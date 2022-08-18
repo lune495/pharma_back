@@ -9,4 +9,8 @@ class Produit extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public  function famille()
+    {
+        return $this->belongsTo(Famille::class);
+    }
 }

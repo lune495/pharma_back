@@ -41,7 +41,6 @@ class AuthController extends Controller
         ]);
         // Check email
         $user = User::where('email',$fields['email'])->first();
-        //dd($user);
         // Check email
         if (!$user || !Hash::check($fields['password'],$user->password)) {
             return response([
