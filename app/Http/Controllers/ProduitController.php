@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produit;
+use Illuminate\Support\Facades\DB;
 
 class ProduitController extends Controller
 {
@@ -28,6 +29,45 @@ class ProduitController extends Controller
     public function store(Request $request)
     {
         return Produit::create($request->all());
+    }
+
+    public function save(Request $request)
+    {
+        try 
+        {
+                $errors =null;
+                $item = new Produit();
+                if (!empty($request->id))
+                {
+                    $item = Produit::find($request->id);
+                }
+                if (empty($request->designation))
+                {
+                    $errors = "Renseignez la designation";
+                }
+                if (empty($request->famille_id))
+                {
+                    $errors = "Renseignez la categorie du produit";
+                }
+                $item->designation = $request->designation;
+                $item->description = $request->description;
+                $item->famille_id = $request->famille_id;
+                try{
+                    if (!isset($errors)) 
+                    {
+                        $item->save();
+                    }
+                }
+                catch (\Exception $e)
+                {
+                    throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
+                }
+                throw new \Exception($errors);
+              
+
+        } catch (\Throwable $e) {
+                return $e->getMessage();
+        }
     }
 
     /**

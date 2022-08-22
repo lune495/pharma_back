@@ -1,31 +1,33 @@
 <?php
 
 namespace App\GraphQL\Type;
- 
 
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 
-
 class ProduitPaginatedType extends GraphQLType
 {
-    protected $attributes = [
+    protected $attributes =
+    [
         'name' => 'produitspaginated'
     ];
-
     public function fields(): array
-    {
-        return [
-            'metadata' => [
+    {  return
+        [
+            'metadata' =>
+            [
                 'type' => GraphQL::type('Metadata'),
-                'resolve' => function ($root) {
+                'resolve' => function ($root)
+                {
                     return array_except($root->toArray(), ['data']);
                 }
             ],
-            'data' => [
+            'data' =>
+            [
                 'type' => Type::listOf(GraphQL::type('Produit')),
-                'resolve' => function ($root) {
+                'resolve' => function ($root)
+                {
                     return $root;
                 }
             ]

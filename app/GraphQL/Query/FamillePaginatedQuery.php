@@ -6,6 +6,7 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Arr;
+use \App\Models\Famille;
 
 class FamillePaginatedQuery extends Query
 {
@@ -34,7 +35,7 @@ class FamillePaginatedQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = Couleur::query();
+        $query = Famille::query();
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);

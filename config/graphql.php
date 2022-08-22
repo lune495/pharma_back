@@ -117,6 +117,7 @@ return [
         \App\GraphQL\Type\ProduitPaginatedType::class,
         \App\GraphQL\Type\FamilleType::class,
         \App\GraphQL\Type\FamillePaginatedType::class,  
+        \App\GraphQL\Type\Metadata::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

@@ -6,6 +6,7 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Arr;
+use \App\Models\Produit;
 
 class ProduitPaginatedQuery extends Query
 {
@@ -35,7 +36,7 @@ class ProduitPaginatedQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = Couleur::query();
+        $query = Produit::query();
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);
@@ -48,7 +49,7 @@ class ProduitPaginatedQuery extends Query
         $count = Arr::get($args, 'count', 20);
         $page  = Arr::get($args, 'page', 1);
 
-        return $query->orderBy('created_at', 'desc')->paginate($count, ['*'], 'page', $page);
+        return $query->orderBy('id', 'desc')->paginate($count, ['*'], 'page', $page);
     }
 }
 

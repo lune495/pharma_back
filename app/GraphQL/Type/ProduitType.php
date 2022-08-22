@@ -16,7 +16,7 @@ class ProduitType extends GraphQLType
     public function fields(): array
     {
        return
-            [
+            [ 
                 'id'                        => ['type' => Type::id(), 'description' => ''],
                 'code'                      => ['type' => Type::string()],
                 'designation'               => ['type' => Type::string()],
