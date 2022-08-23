@@ -41,6 +41,7 @@ class ProduitQuery extends Query
                 'code'                    => $item->code,
                 'designation'             => $item->designation,
                 'description'             => $item->description,
+                'famille_id'              => $item->famille_id,
                 'famille'                 => $item->famille,
             ];
         });
