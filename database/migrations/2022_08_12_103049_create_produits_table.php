@@ -18,7 +18,7 @@ class CreateProduitsTable extends Migration
             $table->string('code')->nullable();
             $table->string('designation')->nullable();
             $table->string('description')->nullable();
-             $table->unsignedBigInteger('famille_id');
+            $table->unsignedBigInteger('famille_id');
             $table->foreign('famille_id')->references('id')->on('familles');
             $table->timestamps();
         });
