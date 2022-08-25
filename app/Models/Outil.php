@@ -33,6 +33,53 @@ class Outil extends Model
     {
         return "Y-m-d H:i:s";
     }
+    public static function getTotalvente($from,$to)
+    {
+         $Totalvent=Vente::whereBetween('created_at', array($from, $to))->count();
+        return   $Totalvent;
+    }
+
+    public static function getCavente($from,$to)
+    {
+
+
+        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(p.pv*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id )
+        as solde "),[$from, $to])[0]->solde;
+        return  $sommetotal;
+
+
+       /*  $allventes= Vente::whereBetween('created_at', array($from, $to))->get();
+        $allbon = Bon::whereBetween('created_at', array($from, $to))->get();
+        $totalallvente = 0 ;
+        foreach ($allventes as $onevente)
+        {
+            $paiemevent = PaiementVente::where('vente_id',$onevente->id)->get();
+            if(count($paiemevent) >0)
+            {
+                foreach ($paiemevent as $onepaiementvente)
+                {
+                    $totalallvente+=$onepaiementvente->montant;
+                }
+            }
+        }
+        foreach ($allbon as $one_bon)
+        {
+            $ventebon = Vente::where('bon_id',$one_bon->id)->first();
+            if(!isset($ventebon))
+            {
+                $totalallvente += $one_bon->montant;
+            }
+        }
+        return $totalallvente ; */
+    }
+
+    public static function getTotalproduitvente($from,$to)
+    {
+
+        return VenteProduit::whereBetween('created_at', array($from, $to))
+        ->groupBy('produit_id')
+        ->count();
+    }
 
 }
 /*select * from reservations where programme_id in (select id from programmes where id=1112 and ((quotepart_pourcentage is not null && quotepart_pourcentage!=0) or (quotepart_valeur is not null && quotepart_valeur!=0)));*/

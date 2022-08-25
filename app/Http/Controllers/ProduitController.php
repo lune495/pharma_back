@@ -57,13 +57,15 @@ class ProduitController extends Controller
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
                 $item->image = $request->image;
-                $item->pa = $request->pv;
+                $item->pa = $request->pa;
+                $item->pv = $request->pv;
                 $item->limite = $request->limite;
                 $item->qte = $request->qte;
                 try{
                     if (!isset($errors)) 
                     {
                         $item->save();
+                        return $item;
                     }
                 }
                 catch (\Exception $e)

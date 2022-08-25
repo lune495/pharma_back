@@ -41,6 +41,9 @@ class ProduitQuery extends Query
                 'code'                    => $item->code,
                 'designation'             => $item->designation,
                 'description'             => $item->description,
+                'pa'                      => $item->pa,
+                'pv'                      => $item->pv,
+                'qte'                     => $item->qte,
                 'famille_id'              => $item->famille_id,
                 'famille'                 => $item->famille,
             ];
