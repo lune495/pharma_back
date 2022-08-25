@@ -5,7 +5,7 @@ namespace App\GraphQL\Query;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\Produit;
+use App\Models\{Produit,Outil};
 class ProduitQuery extends Query
 {
     protected $attributes = [
@@ -30,8 +30,11 @@ class ProduitQuery extends Query
 
     public function resolve($root, $args)
     {
-         $query = Produit::query();
-       
+        $query = Produit::query();
+        if (isset($args['designation']))
+        {
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+        }
         $query = $query->get();
         return $query->map(function (Produit $item)
         {

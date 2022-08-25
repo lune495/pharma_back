@@ -81,5 +81,9 @@ class Outil extends Model
         ->count();
     }
 
+    public static function getOperateurLikeDB()
+    {
+        return config('database.default')=="mysql" ? "like" : "ilike";
+    }
 }
 /*select * from reservations where programme_id in (select id from programmes where id=1112 and ((quotepart_pourcentage is not null && quotepart_pourcentage!=0) or (quotepart_valeur is not null && quotepart_valeur!=0)));*/
