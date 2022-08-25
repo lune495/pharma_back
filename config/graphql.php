@@ -82,6 +82,7 @@ return [
                 \App\GraphQL\Query\VenteQuery::class,
                 \App\GraphQL\Query\RoleQuery::class,
                 \App\GraphQL\Query\FamillePaginatedQuery::class,
+                \App\GraphQL\Query\VenteProduitsQuery::class,
             ],
             'mutation' => [
                 // ExampleMutation::class,
@@ -122,6 +123,7 @@ return [
         \App\GraphQL\Type\VenteType::class,
         \App\GraphQL\Type\RoleType::class,
         \App\GraphQL\Type\UserType::class,
+        \App\GraphQL\Type\VenteProduitType::class,
         \App\GraphQL\Type\FamillePaginatedType::class,  
         \App\GraphQL\Type\Metadata::class,
     ],

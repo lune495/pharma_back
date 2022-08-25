@@ -24,7 +24,9 @@ class VenteType extends GraphQLType
                 'monnaie'                   => ['type' => Type::string()],
 
                 'user_id'                   => ['type' => Type::int()],
-                'user'                      => ['type' => GraphQL::type('User')]
+                'user'                      => ['type' => GraphQL::type('User')],
+                'vente_produits'            => ['type' => Type::listOf(GraphQL::type('VenteProduit')), 'description' => ''],
+
             ];
     }
 

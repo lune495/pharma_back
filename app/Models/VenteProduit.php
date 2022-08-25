@@ -18,4 +18,14 @@ class VenteProduit extends Model
     {
         return $this->belongsTo(Produit::class);
     }
+
+    public static function getTotal($id)
+    {
+        $item = VenteProduit::find($id);
+        // $vente = Vente::find($item->id);
+        $produit = Produit::find($item->produit_id);
+        $total = $item->qte * $produit->pv;
+
+        return $total;
+    }
 }

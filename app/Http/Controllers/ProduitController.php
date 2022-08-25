@@ -49,9 +49,17 @@ class ProduitController extends Controller
                 {
                     $errors = "Renseignez la categorie du produit";
                 }
+                if (empty($request->qte))
+                {
+                    $errors = "Renseignez la quantite du produit";
+                }
                 $item->designation = $request->designation;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
+                $item->image = $request->image;
+                $item->pa = $request->pv;
+                $item->limite = $request->limite;
+                $item->qte = $request->qte;
                 try{
                     if (!isset($errors)) 
                     {
