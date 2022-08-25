@@ -61,6 +61,7 @@ class VenteQuery extends Query
             [
                 'id'                      => $item->id,
                 'qte'                     => $item->qte,
+                'montant'                 => $item->montant,
                 'montantencaisse'         => $item->montantencaisse,
                 'monnaie'                 => $item->monnaie,
                 'user_id'                 => $item->user_id,
