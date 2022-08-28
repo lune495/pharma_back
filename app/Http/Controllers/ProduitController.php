@@ -53,6 +53,14 @@ class ProduitController extends Controller
                 {
                     $errors = "Renseignez la quantite du produit";
                 }
+                if (empty($request->pa))
+                {
+                    $errors = "Renseignez le prix d'achat";
+                }
+                if (empty($request->pv))
+                {
+                    $errors = "Renseignez le prix de vente";
+                }
                 $item->designation = $request->designation;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
@@ -93,30 +101,85 @@ class ProduitController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-        $produit = Produit::find($id);
-        $produit->update($request->all());
-        return $produit;
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
-        return Produit::destroy($id);
+        try
+        {
+            return DB::transaction(function () use ($id)
+            {
+                $errors = null;
+                $data = 0;
+                if($id)
+                {
+
+                    $item = Produit::with('vente_produits')->find($id);
+                    //dd($item->declinaisons);
+                    if ($item!=null)
+                    {
+                        if (count($item->vente_produits)==0)
+                        {
+                            $item->delete();
+                            $item->forceDelete();
+                            $data = 1;
+                        }
+                        else
+                        {
+                            $data = 0;
+                            $errors = "Ce produit fait déjà partie d'une vente";
+                        }
+                    }
+                    else
+                    {
+                        $data = 0;
+                        $errors = "Produit inexistant";
+                    }
+                }
+                else
+                {
+                    $errors = "Données manquantes";
+                }
+
+                if (isset($errors))
+                {
+                    throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                }
+                return response('{"data":' . $data . ', "errors": "'. $errors .'" }')->header('Content-Type','application/json');
+            });
+        }
+        catch (\Exception $e)
+        {
+            return response($e->getMessage())->header('Content-Type','application/json');
+        }
+        // if($id)
+        //         {
+
+        //             $item = Produit::with('vente_produits','ligne_approvisionnements','produit_complementaires')->find($id);
+        //             //dd($item->declinaisons);
+        //             if ($item!=null)
+        //             { 
+        //                 if (count($item->vente_produits)==0 && count($item->ligne_approvisionnements)==0 && count($item->produit_complementaires)==0)
+        //                 {
+        //                     $item->delete();
+        //                     $item->forceDelete();
+        //                     $data = 1;
+        //                 }
+        //                 else
+        //                 {
+        //                     $data = 0;
+        //                     $errors = "Ce produit fait déjà partie d'une vente ou d'une approvisionnement ou est lié a un produit complementaire";
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 $data = 0;
+        //                 $errors = "Produit inexistant";
+        //             }
+        //         }
     }
 
      /**

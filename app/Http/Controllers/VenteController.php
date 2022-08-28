@@ -134,21 +134,50 @@ class VenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
-        return Produit::destroy($id);
+        try {
+            return DB::transaction(function () use ($id) {
+                $errors = null;
+                $data = 0;
+
+                if ($id) {
+                    $vente = Vente::with('vente_produits')->find($id);
+                    if ($vente != null) {
+                        if (!(Carbon::now() > Carbon::parse($vente->created_at)->addDay())) {
+                            $vente->delete();
+                            $vente->forceDelete();
+                            $data = 1;
+                        } else {
+                            $errors = "La Date est dépassée de 1 Jour";
+                        }
+                    } else {
+                        $data = 0;
+                        $errors = "Vente inexistante";
+                    }
+                } else {
+                    $errors = "Données manquantes";
+                }
+
+                if (isset($errors)) {
+                    throw new \Exception('{"data": null, "errors": "' . $errors . '" }');
+                }
+                return response('{"data":' . $data . ', "errors": "' . $errors . '" }')->header('Content-Type', 'application/json');
+            });
+        } catch (\Exception $e) {
+            return response($e->getMessage())->header('Content-Type', 'application/json');
+        }
     }
 
      /**
-     * Search for a name
+     * Search for a id
      *
-     * @param  str  $name
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function search($name)
+    public function search($id)
     {
         //
-        return Produit::where('code','like','%'.$name.'%')->get();
+        return Vente::where('id',$id)->get();
     }
 }

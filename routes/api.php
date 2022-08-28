@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VenteController;
+use App\Http\Controllers\MouvementController;
+use App\Http\Controllers\FamilleController;
+use App\Http\Controllers\DepotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +32,15 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 Route::group(['middleware' => ['auth:sanctum']],function()
 {
     Route::post('/produits',[ProduitController::class,'save']);
+    Route::post('/approsdepot',[MouvementController::class,'approdepot']);
+    Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/ventes',[VenteController::class,'save']);
+    Route::post('/depots',[DepotController::class,'save']);
+    Route::delete('/ventes/{id}',[VenteController::class,'delete']);
     Route::put('/produits/{id}',[ProduitController::class,'update']);
-    Route::delete('/produits/{id}',[ProduitController::class,'destroy']);
+    Route::put('/familles/{id}',[FamilleController::class,'update']);
+    Route::delete('/produits/{id}',[ProduitController::class,'delete']);
+    Route::delete('/familles/{id}',[FamilleController::class,'delete']);
+    Route::post('/familles',[FamilleController::class,'save']);
     Route::post('/logout',[AuthController::class,'logout']);
 });

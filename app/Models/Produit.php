@@ -13,4 +13,8 @@ class Produit extends Model
     {
         return $this->belongsTo(Famille::class);
     }
+    public function vente_produits()
+    {
+        return $this->hasMany(VenteProduit::class);
+    }
 }
