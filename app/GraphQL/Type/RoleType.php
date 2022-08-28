@@ -3,6 +3,7 @@ namespace App\GraphQL\Type;
 
 use App\Models\Role;
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class RoleType extends GraphQLType

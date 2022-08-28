@@ -3,6 +3,7 @@ namespace App\GraphQL\Type;
 
 use App\Models\User;
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class UserType extends GraphQLType
@@ -20,7 +21,7 @@ class UserType extends GraphQLType
                 'name'                      => ['type' => Type::string()],
                 'email'                     => ['type' => Type::string()],
                 'role_id'                   => ['type' => Type::int()],
-                //'role'                      => ['type' => GraphQL::type('Role')],
+                'role'                      => ['type' => GraphQL::type('Role')],
             ];
     }
 
