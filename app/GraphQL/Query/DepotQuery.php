@@ -40,7 +40,7 @@ class DepotQuery extends Query
             [
                 'id'                      => $item->id,
                 'stock'                   => $item->stock,
-                'pa'                      => $item->designation,
+                'pa'                      => $item->pa,
                 'limite'                  => $item->limite,
                 'produit_id'              => $item->produit_id,
                 'produit'                 => $item->produit,
