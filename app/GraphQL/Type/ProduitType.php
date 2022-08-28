@@ -21,9 +21,10 @@ class ProduitType extends GraphQLType
                 'code'                      => ['type' => Type::string()],
                 'designation'               => ['type' => Type::string()],
                 'description'               => ['type' => Type::string()],
-                'pa'                        => ['type' => Type::string()],
-                'pv'                        => ['type' => Type::string()],
-                'qte'                       => ['type' => Type::string()],
+                'pa'                        => ['type' => Type::int()],
+                'pv'                        => ['type' => Type::int()],
+                'qte'                       => ['type' => Type::int()],
+                'limite'                    => ['type' => Type::int()],
 
                 'famille_id'                => ['type' => Type::int()],
                 'famille'                   => ['type' => GraphQL::type('Famille')],

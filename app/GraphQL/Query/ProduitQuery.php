@@ -47,6 +47,7 @@ class ProduitQuery extends Query
                 'pa'                      => $item->pa,
                 'pv'                      => $item->pv,
                 'qte'                     => $item->qte,
+                'limite'                  => $item->limite,
                 'famille_id'              => $item->famille_id,
                 'famille'                 => $item->famille,
                 'depots'                  => $item->depots,
