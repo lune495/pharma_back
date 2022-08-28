@@ -17,4 +17,8 @@ class Produit extends Model
     {
         return $this->hasMany(VenteProduit::class);
     }
+    public function depots()
+    {
+        return $this->hasMany(Depot::class);
+    }
 }

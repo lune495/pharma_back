@@ -26,7 +26,8 @@ class ProduitType extends GraphQLType
                 'qte'                       => ['type' => Type::string()],
 
                 'famille_id'                => ['type' => Type::int()],
-                'famille'                   => ['type' => GraphQL::type('Famille')]
+                'famille'                   => ['type' => GraphQL::type('Famille')],
+                'depots'                    => ['type' => Type::listOf(GraphQL::type('Depot')), 'description' => '']
             ];
     }
 

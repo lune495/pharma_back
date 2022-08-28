@@ -24,7 +24,7 @@ class ProduitQuery extends Query
             'id'                  => ['type' => Type::int()],
             'nom'                 => ['type' => Type::string()],
             'code'                => ['type' => Type::string()],
-            'designation'         => ['type' => Type::string(), 'description' => '']
+            'designation'         => ['type' => Type::string(), 'description' => ''],
         ];
     }
 
@@ -49,6 +49,7 @@ class ProduitQuery extends Query
                 'qte'                     => $item->qte,
                 'famille_id'              => $item->famille_id,
                 'famille'                 => $item->famille,
+                'depots'                  => $item->depots,
             ];
         });
 
