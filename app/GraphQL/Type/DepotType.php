@@ -22,7 +22,7 @@ class DepotType extends GraphQLType
                 'produit'                   => ['type' => GraphQL::type('Produit')],
                 'stock'                     => ['type' => Type::int()],
                 'pa'                        => ['type' => Type::int()],
-                'limit'                     => ['type' => Type::int()]
+                'limite'                     => ['type' => Type::int()]
             ];
     }
 }
