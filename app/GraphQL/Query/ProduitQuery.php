@@ -35,6 +35,7 @@ class ProduitQuery extends Query
         {
             $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
         }
+        $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Produit $item)
         {

@@ -78,7 +78,8 @@ class MouvementController extends Controller
                     $produit->save();
                     $depots = Depot::find($depot[0]['id']);
                     $stock = $depots->stock - $request->quantite;
-                    if(DB::table('depots')->where('produit_id',$request->produit_id)->exists() == true){
+                    if(DB::table('depots')->where('produit_id',$request->produit_id)->exists() == true)
+                    {
                        DB::table('depots')->where('id', $depots->id)->update(['stock' => $stock]);
                     }
                     return $produit;

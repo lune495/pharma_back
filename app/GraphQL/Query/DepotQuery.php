@@ -33,6 +33,7 @@ class DepotQuery extends Query
         {
             $query = $query->where('produit_id',$args['produit_id']);
         }
+        $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Depot $item)
         {

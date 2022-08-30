@@ -28,8 +28,8 @@ class RoleQuery extends Query
 
     public function resolve($root, $args)
     {
-         $query = Role::query();
-       
+        $query = Role::query();
+        $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Role $item)
         {

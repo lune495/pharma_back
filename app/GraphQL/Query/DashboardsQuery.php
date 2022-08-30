@@ -41,12 +41,10 @@ class DashboardsQuery extends Query
         if (isset($args['current_day']) || isset($args['date_day']))
         {
             $thisday = isset($args['date_day']) ? date($args['date_day']) : date('Y-m-d');
-
             // Eventuellement la date fr
             $thisday = (strpos($thisday, '/') !== false) ? Carbon::createFromFormat('d/m/Y', $thisday)->format('Y-m-d') : $thisday;
-
             $debut = date($thisday.' 00:00:00');
-            $fin = date($thisday.' 23:59:59');
+            $fin = date($thisday.' 23:59:59'); 
         }
         else if (isset($args['current_month']) || isset($args['date_month']))
         {

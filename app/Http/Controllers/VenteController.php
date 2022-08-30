@@ -43,9 +43,15 @@ class VenteController extends Controller
                 {
                     $errors = "Renseignez le montant encaisse";
                 }
+                if (empty($request->client_id))
+                {
+                    $errors = "Renseignez le client";
+                }
+                
                     DB::beginTransaction();
                     $item->montantencaisse = $request->montantencaisse;
                     $item->monnaie = $request->monnaie;
+                    $item->client_id = $request->client_id;
                     $item->user_id = $user_id;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
@@ -59,7 +65,11 @@ class VenteController extends Controller
                                 $produit = Produit::find($detail['produit_id']);
                                 if (!isset($produit)) {
                                 $errors = "Produit inexistant";
-                                } 
+                                }
+                                if (empty($detail['prix_vente']))
+                                {
+                                    $errors = "Renseignez le prix unitaire du produit : {$produit->designation}";
+                                }
                                 else 
                                 {
                                     $current_quantity = $produit->qte;
@@ -74,12 +84,13 @@ class VenteController extends Controller
                                         $venteprdt->produit_id = $detail['produit_id'];
                                         $venteprdt->vente_id = $item->id;
                                         $venteprdt->qte = $detail['quantite'];
+                                        $venteprdt->prix_vente = $detail['prix_vente'];
                                         $saved = $venteprdt->save();
                                         if($saved)
                                         {
                                             $produit->qte = $produit->qte - $venteprdt->qte;
                                             $qte_total_vente = $qte_total_vente + $venteprdt->qte;
-                                            $montant_total_vente = $montant_total_vente  + ($produit->pv * $venteprdt->qte);
+                                            $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
                                             $produit->save();
                                         }
                                     }
@@ -88,13 +99,16 @@ class VenteController extends Controller
                             $item->montant = $montant_total_vente;
                             $item->qte = $qte_total_vente;
                             $item->save();
+                            if (!isset($errors)) 
+                            {    
+                              DB::commit();
+                            }
                         }
                     }
                     catch (\Exception $e)
                     {
                         throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
                     }
-                    DB::commit();
                     throw new \Exception($errors);
         } catch (\Throwable $e) {
                 return $e->getMessage();

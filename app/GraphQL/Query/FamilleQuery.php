@@ -38,6 +38,7 @@ class FamilleQuery extends Query
         {
             $query = $query->where('nom', 'like', '%'.$args['nom'].'%');
         }
+        $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Famille $item)
         {

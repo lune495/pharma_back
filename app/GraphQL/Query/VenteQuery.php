@@ -54,6 +54,7 @@ class VenteQuery extends Query
             $to = date($to.' 23:59:59');
             $query->whereBetween('created_at', array($from, $to));
         }
+        $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Vente $item)
         {
