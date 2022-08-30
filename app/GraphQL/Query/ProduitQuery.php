@@ -31,6 +31,10 @@ class ProduitQuery extends Query
     public function resolve($root, $args)
     {
         $query = Produit::query();
+        if (isset($args['id']))
+        {
+            $query = $query->where('id', $args['id']);
+        }
         if (isset($args['designation']))
         {
             $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');

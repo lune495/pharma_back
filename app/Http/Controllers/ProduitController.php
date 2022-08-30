@@ -78,7 +78,7 @@ class ProduitController extends Controller
                     {
                         $item->save();
                         $id = $item->id;
-                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                 }
                 catch (\Exception $e)

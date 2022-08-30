@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class VenteController extends Controller
 {
+    private $queryName = "ventes";
     /**
      * Display a listing of the resource.
      *
@@ -43,15 +44,15 @@ class VenteController extends Controller
                 {
                     $errors = "Renseignez le montant encaisse";
                 }
-                if (empty($request->client_id))
-                {
-                    $errors = "Renseignez le client";
-                }
+                // if (empty($request->client_id))
+                // {
+                //     $errors = "Renseignez le client";
+                // }
                 
                     DB::beginTransaction();
                     $item->montantencaisse = $request->montantencaisse;
                     $item->monnaie = $request->monnaie;
-                    $item->client_id = $request->client_id;
+                    $item->client_id = 1;
                     $item->user_id = $user_id;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
@@ -99,9 +100,11 @@ class VenteController extends Controller
                             $item->montant = $montant_total_vente;
                             $item->qte = $qte_total_vente;
                             $item->save();
+                            $id = $item->id;
                             if (!isset($errors)) 
                             {    
                               DB::commit();
+                              return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
                         }
                     }
