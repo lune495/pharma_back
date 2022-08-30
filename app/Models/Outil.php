@@ -21,6 +21,16 @@ use App\Mail\Maileur;
 class Outil extends Model
 {
 
+    public static $queries = array(
+        "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
+    );
+
+    public static function redirectgraphql($itemName, $critere,$liste_attributs)
+    {
+        $path='{'.$itemName.'('.$critere.'){'.$liste_attributs.'}}';
+        return redirect('graphql?query='.urlencode($path));
+    }
+
     public static function getResponseError(\Exception $e)
     {
         return response()->json(array(

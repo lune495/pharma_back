@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Produit;
+use App\Models\{Produit,Outil};
 use Illuminate\Support\Facades\DB;
 
 class ProduitController extends Controller
 {
+    private $queryName = "produits";
     /**
      * Display a listing of the resource.
      *
@@ -49,6 +50,7 @@ class ProduitController extends Controller
                 {
                     $errors = "Renseignez la categorie du produit";
                 }
+                
                 if (empty($request->qte))
                 {
                     $errors = "Renseignez la quantite du produit";
@@ -62,6 +64,7 @@ class ProduitController extends Controller
                     $errors = "Renseignez le prix de vente";
                 }
                 $item->designation = $request->designation;
+                $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
                 $item->image = $request->image;
@@ -69,11 +72,13 @@ class ProduitController extends Controller
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;
                 $item->qte = $request->qte;
-                try{
+                try
+                {
                     if (!isset($errors)) 
                     {
                         $item->save();
-                        return $item;
+                        $id = $item->id;
+                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                 }
                 catch (\Exception $e)
