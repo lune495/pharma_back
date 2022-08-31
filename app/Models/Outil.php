@@ -23,7 +23,7 @@ class Outil extends Model
 
     public static $queries = array(
         "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"        => " id,montant,montantencaisse,monnaie,qte,user_id,user{id,name,email,role_id,role{id,nom}},vente_produits{id,prix_vente,produit_id,produit{id,designation,qte,pv},vente_id}",
+        "ventes"        => " id,montant,qte,montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,produit{id,designation,qte,pv}}",
     );
 
     public static function redirectgraphql($itemName, $critere,$liste_attributs)
