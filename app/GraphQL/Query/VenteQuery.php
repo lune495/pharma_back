@@ -67,6 +67,7 @@ class VenteQuery extends Query
                 'monnaie'                 => $item->monnaie,
                 'user_id'                 => $item->user_id,
                 'user'                    => $item->user,
+                'client'                  => $item->client,
                 'vente_produits'          => $item->vente_produits,
                 'created_at'              => $item->created_at,
             ];

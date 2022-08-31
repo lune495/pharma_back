@@ -23,7 +23,7 @@ class Outil extends Model
 
     public static $queries = array(
         "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"        => " id,montant,qte,montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,produit{id,designation,qte,pv}}",
+        "ventes"        => " id,montant,qte,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
     );
 
     public static function redirectgraphql($itemName, $critere,$liste_attributs)
@@ -40,6 +40,24 @@ class Outil extends Model
             'errors_line'    => [$e->getLine()],
         ));
     }
+    public static function getOneItemWithGraphQl($queryName, $id_critere, $justone = true)
+    {
+        $guzzleClient = new \GuzzleHttp\Client([
+            'defaults' => [
+                'exceptions' => true
+            ]
+        ]);
+
+        $critere = (is_numeric($id_critere)) ? "id:{$id_critere}" : $id_critere;
+        $queryAttr = Outil::$queries[$queryName];
+        $response = $guzzleClient->get("http://localhost/laravel-app/public/graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
+        $data = json_decode($response->getBody(), true);
+        return ($justone) ? $data['data'][$queryName][0] : $data;
+    }
+    public static function getAPI()
+    {
+        return config('env.APP_URL');
+    }
     public static function formatdate()
     {
         return "Y-m-d H:i:s";
@@ -48,6 +66,10 @@ class Outil extends Model
     {
          $Totalvent=Vente::whereBetween('created_at', array($from, $to))->count();
         return   $Totalvent;
+    }
+    public static function premereLettreMajuscule($val)
+    {
+        return ucfirst($val);
     }
 
     public static function getCavente($from,$to)

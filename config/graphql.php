@@ -97,7 +97,7 @@ return [
             ],
 
             // Laravel HTTP middleware
-            'middleware' => null,
+            'middleware' => ['web'],
 
             // Which HTTP methods to support; must be given in UPPERCASE!
             'method' => ['GET', 'POST'],
@@ -181,11 +181,11 @@ return [
     'simple_pagination_type' => \Rebing\GraphQL\Support\SimplePaginationType::class,
 
     /*
-     * Config for GraphiQL (see (https://github.com/graphql/graphiql).
+     * Config for   QL (see (https://github.com/graphql/graphiql).
      */
     'graphiql' => [
         'prefix' => 'graphiql', // Do NOT use a leading slash
-        'controller' => \Rebing\GraphQL\GraphQLController::class . '@graphiql',
+        'controller' => \Rebing\GraphQL\GraphQLController::class.'@graphiql',
         'middleware' => [],
         'view' => 'graphql::graphiql',
         'display' => env('ENABLE_GRAPHIQL', true),

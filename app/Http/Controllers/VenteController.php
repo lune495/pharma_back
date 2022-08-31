@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; 
 use App\Models\{Produit,VenteProduit,Vente,User,Outil};
 use Illuminate\Support\Facades\DB;
+use \PDF;
 
 class VenteController extends Controller
 {
@@ -106,6 +107,7 @@ class VenteController extends Controller
                               DB::commit();
                               return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
+                            
                         }
                     }
                     catch (\Exception $e)
@@ -130,6 +132,13 @@ class VenteController extends Controller
         return Vente::find($id);
     }
 
+    public function generatePDF($id)
+    {
+        $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+        $pdf = PDF::loadView("pdf.ventesold", $data);
+        $measure = array(0,0,225.772,650.197);
+        return $pdf->setPaper($measure, 'orientation')->stream();
+    }
     /**
      * Update the specified resource in storage.
      *
