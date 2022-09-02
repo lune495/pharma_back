@@ -53,7 +53,7 @@ class VenteController extends Controller
                     DB::beginTransaction();
                     $item->montantencaisse = $request->montantencaisse;
                     $item->monnaie = $request->monnaie;
-                    $item->client_id = 1;
+                    $item->client_id = $request->client_id;
                     $item->user_id = $user_id;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
@@ -134,10 +134,17 @@ class VenteController extends Controller
 
     public function generatePDF($id)
     {
-        $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
-        $pdf = PDF::loadView("pdf.ventesold", $data);
-        $measure = array(0,0,225.772,650.197);
-        return $pdf->setPaper($measure, 'orientation')->stream();
+        $vente = Vente::find($id);
+        if($vente!=null)
+        {
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+         $pdf = PDF::loadView("pdf.ventesold", $data);
+         $measure = array(0,0,225.772,650.197);
+            return $pdf->setPaper($measure, 'orientation')->stream();
+        }else{
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, false);
+            return view('notfound');
+        }
     }
     /**
      * Update the specified resource in storage.

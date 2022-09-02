@@ -76,13 +76,12 @@
                 <br>
 
                 <div style="font-size: 20px;font-weight:bold">
-                    <img src="https://imaara-soft.com/css/app-assets/images/logo/logoimaaramin.png" style="width: 120px;"> <br>
-
+                    <img src="{{asset('app-assets/assets/images/logo_saloum_digital.jpg')}}" style="width: 120px;"> <br>
                     <!--IMAARA-->
                 </div>
 
                 <div style="margin:10px 0">
-                    Rue P x Blvd du Sud, Point E
+                    Rue Serigne Abdou khadr, Keur Massar
                 </div>
                 <div style="margin:10px 0">
                     33 824 63 54

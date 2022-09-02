@@ -8,6 +8,7 @@ use App\Http\Controllers\VenteController;
 use App\Http\Controllers\MouvementController;
 use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\DepotController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +36,10 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/ventes',[VenteController::class,'save']);
+    Route::post('/clients',[ClientController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
+    Route::delete('/clients/{id}',[ClientController::class,'delete']);
     Route::put('/produits/{id}',[ProduitController::class,'update']);
     Route::put('/familles/{id}',[FamilleController::class,'update']);
     Route::delete('/produits/{id}',[ProduitController::class,'delete']);

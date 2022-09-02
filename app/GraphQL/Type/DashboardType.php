@@ -28,6 +28,7 @@ class DashboardType extends GraphQLType
             'nbproduitjour'              => ['type' => Type::int(), 'description' => ''],
             'nbproduitmois'              => ['type' => Type::int(), 'description' => ''],
             'nbproduitannee'             => ['type' => Type::int(), 'description' => ''],
+            'Caproduit'                  => ['type' => Type::int(), 'description' => ''],
 
             // 'nbdepensejour'              => ['type' => Type::int(), 'description' => ''],
             // 'nbdepensemois'              => ['type' => Type::int(), 'description' => ''],

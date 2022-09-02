@@ -67,6 +67,14 @@ class Outil extends Model
          $Totalvent=Vente::whereBetween('created_at', array($from, $to))->count();
         return   $Totalvent;
     }
+    public static function getCaProduit($id,$from,$to)
+    {
+          $ca = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where vp.produit_id = ? and vp.vente_id = v.id and vp.produit_id=p.id and vp.created_at >= ? and vp.created_at <= ?  )
+        as ca "),[$id,$from,$to])[0]->ca;
+        $pa = DB::select(DB::raw("select (SELECT COALESCE(SUM(p.pa),0) FROM `vente_produits` as vp,`produits` as p,`ventes` as v WHERE vp.`produit_id` = ? and vp.`vente_id` = v.id and vp.`produit_id`=p.id and vp.created_at >= ? and vp.created_at <= ?) 
+        as pa"),[$id,$from,$to])[0]->pa;
+        return  $ca - $pa;
+    }
     public static function premereLettreMajuscule($val)
     {
         return ucfirst($val);
@@ -74,7 +82,7 @@ class Outil extends Model
 
     public static function getCavente($from,$to)
     {
-        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(p.pv*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id )
+        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id )
         as solde "),[$from, $to])[0]->solde;
         return  $sommetotal;
 

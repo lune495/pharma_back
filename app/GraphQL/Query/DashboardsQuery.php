@@ -29,13 +29,22 @@ class DashboardsQuery extends Query
             'date_year'          => ['type' => Type::string()],
             'current_day'        => ['type' => Type::boolean()],
             'current_month'      => ['type' => Type::boolean()],
-            'current_year'       => ['type' => Type::boolean()],
+            'produit_id'         => ['type' => Type::int()],
+            'date_start'         => ['type' => Type::string()],
+            'date_end'           => ['type' => Type::string()],
         ];
     }
 
    public function resolve($root, $args)
     {
 
+
+        $from = isset($args['date_start']) ? date($args['date_start']) : date('Y-m-d');
+        $to = isset($args['date_end']) ? date($args['date_end']) : date('Y-m-d');
+        $from = (strpos($from, '/') !== false) ? Carbon::createFromFormat('d/m/Y', $from)->format('Y-m-d') : $from;
+        $to = (strpos($to, '/') !== false) ? Carbon::createFromFormat('d/m/Y', $to)->format('Y-m-d') : $to;
+        $from = $from.' 00:00:00';
+        $to = $to.' 23:59:59';
 
 
         if (isset($args['current_day']) || isset($args['date_day']))
@@ -67,6 +76,11 @@ class DashboardsQuery extends Query
             $today = date('Y-m-d');
             $debut = date($today.' 00:00:00');
             $fin = date($today.' 23:59:59');
+        }
+        $caproduit = 0;
+        if(isset($args['produit_id']))
+        {
+            $caproduit = Outil::getCaProduit($args['produit_id'],$from,$to);
         }
         //********JOUR***********************
       
@@ -112,6 +126,7 @@ class DashboardsQuery extends Query
                 'nbproduitjour'           => json_encode($nbproduitjour),
                 'nbproduitmois'           => json_encode($nbproduitmois),
                 'nbproduitannee'          => json_encode($nbproduitannee),
+                'Caproduit'               => $caproduit,
             ]
         ];
     }
