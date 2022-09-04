@@ -115,7 +115,7 @@
                             <tr>
                                 <td style="padding : 15px 0">  {{$vente["qte"]}}</span> </td>
                                 <td style="padding : 15px 0"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
-                                <td style="padding : 15px 0">  {{$vente["qte"]*$vente["prix_vente"]}} </td>
+                                <td style="padding : 15px 0">  {{\App\Models\Outil::formatPrixToMonetaire($vente["qte"]*$vente["prix_vente"], false, false)}} </td>
                                 <td style="padding : 15px 0">
                             </tr>
                         @endforeach

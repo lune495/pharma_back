@@ -28,7 +28,8 @@ class ProduitType extends GraphQLType
 
                 'famille_id'                => ['type' => Type::int()],
                 'famille'                   => ['type' => GraphQL::type('Famille')],
-                'depots'                    => ['type' => Type::listOf(GraphQL::type('Depot')), 'description' => '']
+                'depots'                    => ['type' => Type::listOf(GraphQL::type('Depot')), 'description' => ''],
+                'capital'                   => ['type' => Type::int()],
             ];
     }
 
@@ -38,4 +39,14 @@ class ProduitType extends GraphQLType
     // {
     //     return strtolower($root->email);
     // }
+    protected function resolveCapitalField($root, array $args)
+    {
+        $produits = Produit::all();
+        $capital = 0;
+        foreach ($produits as $produit)
+        {
+            $capital = $capital + ($produit->pa * $produit->qte);
+        }
+        return $capital;
+    }
 }
