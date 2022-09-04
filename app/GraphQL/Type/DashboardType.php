@@ -4,7 +4,7 @@ namespace App\GraphQL\Type;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\{Vente,Outil};
+use App\Models\{Vente,Outil,Produit};
 use Carbon\Carbon;
 
 
@@ -40,7 +40,8 @@ class DashboardType extends GraphQLType
             'Caventeannee'             => ['type' => Type::int(), 'description' => ''],
             'Cajour'                   => ['type' => Type::string(), 'description' => ''],
             'Cahier'                   => ['type' => Type::string(), 'description' => ''],
-            'Camois'                  => ['type' => Type::string(), 'description' => ''],
+            'capital'                  => ['type' => Type::int()],
+            'Camois'                   => ['type' => Type::string(), 'description' => ''],
         
             // 'meilleurs_clients'             => ['type' => Type::string(), 'description' => ''],
 
@@ -53,6 +54,16 @@ class DashboardType extends GraphQLType
     //     return $retour;
     // }
 
+    protected function resolveCapitalField($root, array $args)
+    {
+        $produits = Produit::all();
+        $capital = 0;
+        foreach ($produits as $produit)
+        {
+            $capital = $capital + ($produit->pa * $produit->qte);
+        }
+        return $capital;
+    }
 
     protected function resolveCajourField($root, $args)
     {
