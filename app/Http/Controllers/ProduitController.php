@@ -72,22 +72,16 @@ class ProduitController extends Controller
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;
                 $item->qte = $request->qte;
-                try
-                {
                     if (!isset($errors)) 
                     {
                         $item->save();
                         $id = $item->id;
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
-                }
-                catch (\Exception $e)
-                {
-                    throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-                }
-                throw new \Exception($errors);
-              
-
+                    if (isset($errors))
+                    {
+                        throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                    }
         } catch (\Throwable $e) {
                 return $e->getMessage();
         }

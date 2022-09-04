@@ -57,8 +57,6 @@ class VenteController extends Controller
                     $item->user_id = $user_id;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
-                    try
-                    {
                         if (!isset($errors)) 
                         {
                             $item->save();
@@ -107,14 +105,11 @@ class VenteController extends Controller
                               DB::commit();
                               return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
-                            
+                            if (isset($errors))
+                            {
+                                throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                            } 
                         }
-                    }
-                    catch (\Exception $e)
-                    {
-                        throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-                    }
-                    throw new \Exception($errors);
         } catch (\Throwable $e) {
                 return $e->getMessage();
         }

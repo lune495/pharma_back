@@ -27,13 +27,13 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
+    Route::post('/approsdepot',[MouvementController::class,'approdepot']);
 
 
 // Protected Routes
 Route::group(['middleware' => ['auth:sanctum']],function()
 {
     Route::post('/produits',[ProduitController::class,'save']);
-    Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/ventes',[VenteController::class,'save']);
     Route::post('/clients',[ClientController::class,'save']);

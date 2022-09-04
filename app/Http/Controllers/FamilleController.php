@@ -24,19 +24,15 @@ class FamilleController extends Controller
                     $errors = "Renseignez le nom de la categorie";
                 }
                 $item->nom = $request->nom;
-                try{
                     if (!isset($errors)) 
                     {
                         $item->save();
                         return $item;
                     }
-                }
-                catch (\Exception $e)
-                {
-                    throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-                }
-                throw new \Exception($errors);
-              
+                    if (isset($errors))
+                    {
+                        throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                    }
 
         } catch (\Throwable $e) {
                 return $e->getMessage();
@@ -69,7 +65,7 @@ class FamilleController extends Controller
                             $data = 1;
                         }
                     }
-                      else
+                    else
                     {
                         $data = 0;
                         $errors = "categorie inexistant";

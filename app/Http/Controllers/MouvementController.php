@@ -12,34 +12,33 @@ class MouvementController extends Controller
     public function approdepot(Request $request)
     {
         try{
-            $errors = null;
-            if (isset($request->produit_id))
+            return DB::transaction(function () use ($request)
             {
-                $item = Depot::where("produit_id",$request->produit_id)->get();
-            }
-            if(!$item->first())
-            {
-                $errors = "Ce produit n'existe pas";
-            }
-            if (empty($request->quantite))
-            {
-                $errors = "Renseignez la quantite";
-            }
-            try{
-                
-                if (!isset($errors)) 
+                $errors = null;
+                if (isset($request->produit_id))
                 {
-                    $depot = Depot::find($item[0]['id']);
-                    $depot->stock = $depot->stock + $request->quantite;
-                    $depot->save();
-                    return $depot;
+                    $item = Depot::where("produit_id",$request->produit_id)->get();
                 }
-            }
-            catch (\Exception $e)
-            {
-                throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-            }
-            throw new \Exception($errors);
+                if(!$item->first())
+                {
+                    $errors = "Ce produit n'existe pas";
+                }
+                if (empty($request->quantite))
+                {
+                    $errors = "Renseignez la quantite";
+                }
+                    if (!isset($errors)) 
+                    {
+                        $depot = Depot::find($item[0]['id']);
+                        $depot->stock = $depot->stock + $request->quantite;
+                        $depot->save();
+                        return $depot;
+                    }
+                    if (isset($errors))
+                    {
+                        throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                    }
+            });
         }catch (\Throwable $e) {
                 return $e->getMessage();
         }
@@ -48,48 +47,48 @@ class MouvementController extends Controller
     public function ravitaillerboutique(Request $request)
     {
         try{
-            $errors = null;
-            $depot = Depot::where("produit_id",$request->produit_id)->get();
-            if (isset($request->produit_id))
+            return DB::transaction(function () use ($request)
             {
-                $item = Produit::where("id",$request->produit_id)->get();
-            }
-            if(!$item->first())
-            {
-                $errors = "Ce produit n'existe pas";
-            }
-            if (empty($request->quantite))
-            {
-                $errors = "Renseignez la quantite";
-            }
-            if($depot->first())
-            {
-                if($depot[0]['stock'] < $request->quantite)
+                $errors = null;
+                $depot = Depot::where("produit_id",$request->produit_id)->get();
+                if (isset($request->produit_id))
                 {
-                    $errors = "La quantite a approvisionner n'existe pas en stock";
+                    $item = Produit::where("id",$request->produit_id)->get();
                 }
-            }
-            try{
-                
-                if (!isset($errors)) 
+                if(!$item->first())
                 {
-                    $produit = Produit::find($item[0]['id']);
-                    $produit->qte = $produit->qte + $request->quantite;
-                    $produit->save();
-                    $depots = Depot::find($depot[0]['id']);
-                    $stock = $depots->stock - $request->quantite;
-                    if(DB::table('depots')->where('produit_id',$request->produit_id)->exists() == true)
+                    $errors = "Ce produit n'existe pas";
+                }
+                if (empty($request->quantite))
+                {
+                    $errors = "Renseignez la quantite";
+                }
+                if($depot->first())
+                {
+                    if($depot[0]['stock'] < $request->quantite)
                     {
-                       DB::table('depots')->where('id', $depots->id)->update(['stock' => $stock]);
+                        $errors = "La quantite a approvisionner n'existe pas en stock";
                     }
-                    return $produit;
                 }
-            }
-            catch (\Exception $e)
-            {
-                throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-            }
-            throw new \Exception($errors);
+                    
+                    if (!isset($errors)) 
+                    {
+                        $produit = Produit::find($item[0]['id']);
+                        $produit->qte = $produit->qte + $request->quantite;
+                        $produit->save();
+                        $depots = Depot::find($depot[0]['id']);
+                        $stock = $depots->stock - $request->quantite;
+                        if(DB::table('depots')->where('produit_id',$request->produit_id)->exists() == true)
+                        {
+                          DB::table('depots')->where('id', $depots->id)->update(['stock' => $stock]);
+                        }
+                        return $produit;
+                    }
+                    if (isset($errors))
+                    {
+                        throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                    }
+            });
         }catch (\Throwable $e) {
                 return $e->getMessage();
         }
