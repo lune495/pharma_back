@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\{User,Outil};
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    private $queryName = "users";
     // Register
     public function register(Request $request ) {
         $fields = $request->validate([
@@ -24,15 +25,14 @@ class AuthController extends Controller
             'role_id' => $fields['role_id'],
              
         ]);
-
+        $id = $user->id;
         $token = $user->createToken('myapptoken')->plainTextToken;
-
         $response = [
-            'user' => $user,
+            'user' =>  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]),
             'token' => $token
         ];
 
-        return response($response,201);
+        return Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
     }
 
      public function login(Request $request ) {

@@ -128,7 +128,7 @@
                     <tbody>
                     <tr>
                         <td style="width: 50%;text-align:left">Total </td>
-                        <td style="padding : 10px 0;text-align:left">  {{$montant}} Fcfa</td>
+                        <td style="padding : 10px 0;text-align:left">  {{\App\Models\Outil::formatPrixToMonetaire($montant, false, true)}}</td>
                     </tr>
                     </tbody>
                 </table>

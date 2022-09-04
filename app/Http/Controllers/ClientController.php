@@ -24,7 +24,7 @@ class ClientController extends Controller
             {
                 $errors = "Renseignez le nom du client";
             }
-            $item->nom_client = $request->nom_client;
+            $item->nom_client = $request->nom_complet;
             $item->email = $request->email;
             $item->adresse = $request->adresse;
             $item->telephone = $request->telephone;

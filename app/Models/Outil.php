@@ -24,6 +24,7 @@ class Outil extends Model
     public static $queries = array(
         "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
         "ventes"        => " id,montant,qte,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
+        "users"          => " id,name,email,role{id,nom}",
     );
 
     public static function redirectgraphql($itemName, $critere,$liste_attributs)
@@ -78,6 +79,94 @@ class Outil extends Model
     public static function premereLettreMajuscule($val)
     {
         return ucfirst($val);
+    }
+    //Formater le prix
+    public static function formatPrixToMonetaire($nbre, $arrondir = false, $avecDevise = false)
+    {
+        //Ajouté pour arrondir le montant
+        if ($arrondir == true) {
+            $nbre = Outil::enleveEspaces($nbre);
+            $nbre = round($nbre);
+        }
+        $rslt = "";
+        $position = strpos($nbre, '.');
+        if ($position === false) {
+            //---C'est un entier---//
+            //Cas 1 000 000 000 Ã  9 999 000
+            if (strlen($nbre) >= 9) {
+                $c = substr($nbre, -3, 3);
+                $b = substr($nbre, -6, 3);
+                $d = substr($nbre, -9, 3);
+                $a = substr($nbre, 0, strlen($nbre) - 9);
+                $rslt = $a . ' ' . $d . ' ' . $b . ' ' . $c;
+            } //Cas 100 000 000 Ã  9 999 000
+            elseif (strlen($nbre) >= 7 && strlen($nbre) < 9) {
+                $c = substr($nbre, -3, 3);
+                $b = substr($nbre, -6, 3);
+                $a = substr($nbre, 0, strlen($nbre) - 6);
+                $rslt = $a . ' ' . $b . ' ' . $c;
+            } //Cas 100 000 Ã  999 000
+            elseif (strlen($nbre) >= 6 && strlen($nbre) < 7) {
+                $a = substr($nbre, 0, 3);
+                $b = substr($nbre, 3);
+                $rslt = $a . ' ' . $b;
+                //Cas 0 Ã  99 000
+            } elseif (strlen($nbre) < 6) {
+                if (strlen($nbre) > 3) {
+                    $a = substr($nbre, 0, strlen($nbre) - 3);
+                    $b = substr($nbre, -3, 3);
+                    $rslt = $a . ' ' . $b;
+                } else {
+                    $rslt = $nbre;
+                }
+            }
+        } else {
+            //---C'est un décimal---//
+            $partieEntiere = substr($nbre, 0, $position);
+            $partieDecimale = substr($nbre, $position, strlen($nbre));
+            //Cas 1 000 000 000 Ã  9 999 000
+            if (strlen($partieEntiere) >= 9) {
+                $c = substr($partieEntiere, -3, 3);
+                $b = substr($partieEntiere, -6, 3);
+                $d = substr($partieEntiere, -9, 3);
+                $a = substr($partieEntiere, 0, strlen($partieEntiere) - 9);
+                $rslt = $a . ' ' . $d . ' ' . $b . ' ' . $c;
+            } //Cas 100 000 000 Ã  9 999 000
+            elseif (strlen($partieEntiere) >= 7 && strlen($partieEntiere) < 9) {
+                $c = substr($partieEntiere, -3, 3);
+                $b = substr($partieEntiere, -6, 3);
+                $a = substr($partieEntiere, 0, strlen($partieEntiere) - 6);
+                $rslt = $a . ' ' . $b . ' ' . $c;
+            } //Cas 100 000 Ã  999 000
+            elseif (strlen($partieEntiere) >= 6 && strlen($partieEntiere) < 7) {
+                $a = substr($partieEntiere, 0, 3);
+                $b = substr($partieEntiere, 3);
+                $rslt = $a . ' ' . $b;
+                //Cas 0 Ã  99 000
+            } elseif (strlen($partieEntiere) < 6) {
+                if (strlen($partieEntiere) > 3) {
+                    $a = substr($partieEntiere, 0, strlen($partieEntiere) - 3);
+                    $b = substr($partieEntiere, -3, 3);
+                    $rslt = $a . ' ' . $b;
+                } else {
+                    $rslt = $partieEntiere;
+                }
+            }
+            if ($partieDecimale == '.0' || $partieDecimale == '.00' || $partieDecimale == '.000') {
+                $partieDecimale = '';
+            }
+            $rslt = $rslt . '' . $partieDecimale;
+        }
+        if ($avecDevise == true) {
+            $formatDevise = Outil::donneFormatDevise();
+            $rslt = $rslt . '' . $formatDevise;
+        }
+        return $rslt;
+    }
+    public static function donneFormatDevise()
+    {
+        $retour = ' F CFA';
+        return $retour;
     }
 
     public static function getCavente($from,$to)

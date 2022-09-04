@@ -29,8 +29,11 @@ class UserQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = User::query();
-        $query->orderBy('id', 'desc');
+        $query = User::query();  
+        if (isset($args['id']))
+        {
+            $query = $query->where('id', $args['id']);
+        }  
         $query = $query->get(); 
         return $query->map(function (User $item)
         {

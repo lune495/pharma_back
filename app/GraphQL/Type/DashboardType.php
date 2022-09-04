@@ -5,6 +5,7 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use App\Models\{Vente,Outil};
+use Carbon\Carbon;
 
 
 
@@ -37,43 +38,10 @@ class DashboardType extends GraphQLType
             'Caventejour'              => ['type' => Type::int(), 'description' => ''],
             'Caventemois'              => ['type' => Type::int(), 'description' => ''],
             'Caventeannee'             => ['type' => Type::int(), 'description' => ''],
-            // 'nombrenouveauclientjour'             => ['type' => Type::int(), 'description' => ''],
-            // 'nombrenouveauclientmois'             => ['type' => Type::int(), 'description' => ''],
-            // 'nombrenouveauclientannee'             => ['type' => Type::int(), 'description' => ''],
-
-            // 'montantdepensejour'             => ['type' => Type::int(), 'description' => ''],
-            // 'montantdepensemois'             => ['type' => Type::int(), 'description' => ''],
-            // 'montantdepenseannee'             => ['type' => Type::int(), 'description' => ''],
-            
-            
-            // 'paniermoyenjour'             => ['type' => Type::int(), 'description' => ''],
-            // 'paniermoyenmois'             => ['type' => Type::int(), 'description' => ''],
-            // 'paniermoyenannee'             => ['type' => Type::int(), 'description' => ''],
-
-            'prctjour'                    => ['type' => Type::int(), 'description' => ''],
-            'prctmois'                    => ['type' => Type::int(), 'description' => ''],
-            'prctannee'                   => ['type' => Type::int(), 'description' => ''],
-            
-            'resultatnetjour'             => ['type' => Type::int(), 'description' => ''],
-            'resultatnetmois'             => ['type' => Type::int(), 'description' => ''],
-            'resultatnetannee'            => ['type' => Type::int(), 'description' => ''],
-
-            // 'montantdepot_a_verserjour'             => ['type' => Type::int(), 'description' => ''],
-
-            // 'montantdepot_a_versermois'             => ['type' => Type::int(), 'description' => ''],
-
-            // 'montantdepot_a_verserannee'             => ['type' => Type::int(), 'description' => ''],
-
-           // get_mnt_depot_vente_reverse
-           
-            'beneficenetjour'                   => ['type' => Type::int(), 'description' => ''],
-            'beneficenetmois'                  => ['type' => Type::int(), 'description' => ''],
-            'beneficenetannee'                 => ['type' => Type::int(), 'description' => ''],
-
-            'couttotal_appro_jour'             => ['type' => Type::int(), 'description' => ''],
-            'couttotal_appro_mois'             => ['type' => Type::int(), 'description' => ''],
-            'couttotal_appro_annee'             => ['type' => Type::int(), 'description' => ''],
-
+            'Cajour'                   => ['type' => Type::string(), 'description' => ''],
+            'Cahier'                   => ['type' => Type::string(), 'description' => ''],
+            'Camois'                  => ['type' => Type::string(), 'description' => ''],
+        
             // 'meilleurs_clients'             => ['type' => Type::string(), 'description' => ''],
 
         ];
@@ -84,5 +52,36 @@ class DashboardType extends GraphQLType
     //     $retour =  Outil::donneMeilleursClients();
     //     return $retour;
     // }
+
+
+    protected function resolveCajourField($root, $args)
+    {
+        $today = date('Y-m-d');
+        $debut = date($today.' 00:00:00');
+        $fin = date($today.' 23:59:59');
+        $Caventejour = Outil::getCavente($debut,  $fin );
+        $Caventejour = Outil::formatPrixToMonetaire($Caventejour, false, true);
+        return $Caventejour;
+    }
+    protected function resolveCahierField($root, $args)
+    {
+        //$today = date('Y-m-d');
+        $yesterday = Carbon::yesterday()->toDateString(); 
+        $debut = date($yesterday.' 00:00:00');
+        $fin = date($yesterday.' 23:59:59');
+        //dd($debut,$fin);
+        $Caventehier = Outil::getCavente($debut,  $fin );
+        $Caventehier = Outil::formatPrixToMonetaire($Caventehier, false, true);
+        return $Caventehier;
+    }
+    protected function resolveCamoisField($root, $args)
+    {
+        //$today = date('Y-m-d');
+        $debut = Carbon::now()->startOfMonth();
+        $fin = Carbon::now();
+        $Camois = Outil::getCavente($debut,  $fin );
+        $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
+        return $Camois;
+    }
    
 }
