@@ -82,7 +82,7 @@ class VenteController extends Controller
                                     {
                                         $venteprdt = new VenteProduit(); 
                                         $venteprdt->produit_id = $detail['produit_id'];
-                                        $venteprdt->vente_id = $item->id;
+                                        $venteprdt->vente_id  = $item->id;
                                         $venteprdt->qte = $detail['quantite'];
                                         $venteprdt->prix_vente = $detail['prix_vente'];
                                         $saved = $venteprdt->save();

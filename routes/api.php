@@ -9,6 +9,7 @@ use App\Http\Controllers\MouvementController;
 use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FournisseurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,6 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
-    Route::post('/approsdepot',[MouvementController::class,'approdepot']);
 
 
 // Protected Routes
@@ -37,9 +37,12 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/ventes',[VenteController::class,'save']);
     Route::post('/clients',[ClientController::class,'save']);
+    Route::post('/fournisseurs',[FournisseurController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
+    Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
     Route::delete('/clients/{id}',[ClientController::class,'delete']);
+    Route::delete('/fournisseurs/{id}',[FournisseurController::class,'delete']);
     Route::put('/produits/{id}',[ProduitController::class,'update']);
     Route::put('/familles/{id}',[FamilleController::class,'update']);
     Route::delete('/produits/{id}',[ProduitController::class,'delete']);
