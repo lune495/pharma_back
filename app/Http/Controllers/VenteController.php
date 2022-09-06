@@ -95,13 +95,13 @@ class VenteController extends Controller
                                     }
                                 }
                             }
-                            $item->montant = $montant_total_vente;
-                            $item->qte = $qte_total_vente;
-                            $item->save();
-                            $id = $item->id;
                             if (!isset($errors)) 
                             {    
-                              DB::commit();
+                                $item->montant = $montant_total_vente;
+                                $item->qte = $qte_total_vente;
+                                $item->save();
+                                $id = $item->id;
+                                DB::commit();
                               return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
                             if (isset($errors))
