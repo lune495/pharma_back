@@ -27,6 +27,7 @@ Route::get('/produits',[ProduitController::class, 'index']);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
+Route::get('/top_produit_vendu',[ProduitController::class, 'list']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 
 
