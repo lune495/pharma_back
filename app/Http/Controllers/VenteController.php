@@ -76,6 +76,7 @@ class VenteController extends Controller
                                     if ($current_quantity < $detail['quantite']) 
                                     {
                                         $errors = "<strong class='text-capitalize'>{$produit->designation}</strong> a un stock de <strong class='text-capitalize'>{$current_quantity}</strong><br> Vous ne pouvez pas effectuer cette vente";
+                                        break;
                                     }
                                     else 
                                     {
@@ -101,17 +102,19 @@ class VenteController extends Controller
                                 $item->qte = $qte_total_vente;
                                 $item->save();
                                 $id = $item->id;
-                                DB::commit();
-                              return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
                             if (isset($errors))
                             {
-                                throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                                throw new \Exception($errors);
                             } 
                         }
         } catch (\Throwable $e) {
-                return $e->getMessage();
+            DB::rollback();
+            return $e->getMessage();
         }
+        DB::commit();
+        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+
     }
 
     /**
