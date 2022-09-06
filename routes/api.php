@@ -29,7 +29,6 @@ Route::post('/login',[AuthController::class,'login']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/top_produit_vendu',[ProduitController::class, 'list']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
-    Route::post('/ventes',[VenteController::class,'save']);
 
 
 // Protected Routes
@@ -37,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']],function()
 {
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
+    Route::post('/ventes',[VenteController::class,'save']);
     Route::post('/clients',[ClientController::class,'save']);
     Route::post('/fournisseurs',[FournisseurController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
