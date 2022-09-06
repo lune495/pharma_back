@@ -109,6 +109,7 @@ class VenteController extends Controller
                             } 
                         }
         } catch (\Throwable $e) {
+            dd($e->getMessage());
             DB::rollback();
             return $e->getMessage();
         }
