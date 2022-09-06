@@ -103,8 +103,7 @@ class ProduitController extends Controller
     {
         //
         $top_produit =  DB::select(DB::raw("select produits.designation, sum(vente_produits.qte) as Qte from vente_produits inner join produits on vente_produits.produit_id = produits.id group by produits.designation Order by sum(vente_produits.qte) desc"));
-        dd($top_produit);
-        return Produit::find($id);
+        return $top_produit;
     }
 
     /**
