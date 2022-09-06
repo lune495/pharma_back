@@ -23,7 +23,7 @@ class Outil extends Model
 
     public static $queries = array(
         "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"        => " id,montant,qte,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
+        "ventes"        => " id,montant,qte,created_at,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
         "users"          => " id,name,email,role{id,nom}",
     );
 

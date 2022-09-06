@@ -28,19 +28,15 @@ class ClientController extends Controller
             $item->email = $request->email;
             $item->adresse = $request->adresse;
             $item->telephone = $request->telephone;
-            try{
                 if (!isset($errors)) 
                 {
                     $item->save();
                     return $item;
                 }
-            }
-            catch (\Exception $e)
-            {
-                throw new \Exception('{"data": null, "errors": "'.$e->getMessage().'" }');
-            }
-            throw new \Exception($errors);
-              
+                if (isset($errors))
+                {
+                    throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                }
 
         } catch (\Throwable $e) {
                 return $e->getMessage();
