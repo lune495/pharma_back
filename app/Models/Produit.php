@@ -21,4 +21,8 @@ class Produit extends Model
     {
         return $this->hasMany(Depot::class);
     }
+    public function ligne_approvisionnements()
+    {
+        return $this->hasMany(LigneApprovisionnement::class);
+    }
 }

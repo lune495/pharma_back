@@ -19,8 +19,9 @@ class ApprovisionnementController extends Controller
             {
                 $errors = null;
                 $item = new Approvisionnement();
-                //$user_id = auth('sanctum')->user()->id;
-
+                $user_id = auth('sanctum')->user()->id;
+                $montant_total_appro = 0;
+                $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))
                 {
                     $fournisseur = Fournisseur::find($request->fournisseur_id);
@@ -31,7 +32,7 @@ class ApprovisionnementController extends Controller
                 }
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
-                $item->user_id = 3;
+                $item->user_id = $user_id;
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 
@@ -61,7 +62,12 @@ class ApprovisionnementController extends Controller
                                 $itemDetail->produit_id = $detail['produit_id'];
                             }
                             $itemDetail->quantity_received = $detail['quantite'];
-                            $itemDetail->save();
+                            $saved = $itemDetail->save();
+                            if($saved)
+                            {
+                                $qte_total_appro = $qte_total_appro + $itemDetail->quantity_received;
+                                $montant_total_appro = $montant_total_appro  + ($itemDetail->produit->pa * $itemDetail->quantity_received);
+                            }
                         }
                         // Appro depot
                         if($request->type_appro == 'DEPOT')
@@ -102,7 +108,10 @@ class ApprovisionnementController extends Controller
                                 $produit->save();
                             }
                         }
-                    }        
+                    }    
+                    $item->montant = $montant_total_appro;
+                    $item->qte_total_appro = $qte_total_appro;
+                    $item->save();    
                 }
                 if (isset($errors))
                 {
