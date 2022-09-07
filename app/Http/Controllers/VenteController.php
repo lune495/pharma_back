@@ -45,10 +45,6 @@ class VenteController extends Controller
                 {
                     $errors = "Renseignez le montant encaisse";
                 }
-                // if (empty($request->client_id))
-                // {
-                //     $errors = "Renseignez le client";
-                // }
                 
                     DB::beginTransaction();
                     $item->montantencaisse = $request->montantencaisse;
@@ -97,11 +93,13 @@ class VenteController extends Controller
                                 }
                             }
                             if (!isset($errors)) 
-                            {    
+                            { 
                                 $item->montant = $montant_total_vente;
                                 $item->qte = $qte_total_vente;
                                 $item->save();
                                 $id = $item->id;
+                                DB::commit();
+                                return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                             }
                             if (isset($errors))
                             {
@@ -113,8 +111,7 @@ class VenteController extends Controller
             DB::rollback();
             return $e->getMessage();
         }
-        DB::commit();
-        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+        
 
     }
 

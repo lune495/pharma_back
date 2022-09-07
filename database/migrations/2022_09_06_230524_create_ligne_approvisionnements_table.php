@@ -17,12 +17,10 @@ class CreateLigneApprovisionnementsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('approvisionnement_id');
             $table->foreign('approvisionnement_id')->references('id')->on('approvisionnements')->onDelete('cascade');
-            $table->unsignedBigInteger('fournisseur_id');
-            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade');
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
             $table->integer('quantity_received');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

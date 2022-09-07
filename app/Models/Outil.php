@@ -22,9 +22,11 @@ class Outil extends Model
 {
 
     public static $queries = array(
-        "produits"      => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"        => " id,montant,qte,created_at,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
-        "users"          => " id,name,email,role{id,nom}",
+        "produits"                   => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
+        "ventes"                     => " id,montant,qte,created_at,client{nom_complet},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
+        "users"                      => " id,name,email,role{id,nom}",
+        "approvisionnements"         => "id,user_id,user{name},fournisseur_id,fournisseur{id,nom_complet},ligne_approvisionnements{id,produit_id,produit{id,designation,pa,pv,qte,famille_id,famille{id,nom}},quantity_received,created_at,created_at_fr,updated_at,updated_at_fr},created_at_fr",
+
     );
 
     public static function redirectgraphql($itemName, $critere,$liste_attributs)

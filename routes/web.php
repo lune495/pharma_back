@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VenteController;
+use App\Http\Controllers\ApprovisionnementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use App\Http\Controllers\VenteController;
 |
 */
 Route::get('/vente/generate-pdf/{id}', [VenteController::class,'generatePDF']);
+Route::get('/approvisionnementpdf/{id}', [ApprovisionnementController::class,'genereallPDf']);
 Route::get('/', function () {
     return view('welcome');
 });

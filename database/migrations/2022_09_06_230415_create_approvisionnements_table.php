@@ -13,11 +13,12 @@ class CreateApprovisionnementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('approvisionnements', function (Blueprint $table) {
+        Schema::create('approvisionnements', function (Blueprint $table) {  
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            
+            $table->unsignedBigInteger('fournisseur_id');
+            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
