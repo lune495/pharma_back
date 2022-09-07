@@ -126,7 +126,6 @@ class DashboardsQuery extends Query
                 'nbproduitjour'           => json_encode($nbproduitjour),
                 'nbproduitmois'           => json_encode($nbproduitmois),
                 'nbproduitannee'          => json_encode($nbproduitannee),
-                'Caproduit'               => $caproduit,
             ]
         ];
     }

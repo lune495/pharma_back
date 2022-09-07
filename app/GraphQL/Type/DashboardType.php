@@ -42,6 +42,7 @@ class DashboardType extends GraphQLType
             'Cahier'                   => ['type' => Type::string(), 'description' => ''],
             'capital'                  => ['type' => Type::int()],
             'Camois'                   => ['type' => Type::string(), 'description' => ''],
+            'Camoisdernier'            => ['type' => Type::string(), 'description' => ''],
         
             // 'meilleurs_clients'             => ['type' => Type::string(), 'description' => ''],
 
@@ -89,6 +90,16 @@ class DashboardType extends GraphQLType
     {
         //$today = date('Y-m-d');
         $debut = Carbon::now()->startOfMonth();
+        $fin = Carbon::now();
+        $Camois = Outil::getCavente($debut,  $fin );
+        $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
+        return $Camois;
+    }
+
+    protected function resolveCamoisdernierField($root, $args)
+    {
+        //$today = date('Y-m-d');
+        $debut = Carbon::now()->startOfMonth() -1;
         $fin = Carbon::now();
         $Camois = Outil::getCavente($debut,  $fin );
         $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
