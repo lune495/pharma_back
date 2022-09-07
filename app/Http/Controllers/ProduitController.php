@@ -103,14 +103,29 @@ class ProduitController extends Controller
     {
         //
         $top_produit =  DB::select(DB::raw("select produits.designation, sum(vente_produits.qte) as Qte from vente_produits inner join produits on vente_produits.produit_id = produits.id group by produits.designation Order by sum(vente_produits.qte) desc limit 5"));
-        return $top_produit;
+        if(isset($top_produit))
+        {
+            return $top_produit;
+        }
+        else
+        {
+            return array();
+        }
+        
     }
 
     public function list_meilleur_client()
     {
         //
         $top_client =  DB::select(DB::raw("select clients.nom_complet, sum(ventes.montant) as montant from ventes inner join clients on ventes.client_id = clients.id where ventes.client_id is not null group by clients.nom_complet Order by sum(ventes.montant) desc limit 5"));
-        return $top_client;
+        if(isset($top_client))
+        {
+            return $top_client;
+        }
+        else
+        {
+            return array();
+        }
     }
 
     /**
