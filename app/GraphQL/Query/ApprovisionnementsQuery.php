@@ -74,6 +74,8 @@ class ApprovisionnementsQuery extends Query
                 'id'                                => $item->id,
                 'user_id'                           => $item->user_id,
                 'fournisseur_id'                    => $item->fournisseur_id,
+                'montant'                           => $item->montant,
+                'qte_total_appro'                   => $item->qte_total_appro,
                 'fournisseur'                       => $item->fournisseur,
                 'user'                              => $item->user,
                 'ligne_approvisionnements'          => $item->ligne_approvisionnements,
