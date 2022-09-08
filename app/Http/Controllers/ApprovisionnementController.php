@@ -19,7 +19,7 @@ class ApprovisionnementController extends Controller
             {
                 $errors = null;
                 $item = new Approvisionnement();
-                $user_id = auth('sanctum')->user()->id;
+                //$user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))
@@ -32,7 +32,8 @@ class ApprovisionnementController extends Controller
                 }
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
-                $item->user_id = $user_id;
+                // $item->user_id = $user_id;
+                 $item->user_id = 3;
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 
@@ -74,9 +75,9 @@ class ApprovisionnementController extends Controller
                         {
                             if (isset($detail['produit_id']))
                             {
-                                $item = Depot::where("produit_id",$detail['produit_id'])->get();
+                                $depot = Depot::where("produit_id",$detail['produit_id'])->get();
                             }
-                            if(!$item->first())
+                            if(!$depot->first())
                             {
                                 $errors = "Ce produit n'existe pas";
                             }
@@ -86,7 +87,7 @@ class ApprovisionnementController extends Controller
                             }
                             if (!isset($errors)) 
                             {
-                                $depot = Depot::find($item[0]['id']);
+                                $depot = Depot::find($depot[0]['id']);
                                 $depot->stock = $depot->stock + $detail['quantite'];
                                 $depot->save();
                             }
@@ -95,7 +96,7 @@ class ApprovisionnementController extends Controller
                         {
                             if (isset($detail['produit_id']))
                             {
-                                $item = Produit::where("id",$detail['produit_id'])->get();
+                                $produit = Produit::where("id",$detail['produit_id'])->get();
                             }
                             if(!$item->first())
                             {
@@ -103,7 +104,7 @@ class ApprovisionnementController extends Controller
                             }
                             if (!isset($errors)) 
                             {
-                                $produit = Produit::find($item[0]['id']);
+                                $produit = Produit::find($produit[0]['id']);
                                 $produit->qte = $produit->qte + $detail['quantite'];
                                 $produit->save();
                             }
@@ -111,7 +112,7 @@ class ApprovisionnementController extends Controller
                     }    
                     $item->montant = $montant_total_appro;
                     $item->qte_total_appro = $qte_total_appro;
-                    $item->save();    
+                    $item->save();
                 }
                 if (isset($errors))
                 {

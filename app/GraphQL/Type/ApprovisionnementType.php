@@ -30,10 +30,8 @@ class ApprovisionnementType extends GraphQLType
             'fournisseur_id'                    => ['type' => Type::int()],
 
             'user'                              => ['type' => GraphQL::type('User'), 'description' => ''],
+            'fournisseur'                       => ['type' => GraphQL::type('Fournisseur'), 'description' => ''],
             'ligne_approvisionnements'          => ['type' => Type::listOf(GraphQL::type('LigneApprovisionnement')), 'description' => ''],
-            'fournisseur'                       => ['type' => Type::listOf(GraphQL::type('Fournisseur')), 'description' => ''],
-
-
 
             'created_at'                        => [ 'type' => Type::string(), 'description' => ''],
             'created_at_fr'                     => [ 'type' => Type::string(), 'description' => ''],
