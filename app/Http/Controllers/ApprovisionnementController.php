@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Fournisseur,Produit,Approvisionnement,User,Outil,LigneApprovisionnement};
+use App\Models\{Fournisseur,Produit,Approvisionnement,User,Depot,Outil,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use \PDF;
 
@@ -81,10 +81,10 @@ class ApprovisionnementController extends Controller
                             {
                                 $errors = "Ce produit n'existe pas";
                             }
-                            if (empty($request->quantite))
-                            {
-                                $errors = "Renseignez la quantite";
-                            }
+                            // if (empty($request->quantite))
+                            // {
+                            //     $errors = "Renseignez la quantite";
+                            // }
                             if (!isset($errors)) 
                             {
                                 $depot = Depot::find($depot[0]['id']);

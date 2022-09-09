@@ -124,16 +124,17 @@
             </section>
             <div style="overflow: hidden;margin-top : 20px">**************************************</div>
             <section  style="overflow: hidden;margin-bottom : 20px">
-                {{-- <table>
+                <table>
                     <tbody>
                     <tr>
-                        <td style="width: 50%;text-align:left">Total </td>
+                        <td style="width: 50%;text-align:left">Total Facture</td>
                         <td style="padding : 10px 0;text-align:left">  {{\App\Models\Outil::formatPrixToMonetaire($montant, false, true)}}</td>
                     </tr>
                     </tbody>
-                </table> --}}
+                </table>
             </section>
             <div style="overflow: hidden;">**************************************</div>
+            
             {{-- <div style="text-align:center;margin-bottom : 7px; margin-top : 7px;font-size: 12px">Reglé en {{$type_paiement["designation"]}}</div> --}}
             <div style=" overflow: hidden;margin-bottom : 7px; margin-top : 7px;">**************************************</div>
         </div>

@@ -112,6 +112,13 @@ class ApprovisionnementType extends GraphQLType
 
         return $quantite;
     }
+
+    protected function resolveMontantField($root, $args)
+    {
+        
+
+        return \App\Models\Outil::formatPrixToMonetaire($root['montant'], false, true);
+    }
     // protected function resolveQuantiteAllField($root, $args)
     // {
     //     if (isset($root['quantite_all']))
