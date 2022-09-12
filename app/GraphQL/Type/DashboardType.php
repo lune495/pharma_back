@@ -89,7 +89,7 @@ class DashboardType extends GraphQLType
     protected function resolveCamoisField($root, $args)
     {
         //$today = date('Y-m-d');
-        $debut = Carbon::now()->startOfMonth();
+        $debut = Carbon::now()->startOfMonth()->toDateString();
         $fin = Carbon::now();
         $Camois = Outil::getCavente($debut,  $fin );
         $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
@@ -99,11 +99,11 @@ class DashboardType extends GraphQLType
     protected function resolveCamoisdernierField($root, $args)
     {
         //$today = date('Y-m-d');
-        $debut = Carbon::now()->startOfMonth() -1;
+        $debut = Carbon::now()->startOfMonth()->subMonth()->toDateString();
         $fin = Carbon::now();
-        $Camois = Outil::getCavente($debut,  $fin );
-        $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
-        return $Camois;
+        $Camoisdernier = Outil::getCavente($debut,  $fin );
+        $Camoisdernier = Outil::formatPrixToMonetaire($Camoisdernier, false, true);
+        return $Camoisdernier;
     }
    
 }

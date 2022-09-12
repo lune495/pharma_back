@@ -34,7 +34,7 @@ class VenteController extends Controller
         {
                 $errors =null;
                 $item = new Vente();
-                // $user_id = auth('sanctum')->user()->id;
+                $user_id = auth('sanctum')->user()->id;
                 $montant_total_vente = 0;
                 $qte_total_vente = 0;
                 if (!empty($request->id))
@@ -46,11 +46,11 @@ class VenteController extends Controller
                     $errors = "Renseignez le montant encaisse";
                 }
                 
-                    //DB::beginTransaction();
+                    DB::beginTransaction();
                     $item->montantencaisse = $request->montantencaisse;
                     $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
-                    // $item->user_id = $user_id;
+                    $item->user_id = $user_id;
                      $item->user_id = 3;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
@@ -62,6 +62,11 @@ class VenteController extends Controller
                                 $produit = Produit::find($detail['produit_id']);
                                 if (!isset($produit)) {
                                 $errors = "Produit inexistant";
+                                }
+                                else if(!isset($detail['quantite']) || !is_numeric($detail['quantite']) || $detail['quantite'] < 1)
+                                {
+                                    $errors = "Veuillez défnir la quantité";
+                                    break;
                                 }
                                 if (empty($detail['prix_vente']))
                                 {
@@ -100,7 +105,7 @@ class VenteController extends Controller
                             $item->qte = $qte_total_vente;
                             $item->save();
                             $id = $item->id;
-                            //DB::commit();
+                            DB::commit();
                             return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                         }
                         if (isset($errors))
@@ -109,7 +114,7 @@ class VenteController extends Controller
                         } 
 
         } catch (exception $e) {
-           // DB::rollback();
+            DB::rollback();
             return $e->getMessage();
         }
         
