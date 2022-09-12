@@ -51,7 +51,6 @@ class VenteController extends Controller
                     $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
                     $item->user_id = $user_id;
-                     $item->user_id = 3;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
                         if (!isset($errors)) 
