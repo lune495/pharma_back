@@ -6,18 +6,18 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Arr;
-use \App\Models\Produit;
+use \App\Models\Client;
 
-class ProduitPaginatedQuery extends Query
+class ClientPaginatedQuery extends Query
 {
     protected $attributes = [
-        'name'              => 'produitspaginated',
+        'name'              => 'clientspaginated',
         'description'       => ''
     ];
 
     public function type():type
     {
-        return GraphQL::type('produitspaginated');
+        return GraphQL::type('clientspaginated');
     }
 
     public function args():array
@@ -25,8 +25,7 @@ class ProduitPaginatedQuery extends Query
         return
         [
             'id'                            => ['type' => Type::int()],
-            'nom'                           => ['type' => Type::string()],
-            'code'                          => ['type' => Type::string()],
+            'nom_complet'                   => ['type' => Type::string()],
         
             'page'                          => ['name' => 'page', 'description' => 'The page', 'type' => Type::int() ],
             'count'                         => ['name' => 'count',  'description' => 'The count', 'type' => Type::int() ]
@@ -36,20 +35,15 @@ class ProduitPaginatedQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = Produit::query();
-        if (isset($args['id']))
+        $query = Client::query();
+        if (isset($args['nom_complet']))
         {
-            $query->where('id', $args['id']);
-        }
-        if (isset($args['code']))
-        {
-            $query->where('code',$args['code']);
+            $query = $query->where('nom_complet',Outil::getOperateurLikeDB(),'%'.$args['nom_complet'].'%');
         }
       
-        $count = Arr::get($args, 'count', 10);
-        $page  = Arr::get($args, 'page', 1);
-
-        return $query->orderBy('id', 'desc')->paginate($count, ['*'], 'page', $page);
+       $count = Arr::get($args, 'count', 20);
+       $page  = Arr::get($args, 'page', 1);
+       return $query->orderBy('nom_complet')->paginate($count, ['*'], 'page', $page);
     }
 }
 

@@ -43,7 +43,7 @@ class ClientQuery extends Query
                 'nom_complet'         => $item->nom_complet,
                 'telephone'           => $item->telephone,
                 'adresse'             => $item->adresse,
-                'emali'               => $item->email,
+                'email'               => $item->email,
             ];
         });
 

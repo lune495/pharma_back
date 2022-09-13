@@ -6,18 +6,18 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Arr;
-use \App\Models\Produit;
+use \App\Models\User;
 
-class ProduitPaginatedQuery extends Query
+class UserPaginatedQuery extends Query
 {
     protected $attributes = [
-        'name'              => 'produitspaginated',
+        'name'              => 'userspaginated',
         'description'       => ''
     ];
 
     public function type():type
     {
-        return GraphQL::type('produitspaginated');
+        return GraphQL::type('userspaginated');
     }
 
     public function args():array
@@ -25,8 +25,7 @@ class ProduitPaginatedQuery extends Query
         return
         [
             'id'                            => ['type' => Type::int()],
-            'nom'                           => ['type' => Type::string()],
-            'code'                          => ['type' => Type::string()],
+            'name'                          => ['type' => Type::string()],
         
             'page'                          => ['name' => 'page', 'description' => 'The page', 'type' => Type::int() ],
             'count'                         => ['name' => 'count',  'description' => 'The count', 'type' => Type::int() ]
@@ -36,20 +35,20 @@ class ProduitPaginatedQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = Produit::query();
+        $query = User::query();
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);
         }
-        if (isset($args['code']))
+        if (isset($args['name']))
         {
-            $query->where('code',$args['code']);
+            $query->where('name',$args['name']);
         }
       
-        $count = Arr::get($args, 'count', 10);
+        $count = Arr::get($args, 'count', 20);
         $page  = Arr::get($args, 'page', 1);
 
-        return $query->orderBy('id', 'desc')->paginate($count, ['*'], 'page', $page);
+        return $query->orderBy('created_at', 'desc')->paginate($count, ['*'], 'page', $page);
     }
 }
 

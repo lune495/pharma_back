@@ -26,7 +26,7 @@ use App\Http\Controllers\FournisseurController;
 //Route::resource('produits', ProduitController::class);
 Route::get('/produits',[ProduitController::class, 'index']);
 Route::post('/register',[AuthController::class,'register']);
-// Route::post('/login',[AuthController::class,'login']);
+Route::post('/login',[AuthController::class,'login']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/top_produit_vendu',[ProduitController::class, 'list_top_produit']);
 Route::get('/top_meilleur_client',[ProduitController::class, 'list_meilleur_client']);
