@@ -40,6 +40,7 @@ class AuthController extends Controller
         ]);
         // Check email
         $user = User::with('role')->where('email',"admin@gmail.com")->first();
+        // dd($user);
         // Check email
         if (!Hash::check($fields['password'],$user->password)) {
             return response([

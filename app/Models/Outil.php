@@ -175,6 +175,7 @@ class Outil extends Model
     {
         $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id )
         as solde "),[$from, $to])[0]->solde;
+        $sommetotal = Outil::formatPrixToMonetaire($sommetotal, false, true);
         return  $sommetotal;
 
 

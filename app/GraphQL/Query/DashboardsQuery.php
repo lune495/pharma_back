@@ -82,6 +82,7 @@ class DashboardsQuery extends Query
         {
             $caproduit = Outil::getCaProduit($args['produit_id'],$from,$to);
         }
+        
         //********JOUR***********************
       
         $nbVenteJour = Outil::getTotalvente($debut,  $fin );
@@ -123,6 +124,7 @@ class DashboardsQuery extends Query
                 'Caventeannee'            => $Caventeannee,
                 'Caventejour'             => $Caventejour,
                 'Caventemois'             => $Caventemois,
+                'Caproduit'               => $caproduit,
                 'nbproduitjour'           => json_encode($nbproduitjour),
                 'nbproduitmois'           => json_encode($nbproduitmois),
                 'nbproduitannee'          => json_encode($nbproduitannee),
