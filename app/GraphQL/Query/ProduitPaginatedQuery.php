@@ -6,7 +6,7 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Arr;
-use \App\Models\Produit;
+use \App\Models\{Produit,Outil};
 
 class ProduitPaginatedQuery extends Query
 {
@@ -45,7 +45,10 @@ class ProduitPaginatedQuery extends Query
         {
             $query->where('code',$args['code']);
         }
-      
+        if (isset($args['designation']))
+        {
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+        }
         $count = Arr::get($args, 'count', 10);
         $page  = Arr::get($args, 'page', 1);
 

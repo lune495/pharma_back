@@ -1,7 +1,7 @@
 <?php
 namespace App\GraphQL\Type;
 
-use App\Models\Produit;
+use App\Models\{Produit,Outil};
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -29,7 +29,7 @@ class ProduitType extends GraphQLType
                 'famille_id'                => ['type' => Type::int()],
                 'famille'                   => ['type' => GraphQL::type('Famille')],
                 'depots'                    => ['type' => Type::listOf(GraphQL::type('Depot')), 'description' => ''],
-                'capital'                   => ['type' => Type::int()],
+                'capital'                   => ['type' => Type::string()],
             ];
     }
 
@@ -47,6 +47,7 @@ class ProduitType extends GraphQLType
         {
             $capital = $capital + ($produit->pa * $produit->qte);
         }
+        $capital = Outil::formatPrixToMonetaire($capital, false, true);
         return $capital;
     }
 }
