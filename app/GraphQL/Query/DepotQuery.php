@@ -5,7 +5,7 @@ namespace App\GraphQL\Query;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\Depot;
+use App\Models\{Depot,Outil};
 class DepotQuery extends Query
 {
     protected $attributes = [
@@ -23,6 +23,7 @@ class DepotQuery extends Query
         [
             'id'                  => ['type' => Type::int()],
             'produit_id'          => ['type' => Type::int()],
+            'designation'         => ['type' => Type::string()],
         ];
     }
 
@@ -32,6 +33,12 @@ class DepotQuery extends Query
         if (isset($args['produit_id']))
         {
             $query = $query->where('produit_id',$args['produit_id']);
+        }
+        if(isset($args['designation']))
+        {
+             $query = $query->join('produits', 'produits.id', '=', 'depots.produit_id')
+            ->where('produits.designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%')
+            ->selectRaw('depots.*');
         }
         $query->orderBy('id', 'desc');
         $query = $query->get();

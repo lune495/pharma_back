@@ -18,22 +18,22 @@ class ApprovisionnementController extends Controller
             return DB::transaction(function () use ($request)
             {
                 $errors = null;
+                $fournisseur = null;
                 $item = new Approvisionnement();
-                //$user_id = auth('sanctum')->user()->id;
+                $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))
                 {
                     $fournisseur = Fournisseur::find($request->fournisseur_id);
                 }
-                if(!$fournisseur->first())
-                {
-                    $errors = "Ce fournisseur n'existe pas";
-                }
+                // if(!isset($fournisseur))
+                // {
+                //     $errors = "Ce fournisseur n'existe pas";
+                // }
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
-                // $item->user_id = $user_id;
-                 $item->user_id = 3;
+                $item->user_id = $user_id; 
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 
@@ -110,6 +110,14 @@ class ApprovisionnementController extends Controller
                             }
                         }
                     }    
+                    if($request->type_appro == 'DEPOT')
+                    {
+                        $item->type_appro = "DEPOT";
+                    }
+                    if($request->type_appro == 'BOUTIQUE')
+                    {
+                        $item->type_appro = "BOUTIQUE";
+                    }
                     $item->montant = $montant_total_appro;
                     $item->qte_total_appro = $qte_total_appro;
                     $item->save();
@@ -121,8 +129,7 @@ class ApprovisionnementController extends Controller
                  DB::commit();
                 return  Outil::redirectgraphql($this->queryName, "id:{$itemId}", Outil::$queries[$this->queryName]);
             });
-        } catch (\Throwable $e) {
-            
+        } catch (exception $e) {            
              DB::rollback();
              return $e->getMessage();
         }

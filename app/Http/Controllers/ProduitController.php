@@ -82,7 +82,7 @@ class ProduitController extends Controller
                     {
                         throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
                     }
-        } catch (\Throwable $e) {
+        } catch (exception $e) {
                 return $e->getMessage();
         }
     }

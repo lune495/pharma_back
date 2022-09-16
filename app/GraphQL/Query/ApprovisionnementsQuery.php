@@ -79,6 +79,7 @@ class ApprovisionnementsQuery extends Query
                 'fournisseur'                       => $item->fournisseur,
                 'user'                              => $item->user,
                 'ligne_approvisionnements'          => $item->ligne_approvisionnements,
+                'type_appro'                        => $item->type_appro,
 
                 'created_at'                        => $item->created_at->format(Outil::formatdate()),
                 'updated_at'                        => $item->updated_at->format(Outil::formatdate())
