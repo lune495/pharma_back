@@ -157,8 +157,7 @@ class ApprovisionnementController extends Controller
         {
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
          $pdf = PDF::loadView("pdf.approvisionnements", $data);
-         $measure = array(0,0,225.772,650.197);
-            return $pdf->setPaper($measure, 'orientation')->stream();
+        return $pdf->stream();
         }
         else
         {
