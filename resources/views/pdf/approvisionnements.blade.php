@@ -52,7 +52,8 @@
         </tr>
     </table>
 
-    <h2 style="margin:0">Facture Globale</h2>
+    <h2 style="margin:0">Facture Achat </h2>
+    <p class="badge" style="text-align:left;line-height:15px">{{$type_appro}}</p>
     <br>
     <table class="table table-bordered w-100">
         <tr style="font-size: 1.2em;">
@@ -65,7 +66,7 @@
     <tbody style="border:none">
         @foreach($ligne_approvisionnements as $ligne_approvisionnement)
             <tr style="padding:0px">
-                <td style="text-align:left;font-size:11px;padding: 2px"> {{$ligne_approvisionnement["produit"]["designation"]}}</td>
+                <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["produit"]["designation"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["quantity_received"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["produit"]["pa"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{0}}</td>
@@ -90,7 +91,7 @@
             </td>
             <td>
                 <div>
-                    <p class="badge" style="line-height:15px">Port</p>
+                    <p class="badge" style="line-height:15px">tva</p>
                     <p style="line-height:5px">0</p>
                 </div>
             </td>

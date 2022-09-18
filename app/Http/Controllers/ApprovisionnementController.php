@@ -118,6 +118,7 @@ class ApprovisionnementController extends Controller
                     {
                         $item->type_appro = "BOUTIQUE";
                     }
+                    $item->numero = "0000221SNDAKAR00"+$item->id;
                     $item->montant = $montant_total_appro;
                     $item->qte_total_appro = $qte_total_appro;
                     $item->save();

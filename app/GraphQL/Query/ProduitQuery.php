@@ -42,9 +42,10 @@ class ProduitQuery extends Query
         }
         if(isset($args['designation']) && isset($args['visible_appro']) && $args['visible_appro'] == 1)
         {
-            $query = $query->join('depots', 'produits.id', '=', 'depots.produit_id')
-            ->where('produits.designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%')
-            ->selectRaw('produits.*');
+            // $query = $query->join('depots', 'produits.id', '=', 'depots.produit_id')
+            // ->where('produits.designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%')
+            // ->selectRaw('produits.*');
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
         }
         $query->orderBy('id', 'desc');
         $query = $query->get();

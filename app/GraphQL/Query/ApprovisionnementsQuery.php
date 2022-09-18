@@ -72,6 +72,7 @@ class ApprovisionnementsQuery extends Query
             return
             [
                 'id'                                => $item->id,
+                'numero_facture'                    => $item->numero,
                 'user_id'                           => $item->user_id,
                 'fournisseur_id'                    => $item->fournisseur_id,
                 'montant'                           => $item->montant,
