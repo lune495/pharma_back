@@ -38,7 +38,7 @@
                 <div>
                     <p class="badge" style="text-align:left;line-height:15px">Numero</p>
                     {{-- <p style="text-align:left;line-height:5px">{{ $data[0]['code']}}</p> --}}
-                    <p style="text-align:left;line-height:5px">0000021000012002100</p>
+                    <p style="text-align:left;line-height:5px">{{$numero ? $numero : "SN0002022FA01"}}</p>
                 </div>
             </td>
             <td style="border:none;"></td>

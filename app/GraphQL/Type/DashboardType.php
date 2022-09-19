@@ -72,7 +72,6 @@ class DashboardType extends GraphQLType
         $debut = date($today.' 00:00:00');
         $fin = date($today.' 23:59:59');
         $Caventejour = Outil::getCavente($debut,  $fin );
-        $Caventejour = Outil::formatPrixToMonetaire($Caventejour, false, true);
         return $Caventejour;
     }
     protected function resolveCahierField($root, $args)
@@ -83,7 +82,6 @@ class DashboardType extends GraphQLType
         $fin = date($yesterday.' 23:59:59');
         //dd($debut,$fin);
         $Caventehier = Outil::getCavente($debut,  $fin );
-        $Caventehier = Outil::formatPrixToMonetaire($Caventehier, false, true);
         return $Caventehier;
     }
     protected function resolveCamoisField($root, $args)
@@ -92,7 +90,6 @@ class DashboardType extends GraphQLType
         $debut = Carbon::now()->startOfMonth()->toDateString();
         $fin = Carbon::now();
         $Camois = Outil::getCavente($debut,  $fin );
-        $Camois = Outil::formatPrixToMonetaire($Camois, false, true);
         return $Camois;
     }
 
@@ -102,7 +99,6 @@ class DashboardType extends GraphQLType
         $debut = Carbon::now()->startOfMonth()->subMonth()->toDateString();
         $fin = Carbon::now();
         $Camoisdernier = Outil::getCavente($debut,  $fin );
-        $Camoisdernier = Outil::formatPrixToMonetaire($Camoisdernier, false, true);
         return $Camoisdernier;
     }
    

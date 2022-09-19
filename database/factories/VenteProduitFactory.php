@@ -15,10 +15,10 @@ class VenteProduitFactory extends Factory
     {
         return [
             //
-            'produit_id'        => 120,
-            'vente_id'          => 50,
+            'produit_id'        => 4,
+            'vente_id'          => 216,
             'qte'               => 200,
-            'prix_vente'        => 50000,
+            'prix_vente'        => 2000,
             'created_at'        => now(),
             'updated_at'        => now(),
         ];
