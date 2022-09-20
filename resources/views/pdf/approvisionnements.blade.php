@@ -22,10 +22,10 @@
             <td style="border:none;"></td>
             <td style="border: none; margin-left: 15px">
                 <div>
-                    <p class="badge" style="text-align:left;line-height:15px">Client</p>
-                    <p style="text-align:left;line-height:5px">{{ $fournisseur["nom_complet"] ? $fournisseur["nom_complet"] : "FOURNISSEUR DE PASSAGE"}}</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Téléphone: {{ $fournisseur["telephone"] ? $fournisseur["telephone"] : " "}}</p>
-                    <p style="text-align:left; margin-left:15px;line-height:5px;text-transform: capitalize ">Adresse: {{ $fournisseur["adresse"] ? $fournisseur["adresse"] : ""}}</p>
+                    <p class="badge" style="text-align:left;line-height:15px">Fournisseur</p>
+                    <p style="text-align:left;line-height:5px">{{ $fournisseur ? $fournisseur["nom_complet"] : "FOURNISSEUR DE PASSAGE"}}</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">{{ $fournisseur ? "Téléphone: " . $fournisseur["telephone"] : " "}}</p>
+                    <p style="text-align:left; margin-left:15px;line-height:5px;text-transform: capitalize "> {{ $fournisseur ? "Adresse:" . $fournisseur["adresse"] : ""}}</p>
 
                 </div>
             </td>
