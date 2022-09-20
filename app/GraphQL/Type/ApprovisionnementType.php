@@ -55,6 +55,20 @@ class ApprovisionnementType extends GraphQLType
         }
         return $date_at;
     }
+
+    protected function resolveNumeroField($root, $args)
+    {
+        $num = null;
+         if (isset($root['numero']))
+        {
+            $num = $root['numero'];
+        }
+        else
+        {
+            $num = "SN0002022FA000";
+        }
+        return $num;
+    }
     protected function resolveCreatedAtFrField($root, $args)
     {
         if (!isset($root['created_at']))
