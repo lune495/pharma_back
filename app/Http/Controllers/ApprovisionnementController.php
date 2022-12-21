@@ -18,7 +18,7 @@ class ApprovisionnementController extends Controller
             return DB::transaction(function () use ($request)
             {
                 $errors = null;
-                $fournisseur = null;
+                // $fournisseur = null;
                 $item = new Approvisionnement();
                 $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
@@ -118,7 +118,7 @@ class ApprovisionnementController extends Controller
                     {
                         $item->type_appro = "BOUTIQUE";
                     }
-                    $item->numero = "SN0002022FA0"+$item->id;
+                    $item->numero = "SN0002022FA0{$item->id}";
                     $item->montant = $montant_total_appro;
                     $item->qte_total_appro = $qte_total_appro;
                     $item->save();

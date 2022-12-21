@@ -82,8 +82,7 @@ class ApprovisionnementsQuery extends Query
                 'ligne_approvisionnements'          => $item->ligne_approvisionnements,
                 'type_appro'                        => $item->type_appro,
 
-                'created_at'                        => $item->created_at->format(Outil::formatdate()),
-                'updated_at'                        => $item->updated_at->format(Outil::formatdate())
+                 
                 //'deleted_at'                        => empty($item->deleted_at) ? $item->deleted_at : $item->deleted_at->format(Outil::formatdate()),
             ];
         });

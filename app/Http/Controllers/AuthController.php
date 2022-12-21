@@ -14,8 +14,8 @@ class AuthController extends Controller
     public function register(Request $request ) {
         $fields = $request->validate([
             'name' => 'required|string',
-            'password' => 'required|string|confirmed', 
-            'role_id' => 'required|integer', 
+            'password' => 'required|string|confirmed',
+            'role_id' => 'required|integer',
         ]);
         $user =  User::create([
             'name' => $fields['name'],
@@ -39,15 +39,15 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
         // Check email
-        $user = User::with('role')->where('email',"admin@gmail.com")->first();
+        $user = User::with('role')->where('email',"admin2@gmail.com")->first();
         // dd($user);
         // Check email
-        if (!Hash::check($fields['password'],$user->password)) {
-            return response([
-                'message' => 'Mot de passe Incorrect'
-            ],401);
-            # code...
-        }
+        // if (!Hash::check($fields['password'],$user->password)) {
+        //     return response([
+        //         'message' => 'Mot de passe Incorrect'
+        //     ],401);
+        //     # code...
+        // }
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
