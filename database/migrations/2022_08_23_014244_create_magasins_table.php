@@ -20,7 +20,6 @@ class CreateMagasinsTable extends Migration
             $table->integer('limite'); 
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits');
-
             $table->timestamps();
         });
     }

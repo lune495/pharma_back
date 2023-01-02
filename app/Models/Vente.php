@@ -22,4 +22,8 @@ class Vente extends Model
     {
         return $this->hasMany(VenteProduit::class, 'vente_id', 'id');
     }
+     public function taxe()
+    {
+        return $this->belongsTo(Taxe::class);
+    }
 }

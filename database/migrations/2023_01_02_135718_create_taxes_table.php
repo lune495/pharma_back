@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPrixToVenteProduits extends Migration
+class CreateTaxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddPrixToVenteProduits extends Migration
      */
     public function up()
     {
-        Schema::table('vente_produits', function (Blueprint $table) {
-            //
-            $table->integer('prix_vente');
+        Schema::create('taxes', function (Blueprint $table) {
+            $table->id();
+            $table->float('value');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class AddPrixToVenteProduits extends Migration
      */
     public function down()
     {
-        Schema::table('vente_produit', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('taxes');
     }
 }

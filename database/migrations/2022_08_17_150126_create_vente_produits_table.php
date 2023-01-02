@@ -20,6 +20,7 @@ class CreateVenteProduitsTable extends Migration
             $table->unsignedBigInteger('vente_id');
             $table->foreign('vente_id')->references('id')->on('ventes');
             $table->integer('qte')->default('0');
+            $table->integer('prix_vente');
             $table->timestamps();
         });
     }

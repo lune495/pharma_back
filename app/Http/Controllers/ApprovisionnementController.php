@@ -20,7 +20,7 @@ class ApprovisionnementController extends Controller
                 $errors = null;
                 // $fournisseur = null;
                 $item = new Approvisionnement();
-                $user_id = auth('sanctum')->user()->id;
+                // $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))
@@ -33,7 +33,7 @@ class ApprovisionnementController extends Controller
                 // }
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
-                $item->user_id = $user_id; 
+                // $item->user_id = $user_id; 
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 

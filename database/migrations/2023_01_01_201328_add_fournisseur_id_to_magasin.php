@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAttributToVentesTable extends Migration
+class AddFournisseurIdToMagasin extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddAttributToVentesTable extends Migration
      */
     public function up()
     {
-        Schema::table('ventes', function (Blueprint $table) {
-            //
-            $table->integer('montantencaisse')->default('0');
-            $table->integer('monnaie')->default('0');
+        Schema::table('magasins', function (Blueprint $table) {
+            $table->foreignId('fournisseur_id')->nullable()->constrained()->references('id')->on('fournisseurs');
         });
     }
 
@@ -27,8 +25,8 @@ class AddAttributToVentesTable extends Migration
      */
     public function down()
     {
-        Schema::table('ventes', function (Blueprint $table) {
-            //
+        Schema::table('magasins', function (Blueprint $table) {
+
         });
     }
 }

@@ -18,6 +18,11 @@ class CreateProduitsTable extends Migration
             $table->string('code')->nullable();
             $table->string('designation')->nullable();
             $table->string('description')->nullable();
+            $table->string('image')->nullable();
+            $table->integer('pa');
+            $table->integer('pv');
+            $table->integer('limite')->nullable();
+            $table->integer('qte')->default('0');
             $table->unsignedBigInteger('famille_id');
             $table->foreign('famille_id')->references('id')->on('familles');
             $table->timestamps();

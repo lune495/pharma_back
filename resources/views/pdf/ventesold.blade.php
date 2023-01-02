@@ -139,6 +139,6 @@
         </div>
     </body>
   <footer>
-        <p style="font-size:10px">Vous avez été servi par:  {{$user["name"]}} </p>
+        <p style="font-size:10px">Vous avez été servi par:  {{$user ? $user["name"] : " "}} </p>
 </footer>
 </html>

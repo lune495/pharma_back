@@ -18,6 +18,8 @@ class CreateInventairestocksTable extends Migration
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits');
             $table->integer('quantite')->default('0');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

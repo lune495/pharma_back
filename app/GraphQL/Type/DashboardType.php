@@ -95,9 +95,8 @@ class DashboardType extends GraphQLType
 
     protected function resolveCamoisdernierField($root, $args)
     {
-        //$today = date('Y-m-d');
         $debut = Carbon::now()->startOfMonth()->subMonth()->toDateString();
-        $fin = Carbon::now();
+        $fin = date('Y-m-d');
         $Camoisdernier = Outil::getCavente($debut,  $fin );
         return $Camoisdernier;
     }
