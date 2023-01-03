@@ -100,13 +100,15 @@ class VenteController extends Controller
                         }
                         if (!isset($errors)) 
                         { 
-                            $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::where('nom','tva')->first();
-                            $remise = !(array_key_exists('remise', $request->all())) ? false : Remise::where('nom','remise')->first();
+                            $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::first();
+                            $remise = !(array_key_exists('remise', $request->all())) ? false : Remise::first();
                             if($tva!= false && $tva->value != null){
                                $montant_total_vente = $montant_total_vente + ($montant_total_vente * $tva->value /100);
+                               $item->taxe_id = $tva->id;
                             }
                              if($remise!= false && $remise->value != null){
                                $montant_total_vente = $montant_total_vente - ($montant_total_vente * $remise->value /100);
+                               $item->remise_id = $remise->id;
                             }
                             $item->montant = $montant_total_vente;
                             $item->qte = $qte_total_vente;
