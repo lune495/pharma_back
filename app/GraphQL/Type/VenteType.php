@@ -88,7 +88,7 @@ class VenteType extends GraphQLType
         }
         return Carbon::parse($date_at)->format('d/m/Y H:i:s');
     }
-    
+
     // You can also resolve a field by declaring a method in the class
     // with the following format resolve[FIELD_NAME]Field()
     // protected function resolveEmailField($root, array $args)
