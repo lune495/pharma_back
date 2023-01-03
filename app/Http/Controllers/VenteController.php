@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
-use App\Models\{Produit,VenteProduit,Vente,User,Outil};
+use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise};
 use Illuminate\Support\Facades\DB;
 use \PDF;
 
@@ -47,8 +47,8 @@ class VenteController extends Controller
                 }
                 
                     DB::beginTransaction();
-                    $item->montantencaisse = $request->montantencaisse;
-                    $item->monnaie = $request->monnaie;
+                    // $item->montantencaisse = $request->montantencaisse;
+                    // $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
                     // $item->user_id = $user_id;
                     $str_json = json_encode($request->details);
@@ -100,8 +100,17 @@ class VenteController extends Controller
                         }
                         if (!isset($errors)) 
                         { 
+                            $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::where('nom','tva')->first();
+                            $remise = !(array_key_exists('remise', $request->all())) ? false : Remise::where('nom','remise')->first();
+                            if($tva!= false && $tva->value != null){
+                               $montant_total_vente = $montant_total_vente + ($montant_total_vente * $tva->value /100);
+                            }
+                             if($remise!= false && $remise->value != null){
+                               $montant_total_vente = $montant_total_vente - ($montant_total_vente * $remise->value /100);
+                            }
                             $item->montant = $montant_total_vente;
                             $item->qte = $qte_total_vente;
+                            $item->numero = "FA00{$item->id}";
                             $item->save();
                             $id = $item->id;
                             DB::commit();
@@ -139,8 +148,9 @@ class VenteController extends Controller
         {
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
          $pdf = PDF::loadView("pdf.ventesold", $data);
-         $measure = array(0,0,225.772,650.197);
-            return $pdf->setPaper($measure, 'orientation')->stream();
+        //  $measure = array(0,0,225.772,650.197);
+            // return $pdf->setPaper($measure, 'orientation')->stream();
+             return $pdf->stream();
         }else{
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, false);
             return view('notfound');

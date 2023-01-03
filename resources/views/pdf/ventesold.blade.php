@@ -1,144 +1,112 @@
- <!DOCTYPE html>
-<html>
-    <head>
-        <style>
-            /**
-                Set the margins of the page to 0, so the footer and the header
-                can be of the full height and width !
-             **/
-            @page {
-                margin: 0cm;
-            }
-            @media print {
-                html, body {
-                    height: 100%;
-                }
-            }
-            body {
-                display: block;
-                position: center;
-                margin-top: 0cm;
-                margin-left: 0.6cm;
-                margin-right: 0.7cm;
-                margin-bottom: 1cm;
-                font-size: 0.6em;
-                font: 16pt/1.5 'Raleway','Cambria', sans-serif;
-                font-weight: 300;
-                background:  #fff;
-                color: black;
-                -webkit-print-color-adjust:  exact;
-                /*border:1px solid black;*/
-            }
-            section{
-                margin-top: -2px;
-                margin-bottom: -2px;
-            }
-            div{
-            .droite{
-                text-align:right;
-                font-size: 0.75em;
-                margin-top:-30px;
-            }
-            .gauche{
-                text-align:left;
-                font-size: 0.8em;
-            }
-            hr{
-                border-top: 1px dotted red;
-            }
-            nav{
-                /*border:1px solid black;*/
-                margin-top:30px;
-                float: center;
-            }
-            table {
-                font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-                margin-bottom: 5px;
-            }
-            td, th {
-                text-align: center;
-                font-size: 0.75em;
-            }
-            header{
-                /*margin-left: auto;
-                margin-right: auto;*/
-            }
-        </style>
-    <head>
-    <body>
-        <div>
-            <section class="droite" style="text-align: center">
-                <header style="margin-top : 50px;font-size: 14px;">
-                    <!-- Ticket De Caisse {{$id}} -->
-                </header>
-                <br>
-
-                <div style="font-size: 20px;font-weight:bold">
-                    <img src="{{asset('app-assets/assets/images/logo_saloum_digital.jpg')}}" style="width: 120px;"> <br>
-                    <!--IMAARA-->
+@extends('pdf.layouts.layout-export2')
+@section('title', "PDF Facture commande")
+@section('content')
+    <table style="border: none; margin-top:50px;font-size: 11px">
+        <tr  style="border: none">
+            <td  style="border: none">
+                <div style="" >
+                    <p  style="text-align:left;line-height:5px"> Rue SACRE COEUR 3 VDN EXTENSION </p>
+                    <p style="text-align:left;line-height:5px"> +221 77 517 98 29</p>
+                    <p style="text-align:left;line-height:5px"> +221 77 615 32 32</p>
                 </div>
+            </td>
 
-                <div style="margin:10px 0">
-                    Rue Serigne Abdou khadr, Keur Massar
+            <td style="border:none;">
+                <div style="border-left: 3px solid black">
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">www.ccps.sn</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Instagram:  @ccps</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">email:  ccpsvdn@gmail.com</p>
                 </div>
-                <div style="margin:10px 0">
-                    33 824 63 54
-                </div>
-                ************************
-                <div style="margin:7px 0">
-                    @if(isset($client["nom_complet"]))
-                    {{$client["nom_complet"]}}
-                    @else
-                    Client de passage
-                    @endif
-                </div>
-                <div style="margin:10px 0">
-                </div>
-                ************************
+            </td>
+            <td style="border:none;"></td>
+            <td style="border:none;"></td>
+            <td style="border: none; margin-left: 15px">
+                <div>
+                    <p class="badge" style="text-align:left;line-height:15px">Client</p>
+                    <p style="text-align:left;margin-left:15px;line-height:5px">{{ $client ? $client["nom_complet"] : "CLIENT DE PASSAGE"}}</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">{{ $client ? "Téléphone: " . $client["telephone"] : " "}}</p>
+                    <p style="text-align:left; margin-left:15px;line-height:5px;text-transform: capitalize "> {{ $client ? "Adresse:" . $client["adresse"] : ""}}</p>
 
-                <!-- <dt  style="font-size: 18px;font-weight:bold">Vente N°{{$id}}</dt> -->
+                </div>
+            </td>
+        </tr>
+    </table>
 
-                <dt  style="margin:10px 0">Date : {{date('d-m-Y H:i:s')}}</dt>
-            </section>
+    <table style="border: none;font-size: 11px; margin-top:30px">
+        <tr  style="border: none">
+            <!-- <td style="border: none; margin-left: 15px">
+                <div>
+                    <p class="badge" style="text-align:left;line-height:15px">Numero</p>
+                    {{-- <p style="text-align:left;line-height:5px">{{ $data[0]['code']}}</p> --}}
+                    <p style="text-align:left;line-height:5px">{{$numero ? $numero : "SN0002022FA01"}}</p>
+                </div>
+            </td> -->
+            <td style="border:none;"></td>
+            <td style="border: none; margin-left: 15px">
+                <div>
+                    <p class="badge" style="text-align:left;line-height:15px">Date</p>
+                    <p style="text-align:left;line-height:5px">{{ $created_at_fr}}</p>
+                </div>
+            </td>
+            <td style="border:none;"></td>
+        </tr>
+    </table>
 
-            <section  style="margin-top : 30px">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td style="width: 10%">Qte </td>
-                        <td style="width: 60%">Produit </td>
-                        <td style="width: 20%">Montant </td>
-                    </tr>
-                        @foreach($vente_produits as $vente)
-                            <tr>
-                                <td style="padding : 15px 0">  {{$vente["qte"]}}</span> </td>
-                                <td style="padding : 15px 0"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
-                                <td style="padding : 15px 0">  {{\App\Models\Outil::formatPrixToMonetaire($vente["qte"]*$vente["prix_vente"], false, false)}} </td>
-                                <td style="padding : 15px 0">
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </section>
-            <div style="overflow: hidden;margin-top : 20px">**************************************</div>
-            <section  style="overflow: hidden;margin-bottom : 20px">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td style="width: 50%;text-align:left">Total </td>
-                        <td style="padding : 10px 0;text-align:left">  {{\App\Models\Outil::formatPrixToMonetaire($montant, false, true)}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
-            <div style="overflow: hidden;">**************************************</div>
-            {{-- <div style="text-align:center;margin-bottom : 7px; margin-top : 7px;font-size: 12px">Reglé en {{$type_paiement["designation"]}}</div> --}}
-            <div style=" overflow: hidden;margin-bottom : 7px; margin-top : 7px;">**************************************</div>
-        </div>
-    </body>
-  <footer>
-        <p style="font-size:10px">Vous avez été servi par:  {{$user ? $user["name"] : " "}} </p>
-</footer>
-</html>
+    <h2 style="margin:0">Facture N0  {{$numero ? $numero : "FA01"}}</h2>
+    <br>
+    <table class="table table-bordered w-100">
+        <tr style="font-size: 1.2em;">
+            <th style="border:none"> <p class="badge">Désignation</p> </th>
+            <th style="border:none"><p class="badge">Qté</p></th>
+            <th style="border:none"><p class="badge">P U</p></th>
+            <th style="border:none"><p class="badge">Montant</p></th>
+        </tr>
+    <tbody style="border:none">
+        @foreach($vente_produits as $vente)
+            <tr style="padding:0px">
+                <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
+                <td style="font-size:11px;padding: 2px"> {{$vente["qte"]}}</td>
+                <td style="font-size:11px;padding: 2px"> {{$vente["prix_vente"]}}</td>
+                <td style="font-size:11px;padding: 2px">{{\App\Models\Outil::formatPrixToMonetaire($vente["qte"]*$vente["prix_vente"], false, false)}}</td>
+            </tr>
+        @endforeach
+
+        <!--total-->
+        <tr>
+            <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
+            <td>
+                <div>
+                    <p class="badge" style="line-height:15px;font-size:9px!important">Total TTC</p>
+                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant, false, true)}}</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p class="badge" style="line-height:15px">Remise</p>
+                    <p style="line-height:5px">{{$remise["value"]}}%</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p class="badge" style="line-height:15px">tva</p>
+                    <p style="line-height:5px">0</p>
+                </div>
+            </td>
+            <td style="font-weight: bold;font-size: 14px"> 
+                <div>
+                    <p class="badge">Net a payer</p>
+                    <p style="line-height:5px">{{ $montant}}</p>
+                </div> 
+            </td>
+            <td style="font-weight: bold;font-size: 14px">  </td>
+        </tr>
+        <tr>
+            <td colspan="2"  style="padding-top : 10px;font-weight: bold;font-size: 11px">Conditions Reglement</td>
+            <td style="padding-top : 10px;font-weight: bold;font-size: 11px"> {{$created_at_fr}} </td>
+            <td style="padding-top : 10px;font-weight: bold;font-size: 11px"> ESP</td>
+            <td style="padding-top : 10px;font-weight: bold;font-size: 11px"> {{\App\Models\Outil::formatPrixToMonetaire($montant, false, true)}} </td>
+        </tr>
+        
+    </tbody>
+</table>
+@endsection

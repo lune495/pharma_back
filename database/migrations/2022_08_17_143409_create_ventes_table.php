@@ -17,8 +17,8 @@ class CreateVentesTable extends Migration
             $table->id();
             $table->integer('montant')->nullable();
             $table->integer('qte')->default('0');
-            $table->integer('montantencaisse')->default('0');
-            $table->integer('monnaie')->default('0');
+            $table->integer('montantencaisse')->nullable()->default('0');
+            $table->integer('monnaie')->nullable()->default('0');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

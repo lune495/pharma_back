@@ -26,4 +26,8 @@ class Vente extends Model
     {
         return $this->belongsTo(Taxe::class);
     }
+     public function remise()
+    {
+        return $this->belongsTo(Remise::class);
+    }
 }

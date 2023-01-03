@@ -2,18 +2,18 @@
 
 namespace App\GraphQL\Type;
 
-use  App\Models\{Taxe};
+use  App\Models\{Remise};
 use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Illuminate\Support\Facades\DB;
 
-class TaxeType extends GraphQLType
+class RemiseType extends GraphQLType
 {
     protected $attributes =
     [
-        'name' => 'Taxe',
+        'name' => 'Remise',
         'description' => ''
     ];
 
