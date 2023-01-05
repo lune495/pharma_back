@@ -58,6 +58,8 @@ class VenteProduitsQuery extends Query
                 'produit_id'                                                      => $item->produit_id,
                 'qte'                                                             => $item->qte,
                 'total'                                                           => $item->total,
+                'remise'                                                          => $item->remise,
+                'montant_remise'                                                  => $item->montant_remise,
                 'vente'                                                           => $item->vente,
                 'produit'                                                         => $item->produit,
                 'created_at'                                                      => $item->created_at->format(Outil::formatdate()),

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRemisesTable extends Migration
+class AddRemiseToVenteProduit extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateRemisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('remises', function (Blueprint $table) {
-            $table->id();
-            $table->float('value');
-            $table->timestamps();
+        Schema::table('vente_produits', function (Blueprint $table) {
+            //
+            $table->float('remise')->nullable()->default('0');
         });
     }
 
@@ -27,6 +26,9 @@ class CreateRemisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('remises');
+        Schema::table('vente_produits', function (Blueprint $table) {
+            //
+            $table->dropColumn('remise');
+        });
     }
 }

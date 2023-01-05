@@ -28,6 +28,8 @@ class VenteProduitType extends GraphQLType
             'qte'                                                       => ['type' => Type::int(), 'description' => ''],
             'vente'                                                     => ['type' => GraphQL::type('Vente'), 'description' => ''],
             'total'                                                     => ['type' => Type::int(), 'description' => ''],
+            'remise'                                                    => ['type' => Type::int(), 'description' => ''],
+            'montant_remise'                                            => ['type' => Type::int(), 'description' => ''],
             'produit'                                                   => ['type' => GraphQL::type('Produit'), 'description' => ''],
 
             'created_at'                                                => ['type' => Type::string(), 'description' => ''],
@@ -48,23 +50,30 @@ class VenteProduitType extends GraphQLType
             $id = $root['id'];
         }
 
-        return VenteProduit::getTotal($id);
+        return $root['prix_vente'] * $root['qte'];
     }
 
-    protected function resolvePrixVenteField($root, $args)
+    protected function resolveMontantRemiseField($root, $args)
     {
-        if (!isset($root['prix_vente']))
-        {
-            $produit_id = $root->produit_id;
-        }
-        else
-        {
-            $produit_id = $root['produit_id'];
-        }
-        $produit = Produit::find($produit_id);
-
-        return $produit->pv;
+        $montant = $root['prix_vente'] * $root['qte'];
+        $montant_remise = ($montant * $root['remise'])/100;
+        return $montant_remise;
     }
+
+    // protected function resolvePrixVenteField($root, $args)
+    // {
+    //     if (!isset($root['prix_vente']))
+    //     {
+    //         $produit_id = $root->produit_id;
+    //     }
+    //     else
+    //     {
+    //         $produit_id = $root['produit_id'];
+    //     }
+    //     $produit = Produit::find($produit_id);
+
+    //     return $produit->pv;
+    // }
     
 }
 

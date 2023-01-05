@@ -86,6 +86,7 @@ class VenteController extends Controller
                                         $venteprdt->vente_id  = $item->id;
                                         $venteprdt->qte = $detail['quantite'];
                                         $venteprdt->prix_vente = $detail['prix_vente'];
+                                        $venteprdt->remise = $detail['remise'] > 0 ? $detail['remise'] : 0;
                                         $saved = $venteprdt->save();
                                         if($saved)
                                         {
@@ -101,14 +102,8 @@ class VenteController extends Controller
                         if (!isset($errors)) 
                         { 
                             $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::first();
-                            $remise = !(array_key_exists('remise', $request->all())) ? false : Remise::first();
                             if($tva!= false && $tva->value != null){
-                               $montant_total_vente = $montant_total_vente + ($montant_total_vente * $tva->value /100);
                                $item->taxe_id = $tva->id;
-                            }
-                             if($remise!= false && $remise->value != null){
-                               $montant_total_vente = $montant_total_vente - ($montant_total_vente * $remise->value /100);
-                               $item->remise_id = $remise->id;
                             }
                             $item->montant = $montant_total_vente;
                             $item->qte = $qte_total_vente;
@@ -149,7 +144,7 @@ class VenteController extends Controller
         if($vente!=null)
         {
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
-         $pdf = PDF::loadView("pdf.ventesold", $data);
+         $pdf = PDF::loadView("pdf.ventesold", $data)->setPaper('a4');
         //  $measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();
              return $pdf->stream();

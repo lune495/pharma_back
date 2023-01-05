@@ -1,7 +1,7 @@
 <?php
 
 namespace App\GraphQL\Query; 
-use App\Models\{Vente,VenteProduit};
+use App\Models\{Vente,VenteProduit,Outil};
 use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
@@ -30,6 +30,7 @@ class VentePaginatedQuery extends Query
             'id'                       => ['type' => Type::int()],
             'client_id'                => ['type' => Type::int()],
             'produit_id'               => ['type' => Type::int()],
+            'reference'                => ['type' => Type::string()],
             'created_at_start'         => ['type' => Type::string()],
             'created_at_end'           => ['type' => Type::string()],
 
@@ -52,6 +53,10 @@ class VentePaginatedQuery extends Query
         if (isset($args['client_id']))
         {
             $query->where('client_id', $args['client_id']);
+        }
+        if (isset($args['reference']))
+        {
+            $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
         }
         if(isset($args['produit_id']))
         {

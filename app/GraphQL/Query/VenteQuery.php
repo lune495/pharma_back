@@ -22,6 +22,7 @@ class VenteQuery extends Query
         return
         [
             'id'                  => ['type' => Type::int()],
+            'reference'           => ['type' => Type::string()],
             'user_id'             => ['type' => Type::int()],
             'produit_id'          => ['type' => Type::int()],
             'created_at_start'    => ['type' => Type::string()],
@@ -36,6 +37,10 @@ class VenteQuery extends Query
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);
+        }
+        if (isset($args['reference']))
+        {
+            $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
         }
         if(isset($args['produit_id']))
         {
@@ -64,13 +69,16 @@ class VenteQuery extends Query
                 'numero'                  => $item->numero,
                 'qte'                     => $item->qte,
                 'montant'                 => $item->montant,
+                'montant_ht'              => $item->montant_ht,
+                'montant_ttc'             => $item->montant_ttc,    
+                'montant_avec_remise'     => $item->montant_avec_remise,    
+                'remise_total'            => $item->remise_total,    
                 'montantencaisse'         => $item->montantencaisse,
                 'monnaie'                 => $item->monnaie,
                 'user_id'                 => $item->user_id,
                 'user'                    => $item->user,
                 'client'                  => $item->client,
                 'taxe'                    => $item->taxe,
-                'remise'                  => $item->remise,
                 'vente_produits'          => $item->vente_produits,
                 'created_at'              => $item->created_at,
                 'created_at_fr'           => $item->created_at_fr,

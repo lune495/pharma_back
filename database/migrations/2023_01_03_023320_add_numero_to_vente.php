@@ -28,7 +28,7 @@ class AddNumeroToVente extends Migration
     {
         Schema::table('ventes', function (Blueprint $table) {
             //
-            $table->dropColumn[('numero')];
+            $table->dropColumn('numero');
         });
     }
 }

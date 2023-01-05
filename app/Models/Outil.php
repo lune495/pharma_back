@@ -16,14 +16,14 @@ use MPDF;
 
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Maileur;
-
+use App\Mail\Maileur;   
+use \NumberFormatter;
 class Outil extends Model
 {
 
     public static $queries = array(
         "produits"                   => " id,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"                     => " id,numero,montant,qte,created_at,created_at_fr,remise{id,value},taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,prix_vente,qte,produit{id,designation,qte,pv}}",
+        "ventes"                     => " id,numero,montant,montant_ht,montant_ttc,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,remise,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "users"                      => " id,name,email,role{id,nom}",
         "taxes"                      => " id,value",
         "remises"                    => " id,value",
@@ -166,6 +166,11 @@ class Outil extends Model
             $rslt = $rslt . '' . $formatDevise;
         }
         return $rslt;
+    }
+    public static function convertNumber($num)
+    {
+        $f = new NumberFormatter("fr", NumberFormatter::SPELLOUT);
+        return "{$f->format($num)} FRANCS CFA";
     }
     public static function donneFormatDevise()
     {
