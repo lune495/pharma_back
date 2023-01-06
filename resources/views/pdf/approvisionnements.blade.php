@@ -79,7 +79,7 @@
             <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
             <td>
                 <div>
-                    <p class="badge" style="line-height:15px;font-size:9px!important">Total TTC</p>
+                    <p class="badge" style="line-height:15px;font-size:9px!important">Total HT</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant, false, true)}}</p>
                 </div>
             </td>

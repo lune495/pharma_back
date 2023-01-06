@@ -20,10 +20,10 @@ class VenteType extends GraphQLType
                 'id'                        => ['type' => Type::id(), 'description' => ''],
                 'numero'                    => ['type' => Type::string()],
                 'montant'                   => ['type' => Type::string()],
-                'montant_avec_remise'       => ['type' => Type::int()],
-                'remise_total'              => ['type' => Type::int()],
-                'montant_ht'                => ['type' => Type::int()],
-                'montant_ttc'               => ['type' => Type::int()],
+                'montant_avec_remise'       => ['type' => Type::float()],
+                'remise_total'              => ['type' => Type::float()],
+                'montant_ht'                => ['type' => Type::float()],
+                'montant_ttc'               => ['type' => Type::float()],
                 'qte'                       => ['type' => Type::string()],
                 'montantencaisse'           => ['type' => Type::string()],
                 'monnaie'                   => ['type' => Type::string()],
@@ -72,10 +72,12 @@ class VenteType extends GraphQLType
     {
          $venteprdts = VenteProduit::where('vente_id',$root['id'])->get();
          $remise_total = 0;
+         $cpt = 1;
          foreach($venteprdts as $venteprdt){
+            $cpt++;
             $remise_total = $remise_total + $venteprdt->remise;
         }
-        return $remise_total;
+        return $remise_total/$cpt;
     }
     protected function resolveMontantTtcField($root, $args)
     {
@@ -86,7 +88,8 @@ class VenteType extends GraphQLType
             // dd($montant_remise);
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
-        return isset($root['taxe']) ? $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100) : null;
+        $montant_ttc = $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100);
+        return isset($root['taxe']) ? $montant_ttc : null;
     }
     protected function resolveCreatedAtFrField($root, $args)
     {
