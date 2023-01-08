@@ -18,6 +18,7 @@ class ProduitType extends GraphQLType
        return
             [ 
                 'id'                        => ['type' => Type::id(), 'description' => ''],
+                'image'                     => ['type' => Type::string()],
                 'code'                      => ['type' => Type::string()],
                 'designation'               => ['type' => Type::string()],
                 'description'               => ['type' => Type::string()],
