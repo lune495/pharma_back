@@ -59,6 +59,8 @@ class VenteProduitsQuery extends Query
                 'qte'                                                             => $item->qte,
                 'total'                                                           => $item->total,
                 'remise'                                                          => $item->remise,
+                'pu_net'                                                          => $item->pu_net,
+                'montant_net'                                                     => $item->montant_net,
                 'montant_remise'                                                  => $item->montant_remise,
                 'vente'                                                           => $item->vente,
                 'produit'                                                         => $item->produit,

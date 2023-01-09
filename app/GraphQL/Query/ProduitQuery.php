@@ -54,6 +54,7 @@ class ProduitQuery extends Query
             return
             [
                 'id'                      => $item->id,
+                'image'                   => $item->image,
                 'code'                    => $item->code,
                 'designation'             => $item->designation,
                 'description'             => $item->description,
