@@ -55,7 +55,7 @@
         <tr style="font-size: 1.2em;">
             <th style="border:none"> <p class="badge">REFERENCE</p> </th>
             <th style="border:none"> <p class="badge">DESIGNATION</p> </th>
-            <th style="border:none"><p class="badge">QTE</p></th>
+            <th style="border:none"><p class="badge">QUANTITE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
             <th style="border:none"><p class="badge">REMISE</p></th>
             <th style="border:none"><p class="badge">MONTANT</p></th>
@@ -63,7 +63,7 @@
     <tbody style="border:none">
         @foreach($vente_produits as $vente)
             <tr style="padding:0px">
-                <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"])}}</td>
+                <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
                 <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$vente["qte"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$vente["prix_vente"]}}</td>
@@ -75,7 +75,13 @@
         <!--total-->
         <tr>
             {{-- <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td> --}}
-             <td>
+            <td>
+                <div>
+                    <p class="badge" style="line-height:15px">Total HT</p>
+                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_avec_remise, false, false)}}</p>
+                </div>
+            </td>
+            <td>
                 @if (isset($montant_ttc))
                 
                     <p class="badge" style="line-height:15px">Total TTC</p>
@@ -84,18 +90,12 @@
                     <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
                 @endif
             </td>
-            <td>
-                <div>
-                    <p class="badge" style="line-height:15px">Total HT</p>
-                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_avec_remise, false, false)}}</p>
-                </div>
-            </td>
-            <td>
+            {{-- <td>
                 <div>
                     <p class="badge" style="line-height:15px">Remise</p>
                     <p style="line-height:5px">{{$remise_total}}%</p>
                 </div>
-            </td>
+            </td> --}}
             <td>
                 <div>
                     <p class="badge" style="line-height:15px">Tva</p>
