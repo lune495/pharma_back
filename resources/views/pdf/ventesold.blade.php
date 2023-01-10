@@ -101,7 +101,7 @@
             <td style="font-size: 14px" colspan="2"> 
                 <div>
                     <p class="badge" style="font-weight: bold">Net a payer</p>
-                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, true)}}</p>
+                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
                 </div> 
             </td>
             <td style="font-weight: bold;font-size: 14px"></td>

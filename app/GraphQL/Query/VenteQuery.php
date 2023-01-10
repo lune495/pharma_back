@@ -75,6 +75,7 @@ class VenteQuery extends Query
                 'remise_total'            => $item->remise_total,    
                 'montantencaisse'         => $item->montantencaisse,
                 'monnaie'                 => $item->monnaie,
+                'statut'                  => $item->statut,
                 'user_id'                 => $item->user_id,
                 'user'                    => $item->user,
                 'client'                  => $item->client,

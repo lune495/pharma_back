@@ -24,6 +24,7 @@ class ProduitQuery extends Query
             'id'                  => ['type' => Type::int()],
             'nom'                 => ['type' => Type::string()],
             'code'                => ['type' => Type::string()],
+            'search'              => ['type' => Type::string()],
             'designation'         => ['type' => Type::string(), 'description' => ''],
             'visible_appro'       => ['type' => Type::int(), 'description' => ''],
         ];
@@ -36,17 +37,18 @@ class ProduitQuery extends Query
         {
             $query = $query->where('id', $args['id']);
         }
-        if (isset($args['designation']))
+        if (isset($args['search']))
         {
-            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['search'].'%')
+                           ->orWhere('code',Outil::getOperateurLikeDB(),'%'.$args['search'].'%');
         }
-        if(isset($args['designation']) && isset($args['visible_appro']) && $args['visible_appro'] == 1)
-        {
-            // $query = $query->join('depots', 'produits.id', '=', 'depots.produit_id')
-            // ->where('produits.designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%')
-            // ->selectRaw('produits.*');
-            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
-        }
+        // if(isset($args['designation']) && isset($args['visible_appro']) && $args['visible_appro'] == 1)
+        // {
+        //     // $query = $query->join('depots', 'produits.id', '=', 'depots.produit_id')
+        //     // ->where('produits.designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%')
+        //     // ->selectRaw('produits.*');
+        //     $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+        // }
         $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Produit $item)

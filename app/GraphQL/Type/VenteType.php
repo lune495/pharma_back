@@ -27,6 +27,7 @@ class VenteType extends GraphQLType
                 'qte'                       => ['type' => Type::string()],
                 'montantencaisse'           => ['type' => Type::string()],
                 'monnaie'                   => ['type' => Type::string()],
+                'statut'                    => ['type' => Type::boolean()],
 
                 'user_id'                   => ['type' => Type::int()],
                 'user'                      => ['type' => GraphQL::type('User')],
@@ -88,7 +89,7 @@ class VenteType extends GraphQLType
             // dd($montant_remise);
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
-        $montant_ttc = $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100);
+        $montant_ttc = $root['taxe'] ? $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100) : 0;
         return isset($root['taxe']) ? $montant_ttc : null;
     }
     protected function resolveCreatedAtFrField($root, $args)

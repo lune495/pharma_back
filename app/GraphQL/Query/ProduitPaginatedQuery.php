@@ -27,6 +27,8 @@ class ProduitPaginatedQuery extends Query
             'id'                            => ['type' => Type::int()],
             'nom'                           => ['type' => Type::string()],
             'code'                          => ['type' => Type::string()],
+            'search'                        => ['type' => Type::string()],
+
         
             'page'                          => ['name' => 'page', 'description' => 'The page', 'type' => Type::int() ],
             'count'                         => ['name' => 'count',  'description' => 'The count', 'type' => Type::int() ]
@@ -41,13 +43,10 @@ class ProduitPaginatedQuery extends Query
         {
             $query->where('id', $args['id']);
         }
-        if (isset($args['code']))
+        if (isset($args['search']))
         {
-            $query->where('code',$args['code']);
-        }
-        if (isset($args['designation']))
-        {
-            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['search'].'%')
+                           ->orWhere('code',Outil::getOperateurLikeDB(),'%'.$args['search'].'%');
         }
         $count = Arr::get($args, 'count', 10);
         $page  = Arr::get($args, 'page', 1);
