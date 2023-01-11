@@ -51,4 +51,9 @@ class ProduitType extends GraphQLType
         $capital = Outil::formatPrixToMonetaire($capital, false, true);
         return $capital;
     }
+    protected function resolvePaField($root, array $args)
+    {
+        
+        return $root['pa']==null ? 0 : $root['pa'];
+    }
 }
