@@ -132,10 +132,41 @@ class VenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function abortsale($id)
     {
         //
-        return Vente::find($id);
+        try 
+        {
+            $vente = Vente::find($id);
+            if($vente){
+                if($vente->statut == 0)
+                {
+                    DB::beginTransaction();
+                    $vnteprdts = VenteProduit::where('vente_id',$vente->id)->get();
+                    foreach ($vnteprdts as $vnteprdt) 
+                    {
+                        $produit = Produit::find($vnteprdt->produit_id);
+                        if($produit)
+                        {
+                            $produit->qte = $produit->qte + $vnteprdt->qte;
+                            $produit->save();
+                        }
+                    }
+                    $vente->statut = 1;
+                    if($vente->save())
+                    {
+                        DB::commit();
+                        $id = $vente->id;
+                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                    }
+                }else{
+                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                } 
+            }
+        } catch (exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
     }
 
     public function generatePDF($id)

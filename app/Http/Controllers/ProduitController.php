@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Produit,Outil};
+use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 class ProduitController extends Controller
@@ -86,7 +86,20 @@ class ProduitController extends Controller
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;
-                $item->qte = $request->qte;
+                if(!empty($request->id))
+                {
+                    $itemDetailVente = VenteProduit::where('produit_id',$request->id)->first();
+                    $itemDetailAppro = LigneApprovisionnement::where('produit_id',$request->id)->first();
+                       
+                    if ($itemDetailVente==null && $itemDetailAppro==null){
+                        $item->qte = $request->qte;
+                    }else{
+                         $errors = "Impossible de modifier le stock de ce produit";
+                        }
+                }else{
+                     
+                        $item->qte = $request->qte;
+                }
                     if (!isset($errors)) 
                     {
                         $item->save();
@@ -95,7 +108,7 @@ class ProduitController extends Controller
                     }
                     if (isset($errors))
                     {
-                        throw new \Exception('{"data": null, "errors": "'. $errors .'" }');
+                        throw new \Exception($errors);
                     }
         } catch (exception $e) {
                 return $e->getMessage();
