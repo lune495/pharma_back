@@ -50,16 +50,24 @@ class ProduitController extends Controller
                 {
                     $errors = "Renseignez la categorie du produit";
                 }
+                if (!empty($request->code))
+                {
+                    $produit = Produit::where('code',$request->code)->first();
+                    if($produit != null && empty($request->id))
+                    {
+                        $errors = "cette reference existe deja";
+                    }
+                }
                 
-                if (empty($request->qte))
+                if ($request->qte < 0)
                 {
                     $errors = "Renseignez la quantite du produit";
                 }
-                if (empty($request->pa))
+                if ($request->pa < 0)
                 {
                     $errors = "Renseignez le prix d'achat";
                 }
-                if (empty($request->pv))
+                if ($request->pv < 0)
                 {
                     $errors = "Renseignez le prix de vente";
                 }

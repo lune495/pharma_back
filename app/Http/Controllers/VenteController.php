@@ -34,7 +34,7 @@ class VenteController extends Controller
         {
                 $errors =null;
                 $item = new Vente();
-                // $user_id = auth('sanctum')->user()->id;
+                $user_id = auth('sanctum')->user()->id;
                 $montant_total_vente = 0;
                 $qte_total_vente = 0;
                 if (!empty($request->id))
@@ -51,6 +51,7 @@ class VenteController extends Controller
                     // $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
                     // $item->user_id = $user_id;
+                    $item->user_id = 1;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
                         if (!isset($errors)) 
@@ -175,7 +176,7 @@ class VenteController extends Controller
         if($vente!=null)
         {
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
-         $pdf = PDF::loadView("pdf.ventesold", $data)->setPaper('a4');
+         $pdf = PDF::loadView("pdf.ventesold", $data);
         //  $measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();
              return $pdf->stream();

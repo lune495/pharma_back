@@ -75,10 +75,25 @@
         <!--total-->
         <tr>
             {{-- <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td> --}}
-            <td colspan="2">
+             <td>
+                @if (isset($montant_ttc))
+                
+                    <p class="badge" style="line-height:15px">Total TTC</p>
+                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
+                @else
+                    <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
+                @endif
+            </td>
+            <td>
                 <div>
                     <p class="badge" style="line-height:15px">Total HT</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_avec_remise, false, false)}}</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p class="badge" style="line-height:15px">Remise</p>
+                    <p style="line-height:5px">{{$remise_total}}%</p>
                 </div>
             </td>
             <td>
@@ -95,11 +110,8 @@
                 @else
                     <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
                 @endif
-            <td style="font-size: 14px" colspan="2"> 
-                    <p class="badge" style="font-weight: bold">Net a payer</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>
-            <td style="font-weight: bold;font-size: 14px"></td>
         </tr>
         <tr>
             {{-- <td colspan="2"  style="padding-top : 10px;font-size: 11px">

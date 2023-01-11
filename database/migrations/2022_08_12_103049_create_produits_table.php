@@ -19,8 +19,8 @@ class CreateProduitsTable extends Migration
             $table->string('designation')->nullable();
             $table->string('description')->nullable();
             $table->string('image')->nullable();
-            $table->integer('pa');
-            $table->integer('pv');
+            $table->integer('pa')->nullable()->default('0');
+            $table->integer('pv')->nullable()->default('0');
             $table->integer('limite')->nullable();
             $table->integer('qte')->default('0');
             $table->unsignedBigInteger('famille_id');
