@@ -28,6 +28,7 @@ class ProduitPaginatedQuery extends Query
             'nom'                           => ['type' => Type::string()],
             'code'                          => ['type' => Type::string()],
             'search'                        => ['type' => Type::string()],
+            'designation'                   => ['type' => Type::string()],
 
         
             'page'                          => ['name' => 'page', 'description' => 'The page', 'type' => Type::int() ],
@@ -42,6 +43,14 @@ class ProduitPaginatedQuery extends Query
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);
+        }
+        if (isset($args['code']))
+        {
+            $query->where('code',$args['code']);
+        }
+        if (isset($args['designation']))
+        {
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
         }
         if (isset($args['search']))
         {

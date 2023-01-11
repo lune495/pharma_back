@@ -54,11 +54,10 @@
     <table class="table table-bordered w-100">
         <tr style="font-size: 1.2em;">
             <th style="font-size:5px;border:none"> <p class="badge">REF</p> </th>
-            <th style="border:none"> <p class="badge">DESIGN</p> </th>
+            <th style="border:none"> <p class="badge">DESIGNATION</p> </th>
             <th style="border:none"><p class="badge">QTE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
             <th style="border:none"><p class="badge">REMISE</p></th>
-            <th style="border:none"><p class="badge">P.U NET</p></th>
             <th style="border:none"><p class="badge">MONTANT</p></th>
         </tr>
     <tbody style="border:none">
@@ -69,7 +68,6 @@
                 <td style="font-size:11px;padding: 2px"> {{$vente["qte"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$vente["prix_vente"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$vente["remise"]}}%</td>
-                <td style="font-size:11px;padding: 2px"> {{$vente["pu_net"]}}</td>
                 <td style="font-size:11px;padding: 2px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
             </tr>
         @endforeach
@@ -89,20 +87,17 @@
                     <p style="line-height:5px">{{$taxe ? $taxe["value"] : "0"}}%</p>
                 </div>
             </td>
-            <td colspan="2">
                 @if (isset($montant_ttc))
-                
+                <td colspan="2">
                     <p class="badge" style="line-height:15px">Total TTC</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
+                </td>
                 @else
                     <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
                 @endif
-            </td>
             <td style="font-size: 14px" colspan="2"> 
-                <div>
                     <p class="badge" style="font-weight: bold">Net a payer</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
-                </div> 
             </td>
             <td style="font-weight: bold;font-size: 14px"></td>
         </tr>

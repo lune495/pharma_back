@@ -42,6 +42,10 @@ class ProduitQuery extends Query
             $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['search'].'%')
                            ->orWhere('code',Outil::getOperateurLikeDB(),'%'.$args['search'].'%');
         }
+        if (isset($args['designation']))
+        {
+            $query = $query->where('designation',Outil::getOperateurLikeDB(),'%'.$args['designation'].'%');
+        }
         // if(isset($args['designation']) && isset($args['visible_appro']) && $args['visible_appro'] == 1)
         // {
         //     // $query = $query->join('depots', 'produits.id', '=', 'depots.produit_id')

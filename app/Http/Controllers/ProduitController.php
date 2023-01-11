@@ -93,11 +93,10 @@ class ProduitController extends Controller
                        
                     if ($itemDetailVente==null && $itemDetailAppro==null){
                         $item->qte = $request->qte;
-                    }else{
+                    }elseif($item->qte != $request->qte){
                          $errors = "Impossible de modifier le stock de ce produit";
                         }
                 }else{
-                     
                         $item->qte = $request->qte;
                 }
                     if (!isset($errors)) 
