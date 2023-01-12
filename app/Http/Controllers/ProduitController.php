@@ -89,7 +89,7 @@ class ProduitController extends Controller
                 /*After Resize Add this Code to Upload Image*/
                 $destinationPath = public_path('/');
                 $image->move($destinationPath, $input['imagename']);
-                $item->image = $destinationPath.'/'.$input['imagename'];
+                $item->image = $input['imagename'];
                 }
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;

@@ -37,7 +37,7 @@
         </tr>
     </table>
 
-    <table style="border: none;font-size: 11px; margin-top:30px">
+    <table style="border: none;font-size: 11px; margin-top:0px">
         <tr  style="border: none">
             <td style="border: none; margin-left: 15px">
                 <div>
@@ -54,7 +54,7 @@
     <div class="static">
     <table class="table table-bordered">
         <tr>
-            <th style="border:none"> <p class="badge">REF</p> </th>
+            <th style="border:none"> <p class="badge">REF.</p> </th>
             <th style="border:none"> <p class="badge">DESIGNATION</p> </th>
             <th style="border:none"><p class="badge">QTE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
@@ -78,13 +78,16 @@
         <!--total-->
         <tr>
             {{-- <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td> --}}
-             <td>
+             {{-- <td>
                 @if (isset($montant_ttc))
                 
                     <p class="badge" style="line-height:15px">Total TTC</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
                 @endif
-            </td>
+            </td> --}}
+            @if (!isset($montant_ttc))
+            <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
+            @endif
             <td>
                 <div>
                     <p class="badge" style="line-height:15px">Total HT</p>
@@ -104,21 +107,25 @@
                 </div>
             </td>
             @if (isset($montant_ttc))
-            <td>
+            <td colspan="2">
                 <p class="badge" style="line-height:15px">Total TTC</p>
                 <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
             </td>
             @endif
-            <td>  
+             @if (isset($montant_ttc))
+             <td>
+             @else
+             <td colspan="2">
+             @endif
                     <p class="badge" style="font-weight: bold">Net a payer</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>
         </tr>
         <tr>
-            {{-- <td colspan="2"  style="padding-top : 10px;font-size: 11px">
+            <td colspan="2"  style="padding-top : 10px;font-size: 11px">
                 <p >Arretée à la somme de :</p>  
-                <p style="font-weight: bold">{{\App\Models\Outil::convertNumber($montant)}}</p> 
-            </td> --}}
+                <p style="font-weight: bold;font-size: 11px">{{\App\Models\Outil::convertNumber(isset($montant_ttc) ? $montant_ttc : $montant_avec_remise)}}</p> 
+            </td>
             <td style="padding-top : 10px;font-size: 11px" colspan="2"> <p>Conditions Reglement</p> </td>
             <td style="padding-top : 10px;font-size: 11px"> <p>ESPECE</p></td>
             <td style="padding-top : 10px;font-weight: bold;font-size: 11px" colspan="2"><p> {{\App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, true)}} </p></td>

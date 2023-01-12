@@ -56,4 +56,14 @@ class ProduitType extends GraphQLType
         
         return $root['pa']==null ? 0 : $root['pa'];
     }
+    protected function resolvePvField($root, array $args)
+    {
+        
+        return $root['pv']==null ? 0 : $root['pv'];
+    }
+    protected function resolveImageField($root, array $args)
+    {
+        $destinationPath = public_path('\\img_prod');
+        return $destinationPath.'\\'.$root['image'];
+    }
 }
