@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     {
         //
         $users = array();
-        array_push($users,array("name" => "Admin" , "email" => "admin@gmail.com" ,"password" => "0000","role_id" => "1"));
+        array_push($users,array("name" => "Admin" , "email" => "Admin" ,"password" => "cis2022","role_id" => "1"));
         $newuser = User::where('email', $users[0]['email'])->first();
         if (!isset($newuser))
         {

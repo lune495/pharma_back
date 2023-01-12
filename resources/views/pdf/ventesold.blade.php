@@ -1,7 +1,7 @@
 @extends('pdf.layouts.layout-export2')
 @section('title', "PDF Facture commande")
 @section('content')
-    <table style="border: none; border: none;margin-top:50px;font-size: 11px">
+    <table style="border: none; border: none;margin-top:2px;font-size: 11px">
         <tr>
             <td style="border: none">
                 <p style="font-weight: bold;font-size: 14px">C.I.S PLOMBERIE SHOWROOM</p>
@@ -51,9 +51,10 @@
 
     <h2 style="margin:0">Facture N0  {{$numero ? $numero : "FA01"}}</h2>
     <br>
-    <table class="table table-bordered w-100">
-        <tr style="font-size: 1.2em;">
-            <th style="font-size:5px;border:none"> <p class="badge">REF</p> </th>
+    <div class="static">
+    <table class="table table-bordered">
+        <tr>
+            <th style="border:none"> <p class="badge">REF</p> </th>
             <th style="border:none"> <p class="badge">DESIGNATION</p> </th>
             <th style="border:none"><p class="badge">QTE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
@@ -61,8 +62,10 @@
             <th style="border:none"><p class="badge">MONTANT</p></th>
         </tr>
     <tbody style="border:none">
+        {{$i = 0}}
         @foreach($vente_produits as $vente)
-            <tr style="padding:0px">
+            {{$i++}}
+            <tr {{ $i%2 == 1 ? "style=background-color:rgb(206,237,240);line-height:15px": "style=background-color:rgb(206,225,231);line-height:15px" }}>
                 <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
                 <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$vente["qte"]}}</td>
@@ -80,8 +83,6 @@
                 
                     <p class="badge" style="line-height:15px">Total TTC</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
-                @else
-                    <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
                 @endif
             </td>
             <td>
@@ -102,14 +103,14 @@
                     <p style="line-height:5px">{{$taxe ? $taxe["value"] : "0"}}%</p>
                 </div>
             </td>
-                @if (isset($montant_ttc))
-                <td colspan="2">
-                    <p class="badge" style="line-height:15px">Total TTC</p>
-                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
-                </td>
-                @else
-                    <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
-                @endif
+            @if (isset($montant_ttc))
+            <td>
+                <p class="badge" style="line-height:15px">Total TTC</p>
+                <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
+            </td>
+            @endif
+            <td>  
+                    <p class="badge" style="font-weight: bold">Net a payer</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>
         </tr>
@@ -125,4 +126,5 @@
         
     </tbody>
 </table>
+</div>
 @endsection

@@ -102,7 +102,7 @@
                 }
                 /** Define now the real margins of every page in the PDF **/
                 body {
-                    margin-top: 1.3cm;
+                    margin-top: 0.2cm;
                     font-weight: 400;
                     background:  #fff;
                     color: black;

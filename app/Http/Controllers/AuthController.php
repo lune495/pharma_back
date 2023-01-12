@@ -39,15 +39,14 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
         // Check email
-        $user = User::with('role')->where('email',"admin@gmail.com")->first();
-        // dd($user);
+        $user = User::with('role')->where('email',"Admin")->first();
         //Check email
-            // if (!Hash::check($fields['password'],$user->password)) {
-            //     return response([
-            //         'message' => 'Mot de passe Incorrect'
-            //     ],401);
-            //     # code...
-            // }
+            if (!$user || !Hash::check($fields['password'],$user->password)) {
+                return response([
+                    'message' => 'Mot de passe Incorrect'
+                ],401);
+                # code...
+            }
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [

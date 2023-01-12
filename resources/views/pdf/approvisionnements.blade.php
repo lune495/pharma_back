@@ -65,7 +65,7 @@
         </tr>
     <tbody style="border:none">
         @foreach($ligne_approvisionnements as $ligne_approvisionnement)
-            <tr style="padding:0px">
+            <tr style="padding:0px;">
                 <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["produit"]["designation"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["quantity_received"]}}</td>
                 <td style="font-size:11px;padding: 2px"> {{$ligne_approvisionnement["produit"]["pa"]}}</td>
