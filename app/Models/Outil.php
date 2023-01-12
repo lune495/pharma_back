@@ -169,7 +169,7 @@ class Outil extends Model
     public static function convertNumber($num)
     {
         $f = new NumberFormatter("fr", NumberFormatter::SPELLOUT);
-        return "{$f->format($num)} FRANCS CFA";
+        return  ucfirst("{$f->format($num)} FRANCS CFA");
     }
     public static function donneFormatDevise()
     {

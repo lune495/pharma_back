@@ -49,7 +49,7 @@
         </tr>
     </table>
 
-    <h2 style="margin:0">Facture N0  {{$numero ? $numero : "FA01"}}</h2>
+    <h2 style="margin:0">Facture N°  {{$numero ? $numero : "FA01"}}</h2>
     <br>
     <div class="static">
     <table class="table table-bordered">
@@ -88,17 +88,16 @@
             @if (!isset($montant_ttc))
             <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
             @endif
+            @if (isset($montant_ttc))
             <td>
-                <div>
-                    <p class="badge" style="line-height:15px">Total HT</p>
-                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_avec_remise, false, false)}}</p>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p class="badge" style="line-height:15px">Remise</p>
-                    <p style="line-height:5px">{{$remise_total}}%</p>
-                </div>
+            <div>
+            @else
+            <td colspan="2">
+            <div>
+            @endif
+                <p class="badge" style="line-height:15px">Total HT</p>
+                <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_avec_remise, false, false)}}</p>
+            </div>
             </td>
             <td>
                 <div>
@@ -112,11 +111,12 @@
                 <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
             </td>
             @endif
-             @if (isset($montant_ttc))
+             {{-- @if (isset($montant_ttc))
              <td>
              @else
              <td colspan="2">
-             @endif
+             @endif --}}
+             <td colspan="2">
                     <p class="badge" style="font-weight: bold">Net a payer</p>
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>

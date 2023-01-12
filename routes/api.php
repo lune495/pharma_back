@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
     Route::post('/venteannulee/{id}',[VenteController::class,'abortsale']);
+    Route::post('/approannulee/{id}',[ApprovisionnementController::class,'abortappro']);
     Route::delete('/clients/{id}',[ClientController::class,'delete']);
     Route::delete('/fournisseurs/{id}',[FournisseurController::class,'delete']);
     Route::post('/taxe',[TaxeController::class,'save']);
