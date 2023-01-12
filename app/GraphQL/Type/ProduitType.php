@@ -49,7 +49,7 @@ class ProduitType extends GraphQLType
             $capital = $capital + ($produit->pa * $produit->qte);
         }
         $capital = Outil::formatPrixToMonetaire($capital, false, true);
-        return $capital;
+        return $capital;    
     }
     protected function resolvePaField($root, array $args)
     {

@@ -4,16 +4,16 @@
     <table style="border: none; border: none;margin-top:2px;font-size: 11px">
         <tr>
             <td style="border: none">
-                <p style="font-weight: bold;font-size: 14px">C.I.S PLOMBERIE SHOWROOM</p>
+                <p style="font-weight: bold;font-size: 14px">C.I.S SHOWROOM</p>
                 <p style="font-size: 11px">Vente de Materiels de Plomberie et Sanitaire</p>
             </td>
         </tr>
         <tr  style="border: none">
             <td  style="border: none">
                 <div style="" >
-                    <p  style="text-align:left;line-height:5px"> Rue SACRE COEUR 3 VDN EXTENSION </p>
-                    <p style="text-align:left;line-height:5px"> +221 77 517 98 29</p>
-                    <p style="text-align:left;line-height:5px"> +221 77 615 32 32</p>
+                    <p  style="text-align:left;line-height:5px"> OUEST FOIRE, TALLY WALLY N°21  </p>
+                    <p style="text-align:left;line-height:5px"> +221 77 348 15 82</p>
+                    <p style="text-align:left;line-height:5px"> +221 77 597 55 21</p>
                 </div>
             </td>
             <td style="border:none;">
@@ -65,13 +65,13 @@
         {{$i = 0}}
         @foreach($vente_produits as $vente)
             {{$i++}}
-            <tr {{ $i%2 == 1 ? "style=background-color:rgb(206,237,240);line-height:15px": "style=background-color:rgb(206,225,231);line-height:15px" }}>
-                <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
-                <td style="font-size:11px;padding: 2px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
-                <td style="font-size:11px;padding: 2px"> {{$vente["qte"]}}</td>
-                <td style="font-size:11px;padding: 2px"> {{$vente["prix_vente"]}}</td>
-                <td style="font-size:11px;padding: 2px"> {{$vente["remise"]}}%</td>
-                <td style="font-size:11px;padding: 2px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
+            <tr {{ $i%2 == 1 ? "style=background-color:rgba(255,249,249,0.877);line-height:15px": "style=background-color:rgba(21,150,189,0.281);line-height:15px" }}>
+                <td style="font-size:13px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
+                <td style="font-size:13px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
+                <td style="font-size:13px;padding: 6px"> {{$vente["qte"]}}</td>
+                <td style="font-size:13px;padding: 6px"> {{$vente["prix_vente"]}}</td>
+                <td style="font-size:13px;padding: 6px"> {{$vente["remise"]}}%</td>
+                <td style="font-size:13px;padding: 6px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
             </tr>
         @endforeach
 

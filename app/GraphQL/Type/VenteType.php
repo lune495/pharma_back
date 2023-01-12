@@ -73,12 +73,12 @@ class VenteType extends GraphQLType
     {
          $venteprdts = VenteProduit::where('vente_id',$root['id'])->get();
          $remise_total = 0;
-         $cpt = 1;
+         $cpt = 0;
          foreach($venteprdts as $venteprdt){
             $cpt++;
             $remise_total = $remise_total + $venteprdt->remise;
         }
-        return $remise_total/$cpt;
+        return  round($remise_total/$cpt, 1);
     }
     protected function resolveMontantTtcField($root, $args)
     {
@@ -90,7 +90,7 @@ class VenteType extends GraphQLType
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
         $montant_ttc = $root['taxe'] ? $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100) : 0;
-        return isset($root['taxe']) ? $montant_ttc : null;
+        return isset($root['taxe']) ? round($montant_ttc,1) : null;
     }
     protected function resolveCreatedAtFrField($root, $args)
     {

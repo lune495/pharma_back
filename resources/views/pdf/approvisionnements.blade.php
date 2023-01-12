@@ -5,17 +5,17 @@
         <tr  style="border: none">
             <td  style="border: none">
                 <div style="" >
-                    <p  style="text-align:left;line-height:5px"> Dakar, Senegal </p>
-                    <p style="text-align:left;line-height:5px"> +221 33 842 80 82</p>
-                    <p style="text-align:left;line-height:5px"> +221 77 497 85 85</p>
+                    <p  style="text-align:left;line-height:5px"> OUEST FOIRE, TALLY WALLY N°21 </p>
+                    <p style="text-align:left;line-height:5px"> +221 77 348 15 82</p>
+                    <p style="text-align:left;line-height:5px"> +221 77 597 55 21</p>
                 </div>
             </td>
 
             <td style="border:none;">
                 <div style="border-left: 3px solid black">
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">www.hoballahome.com</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Instagram:  @hoballahome</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Facebook:  Hoballahome Sénégal</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">www.ccps.sn</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Instagram:  @ccps</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">email:  ccpsvdn@gmail.com</p>
                 </div>
             </td>
             <td style="border:none;"></td>

@@ -140,6 +140,73 @@ class ApprovisionnementController extends Controller
 
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function abortappro($id)
+    {
+        //
+        try 
+        {
+            $appro = Appro::find($id);
+            if($appro && $appro->type_appro == 'BOUTIQUE'){
+                if($appro->statut == 0)
+                {
+                    DB::beginTransaction();
+                    $ligne_appros = LigneApprovisionnement::where('approvisionnement_id',$appro->id)->get();
+                    foreach ($ligne_appros as $ligne_appro) 
+                    {
+                        $produit = Produit::find($ligne_appro->produit_id);
+                        if($produit)
+                        {
+                            $produit->qte = $produit->qte - $ligne_appro->quantity_received;
+                            $produit->save();
+                        }
+                    }
+                    $appro->statut = 1;
+                    if($appro->save())
+                    {
+                        DB::commit();
+                        $id = $appro->id;
+                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                    }
+                }else{
+                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                } 
+            }
+            if($appro && $appro->type_appro == 'DEPOT'){
+                if($appro->statut == 0)
+                {
+                    DB::beginTransaction();
+                    $ligne_appros = LigneApprovisionnement::where('approvisionnement_id',$appro->id)->get();
+                    foreach ($ligne_appros as $ligne_appro) 
+                    {
+                        $depot = Depot::where('produit_id',$ligne_appro->produit_id);
+                        if($depot)
+                        {
+                            $depot->stock = $depot->stock - $ligne_appro->quantity_received;
+                            $depot->save();
+                        }
+                    }
+                    $appro->statut = 1;
+                    if($appro->save())
+                    {
+                        DB::commit();
+                        $id = $appro->id;
+                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                    }
+                }else{
+                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                } 
+            }
+        } catch (exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
+    }
     public function genereallPDf($id)
     {
         // $pdf = PDF::loadView('pdf.Approvisionnement', [
