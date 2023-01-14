@@ -67,7 +67,7 @@ class VenteType extends GraphQLType
             // dd($montant_remise);
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
-        return $montant_total_vente;
+        return round($montant_total_vente);
     }
     protected function resolveRemiseTotalField($root, $args)
     {
@@ -78,7 +78,7 @@ class VenteType extends GraphQLType
             $cpt++;
             $remise_total = $remise_total + $venteprdt->remise;
         }
-        return  round($remise_total/$cpt, 1);
+        return  round($remise_total/$cpt);
     }
     protected function resolveMontantTtcField($root, $args)
     {
@@ -90,7 +90,7 @@ class VenteType extends GraphQLType
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
         $montant_ttc = $root['taxe'] ? $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100) : 0;
-        return isset($root['taxe']) ? round($montant_ttc,1) : null;
+        return isset($root['taxe']) ? round($montant_ttc) : null;
     }
     protected function resolveCreatedAtFrField($root, $args)
     {

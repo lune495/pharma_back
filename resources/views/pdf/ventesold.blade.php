@@ -25,24 +25,38 @@
             </td>
             <td style="border:none;"></td>
             <td style="border:none;"></td>
-            <td style="border: none; margin-left: 15px">
-                <div>
-                    <p class="badge" style="text-align:left;line-height:15px">Client</p>
-                    <p style="text-align:left;margin-left:15px;line-height:5px">{{ $client ? \App\Models\Outil::premereLettreMajuscule($client["nom_complet"]) : "CLIENT DE PASSAGE"}}</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">{{ $client ? "Téléphone: " . $client["telephone"] : " "}}</p>
-                    <p style="text-align:left; margin-left:15px;line-height:5px;text-transform: capitalize "> {{ $client ? "Adresse:" . $client["adresse"] : ""}}</p>
-
-                </div>
-            </td>
         </tr>
     </table>
 
     <table style="border: none;font-size: 11px; margin-top:0px">
         <tr  style="border: none">
-            <td style="border: none; margin-left: 15px">
+            <td style="border: none;">
                 <div>
                     <p class="badge" style="text-align:left;line-height:15px">Date</p>
                     <p style="text-align:left;line-height:5px">{{ $created_at_fr}}</p>
+                    <p style="style=border-left: 2px solid white;border-bottom: 2px solid white"></p>
+                    <p style="style=border-left: 2px solid white;border-bottom: 2px solid white"></p>
+                </div>
+            </td>
+            <td style="border: none;"></td><td style="border: none;"></td><td style="border: none;"></td><td style="border: none;"></td><td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none">
+                <div>
+                    <p class="badge" style="text-align:left;line-height:15px">Client</p>
+                    <p style="text-align:left;line-height:5px">{{ $client ?  "Nom: " .\App\Models\Outil::premereLettreMajuscule($client["nom_complet"]) : "CLIENT DE PASSAGE"}}</p>
+                    <p style="text-align:left ;line-height:5px ">{{ $client ? "Téléphone: " . $client["telephone"] : " "}}</p>
+                    <p style="text-align:left;line-height:5px;text-transform: capitalize "> {{ $client ? "Adresse:" . $client["adresse"] : ""}}</p>
                 </div>
             </td>
             <td style="border:none;"></td>
@@ -65,13 +79,13 @@
         {{$i = 0}}
         @foreach($vente_produits as $vente)
             {{$i++}}
-            <tr {{ $i%2 == 1 ? "style=background-color:rgba(255,249,249,0.877);line-height:15px": "style=background-color:rgba(21,150,189,0.281);line-height:15px" }}>
-                <td style="font-size:13px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
-                <td style="font-size:13px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
-                <td style="font-size:13px;padding: 6px"> {{$vente["qte"]}}</td>
-                <td style="font-size:13px;padding: 6px"> {{$vente["prix_vente"]}}</td>
-                <td style="font-size:13px;padding: 6px"> {{$vente["remise"]}}%</td>
-                <td style="font-size:13px;padding: 6px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
+            <tr {{ $i%2 == 1 ? "style=background-color:rgba(255,249,249,0.877);line-height:9px": "style=background-color:rgba(21,150,189,0.281);line-height:9px" }}>
+                <td style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
+                <td style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
+                <td style="font-size:12px;padding: 6px"> {{$vente["qte"]}}</td>
+                <td style="font-size:12px;padding: 6px"> {{$vente["prix_vente"]}}</td>
+                <td style="font-size:12px;padding: 6px"> {{$vente["remise"]}}%</td>
+                <td style="font-size:12px;padding: 6px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
             </tr>
         @endforeach
 

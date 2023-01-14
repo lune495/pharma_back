@@ -117,7 +117,7 @@
 
                 /** Define the footer rules **/
                 .footer {
-                    position: fixed;
+                    /**position: fixed;**/
                     bottom: 0px;
                     height: 2.5cm;
                 }
@@ -165,8 +165,8 @@
                 </div>
                 <hr>
                 <div style="display:inline-flex" style="font-size:10px;">
-                    <p class="text-left" style="font-size:10px; margin-top:1.5em"> RC: SN DKR 2014 A 1270</p>
-                    <p class="text-right" style="margin-top:1.5em;font-size:10px;"> NINEA: 4982965 1A1 - Dakar</p>
+                    {{-- <p class="text-left" style="font-size:10px;"> RC: SN DKR 2014 A 1270</p>
+                    <p class="text-right" style="font-size:10px;"> NINEA: 4982965 1A1 - Dakar</p> --}}
                 </div>
             </div>
            
