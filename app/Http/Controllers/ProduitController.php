@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
+use Illuminate\Support\Facades\File;
 class ProduitController extends Controller
 {
     private $queryName = "produits";
@@ -75,22 +76,30 @@ class ProduitController extends Controller
                 $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
-                if($request->hasFile('image'))
-                {
                 $image = $request->file('image');
 
-                $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-                $destinationPath = public_path('/img_prod');
-                $img = Image::make($image->getRealPath());
-                $img->resize(60, 60, function ($constraint) {
-                $constraint->aspectRatio();
-                })->save($destinationPath.'/'.$input['imagename']);
-
-                /*After Resize Add this Code to Upload Image*/
-                $destinationPath = public_path('/');
-                $image->move($destinationPath, $input['imagename']);
-                $item->image = $input['imagename'];
+                $reImage = time().'.'.$image->getClientOriginalExtension();
+                if($errors == null && $request->hasFile('image'))
+                {
+                $path = public_path('/img_prod');
+                if(!File::isDirectory($path)){
+                File::makeDirectory($path, 0777, true, true);
                 }
+                $image->move($path, $reImage);
+                }
+                
+                // if(!File::isDirectory($path)){
+                // File::makeDirectory($path, 0777, true, true);}
+                // $destinationPath = public_path('\img_prod');
+                // $img = Image::make($image->getRealPath());
+                // $img->resize(60, 60, function ($constraint) {
+                // $constraint->aspectRatio();
+                // })->save($destinationPath.'/'.$input['imagename']);
+
+                // /*After Resize Add this Code to Upload Image*/
+                // $destinationPath = public_path('/');
+                // $image->move($destinationPath, $input['imagename']);
+                $item->image = $reImage;
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;

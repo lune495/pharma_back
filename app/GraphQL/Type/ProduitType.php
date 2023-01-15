@@ -63,7 +63,6 @@ class ProduitType extends GraphQLType
     }
     protected function resolveImageField($root, array $args)
     {
-        $destinationPath = public_path('\\img_prod');
-        return $destinationPath.'\\'.$root['image'];
+        return $root['image'] ? $root['image'] : null;
     }
 }
