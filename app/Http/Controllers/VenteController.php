@@ -175,6 +175,7 @@ class VenteController extends Controller
         if($vente!=null)
         {
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+        //  dd($data);
          $pdf = PDF::loadView("pdf.ventesold", $data);
         //  $measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();

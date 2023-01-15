@@ -24,6 +24,7 @@ class VenteType extends GraphQLType
                 'remise_total'              => ['type' => Type::float()],
                 'montant_ht'                => ['type' => Type::float()],
                 'montant_ttc'               => ['type' => Type::float()],
+                'montant_taxe'              => ['type' => Type::float()],
                 'qte'                       => ['type' => Type::string()],
                 'montantencaisse'           => ['type' => Type::string()],
                 'monnaie'                   => ['type' => Type::string()],
@@ -90,7 +91,19 @@ class VenteType extends GraphQLType
             $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
         }
         $montant_ttc = $root['taxe'] ? $montant_total_vente + (($montant_total_vente * $root['taxe']['value'])/100) : 0;
-        return isset($root['taxe']) ? round($montant_ttc) : null;
+        return isset($root['taxe']) ? round($montant_ttc) : 0;
+    }
+    protected function resolveMontantTaxeField($root, $args)
+    {
+        $venteprdts = VenteProduit::where('vente_id',$root['id'])->get();
+        $montant_total_vente = 0;
+        foreach($venteprdts as $venteprdt){
+            $montant_remise = ((($venteprdt->prix_vente * $venteprdt->qte)*$venteprdt->remise)/100);
+            // dd($montant_remise);
+            $montant_total_vente = $montant_total_vente + (($venteprdt->prix_vente * $venteprdt->qte)-$montant_remise);
+        }
+        $montant_remise = $root['taxe'] ? ($montant_total_vente * $root['taxe']['value'])/100 : 0;
+        return $montant_remise;
     }
     protected function resolveCreatedAtFrField($root, $args)
     {

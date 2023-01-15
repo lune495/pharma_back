@@ -26,6 +26,7 @@ class ApprovisionnementType extends GraphQLType
             'user_id'                           => ['type' => Type::int(), 'description' => ''],
             'montant'                           => ['type' => Type::string()],
             'qte_total_appro'                   => ['type' => Type::int()],
+            'statut'                            => ['type' => Type::boolean()],
             'quantite'                          => ['type' => Type::int(), 'description' => ''],
             //'quantite_all'                      => ['type' => Type::int(), 'description' => ''],
             'fournisseur_id'                    => ['type' => Type::int()],

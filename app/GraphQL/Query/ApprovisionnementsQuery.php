@@ -73,6 +73,7 @@ class ApprovisionnementsQuery extends Query
             [
                 'id'                                => $item->id,
                 'numero'                            => $item->numero,
+                'statut'                            => $item->statut,
                 'user_id'                           => $item->user_id,
                 'fournisseur_id'                    => $item->fournisseur_id,
                 'montant'                           => $item->montant,
@@ -81,6 +82,7 @@ class ApprovisionnementsQuery extends Query
                 'user'                              => $item->user,
                 'ligne_approvisionnements'          => $item->ligne_approvisionnements,
                 'type_appro'                        => $item->type_appro,
+                'created_at'                        => $item->created_at,
 
                  
                 //'deleted_at'                        => empty($item->deleted_at) ? $item->deleted_at : $item->deleted_at->format(Outil::formatdate()),

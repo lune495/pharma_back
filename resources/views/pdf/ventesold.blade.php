@@ -69,10 +69,10 @@
     <table class="table table-bordered">
         <tr>
             <th style="border:none"> <p class="badge">REF.</p> </th>
-            <th style="border:none"> <p class="badge">DESIGNATION</p> </th>
+            <th style="border:none" colspan="2"> <p class="badge">DESIGNATION</p> </th>
             <th style="border:none"><p class="badge">QTE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
-            <th style="border:none"><p class="badge">REMISE</p></th>
+            {{-- <th style="border:none"><p class="badge">REMISE</p></th> --}}
             <th style="border:none"><p class="badge">MONTANT</p></th>
         </tr>
     <tbody style="border:none">
@@ -81,10 +81,10 @@
             {{$i++}}
             <tr {{ $i%2 == 1 ? "style=background-color:rgba(255,249,249,0.877);line-height:9px": "style=background-color:rgba(21,150,189,0.281);line-height:9px" }}>
                 <td style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
-                <td style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
+                <td colspan="2" style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
                 <td style="font-size:12px;padding: 6px"> {{$vente["qte"]}}</td>
                 <td style="font-size:12px;padding: 6px"> {{$vente["prix_vente"]}}</td>
-                <td style="font-size:12px;padding: 6px"> {{$vente["remise"]}}%</td>
+                {{-- <td style="font-size:12px;padding: 6px"> {{$vente["remise"]}}%</td> --}}
                 <td style="font-size:12px;padding: 6px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
             </tr>
         @endforeach
@@ -99,10 +99,10 @@
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
                 @endif
             </td> --}}
-            @if (!isset($montant_ttc))
+            @if ($montant_ttc==0)
             <td colspan="1" style="border-left: 2px solid white;border-bottom: 2px solid white"></td>
             @endif
-            @if (isset($montant_ttc))
+            @if ($montant_ttc!=0)
             <td>
             <div>
             @else
@@ -115,11 +115,11 @@
             </td>
             <td>
                 <div>
-                    <p class="badge" style="line-height:15px">Tva</p>
-                    <p style="line-height:5px">{{$taxe ? $taxe["value"] : "0"}}%</p>
+                    <p class="badge" style="line-height:15px">Tva({{$taxe ? $taxe["value"] : "0"}}%)</p>
+                    <p style="line-height:5px">{{$montant_taxe}}</p>
                 </div>
             </td>
-            @if (isset($montant_ttc))
+            @if ($montant_ttc!=0)
             <td colspan="2">
                 <p class="badge" style="line-height:15px">Total TTC</p>
                 <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc, false, false)}}</p>
@@ -132,16 +132,16 @@
              @endif --}}
              <td colspan="2">
                     <p class="badge" style="font-weight: bold">Net a payer</p>
-                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
+                    <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc !=0 ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>
         </tr>
         <tr>
             <td colspan="2"  style="padding-top : 10px;font-size: 11px">
                 <p >Arretée à la somme de :</p>  
-                <p style="font-weight: bold;font-size: 11px">{{\App\Models\Outil::convertNumber(isset($montant_ttc) ? $montant_ttc : $montant_avec_remise)}}</p> 
+                <p style="font-weight: bold;font-size: 11px">{{\App\Models\Outil::convertNumber($montant_ttc !=0 ? $montant_ttc : $montant_avec_remise)}}</p> 
             </td>
-            <td style="padding-top : 10px;font-size: 11px" colspan="2"> <p>Conditions Reglement</p> </td>
-            <td style="padding-top : 10px;font-size: 11px"> <p>ESPECE</p></td>
+            <td style="padding-top : 10px;font-size: 11px" colspan="2"> <p>Conditions Règlement</p> </td>
+            <td style="padding-top : 10px;font-size: 11px"> <p>ESPECES</p></td>
             <td style="padding-top : 10px;font-weight: bold;font-size: 11px" colspan="2"><p> {{\App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, true)}} </p></td>
         </tr>
         

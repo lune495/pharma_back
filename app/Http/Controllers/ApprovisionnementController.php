@@ -151,7 +151,7 @@ class ApprovisionnementController extends Controller
         //
         try 
         {
-            $appro = Appro::find($id);
+            $appro = Approvisionnement::find($id);
             if($appro && $appro->type_appro == 'BOUTIQUE'){
                 if($appro->statut == 0)
                 {
