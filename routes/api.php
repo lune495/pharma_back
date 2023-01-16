@@ -34,8 +34,8 @@ Route::get('/top_meilleur_client',[ProduitController::class, 'list_meilleur_clie
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 
 // Protected Routes
-Route::group(['middleware' => ['auth:sanctum']],function()
-{
+// Route::group(['middleware' => ['auth:sanctum']],function()
+// {
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::delete('/clients/{id}',[ClientController::class,'delete']);
     Route::delete('/fournisseurs/{id}',[FournisseurController::class,'delete']);
     Route::post('/taxe',[TaxeController::class,'save']);
-    Route::put('/produits/{id}',[ProduitController::class,'update']);
+    Route::post('/produits/{id}',[ProduitController::class,'save']);
     Route::post('/approvisionnements',[ApprovisionnementController::class,'save']);
     Route::post('/ventes',[VenteController::class,'save']);
     Route::put('/familles/{id}',[FamilleController::class,'update']);
@@ -56,4 +56,4 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
     Route::post('/familles',[FamilleController::class,'save']);
     Route::post('/logout',[AuthController::class,'logout']);
-});
+// });
