@@ -46,6 +46,7 @@
             "sudo chmod -R 777 storage/",
             "sudo chmod -R 777 bootstrap/cache",
             "sudo chmod -R 777 storage/ bootstrap/cache",
+            "cp .env.server .env",
             "php artisan clear-compiled",
             "composer dumpautoload",
             "php artisan config:cache",
