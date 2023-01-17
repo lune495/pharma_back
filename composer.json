@@ -42,6 +42,24 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
+        "config-server-base": [
+            "sudo chmod -R 777 storage/",
+            "sudo chmod -R 777 bootstrap/cache",
+            "sudo chmod -R 777 storage/ bootstrap/cache",
+            "php artisan clear-compiled",
+            "composer dumpautoload",
+            "php artisan config:cache",
+            "sudo mkdir -p s public/uploads/img_prod",
+        ],
+        "config-server-laravel-app": [
+            "@config-server-base",
+            "chown -R www-data:www-data storage bootstrap/cache"
+        ],
+        "config-server-linux": [
+            "cp GraphQLController_local.php vendor/rebing/graphql-laravel/src/GraphQLController.php",
+            "@config-server-laravel-app",
+            "sudo chmod -R 777 public/uploads/"
+        ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
