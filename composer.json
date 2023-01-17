@@ -56,7 +56,6 @@
             "chown -R www-data:www-data storage bootstrap/cache"
         ],
         "config-server-linux": [
-            "cp GraphQLController_local.php vendor/rebing/graphql-laravel/src/GraphQLController.php",
             "@config-server-laravel-app",
             "sudo chmod -R 777 public/uploads/"
         ],
