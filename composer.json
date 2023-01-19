@@ -44,6 +44,8 @@
         ],
         "config-server-base": [
             "sudo chmod -R 777 storage/",
+            "sudo chmod -R 777 public/",
+            "sudo chmod -R 777 public/app-assets/images",
             "sudo chmod -R 777 bootstrap/cache",
             "sudo chmod -R 777 storage/ bootstrap/cache",
             "cp .env.server .env",
