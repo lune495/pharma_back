@@ -76,11 +76,10 @@ class ProduitController extends Controller
                 $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
-                $image = $request->file('image');
-
-                $reImage = time().'.'.$image->getClientOriginalExtension();
                 if($errors == null && $request->hasFile('image'))
                 {
+                $image = $request->file('image');
+                $reImage = time().'.'.$image->getClientOriginalExtension();
                 $path = public_path('/img_prod');
                 if(!File::isDirectory($path)){
                 File::makeDirectory($path, 0777, true, true);
