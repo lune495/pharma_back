@@ -76,6 +76,7 @@ class ProduitController extends Controller
                 $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
+                $reImage = null;
                 if($errors == null && $request->hasFile('image'))
                 {
                 $image = $request->file('image');
