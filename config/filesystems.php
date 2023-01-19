@@ -42,6 +42,7 @@ return [
                         'public' => 0777,
                         'private' => 0700,
                     ],
+                ],
         ],
 
         'public' => [
