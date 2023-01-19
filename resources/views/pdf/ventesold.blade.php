@@ -72,7 +72,7 @@
             <th style="border:none" colspan="2"> <p class="badge">DESIGNATION</p> </th>
             <th style="border:none"><p class="badge">QTE</p></th>
             <th style="border:none"><p class="badge">P.U</p></th>
-            {{-- <th style="border:none"><p class="badge">REMISE</p></th> --}}
+            <th style="border:none"><p class="badge">REMISE</p></th>
             <th style="border:none"><p class="badge">MONTANT</p></th>
         </tr>
     <tbody style="border:none">
@@ -84,7 +84,7 @@
                 <td colspan="2" style="font-size:12px;padding: 6px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</td>
                 <td style="font-size:12px;padding: 6px"> {{$vente["qte"]}}</td>
                 <td style="font-size:12px;padding: 6px"> {{$vente["prix_vente"]}}</td>
-                {{-- <td style="font-size:12px;padding: 6px"> {{$vente["remise"]}}%</td> --}}
+                <td style="font-size:12px;padding: 6px"> {{($vente["remise"] ? $vente["remise"] : "-")}}</td>
                 <td style="font-size:12px;padding: 6px">{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</td>
             </tr>
         @endforeach
