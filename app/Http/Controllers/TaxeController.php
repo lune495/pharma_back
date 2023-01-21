@@ -32,7 +32,6 @@ class TaxeController extends Controller
                 {
                     $errors = "Renseignez la valeur";
                 }
-                $item->nom = $request->nom;
                 $item->value = $request->value;
                 if (!isset($errors)) 
                 {
