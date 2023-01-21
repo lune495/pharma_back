@@ -82,9 +82,9 @@ class ProduitController extends Controller
                 $image = $request->file('image');
                 $reImage = time().'.'.$image->getClientOriginalExtension();
                 $path = public_path('/img_prod');
-                if(!File::isDirectory($path)){
-                File::makeDirectory($path, 0777, true, true);
-                }
+                // if(!File::isDirectory($path)){
+                // File::makeDirectory($path, 0777, true, true);
+                // }
                 $image->move($path, $reImage);
                 }
                 
