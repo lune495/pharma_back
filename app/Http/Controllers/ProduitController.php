@@ -76,15 +76,12 @@ class ProduitController extends Controller
                 $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
-                $reImage = null;
-                if($errors == null && $request->hasFile('image'))
-                {
-                $image = $request->file('image');
-                $reImage = time().'.'.$image->getClientOriginalExtension();
-                $path = public_path('/img_prod');
-                $image->move($path, $reImage);
+                if($request->hasFile('image')){
+                   $destinationPath = "images/produits";
+                   $image = $request->file("image");
+                   $image_name = $image->getClientOriginalName();
+                   $path = $request->file('image')->storeAs($destinationPath,$image_name); 
                 }
-                
                 // if(!File::isDirectory($path)){
                 // File::makeDirectory($path, 0777, true, true);}
                 // $destinationPath = public_path('\img_prod');
@@ -96,7 +93,7 @@ class ProduitController extends Controller
                 // /*After Resize Add this Code to Upload Image*/
                 // $destinationPath = public_path('/');
                 // $image->move($destinationPath, $input['imagename']);
-                $item->image = $reImage;
+                $item->image = $image_name;
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;
