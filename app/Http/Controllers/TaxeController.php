@@ -24,10 +24,10 @@ class TaxeController extends Controller
                 {
                     $item = Taxe::find($request->id);
                 }
-                if (empty($request->nom))
-                {
-                    $errors = "Renseignez la taxe";
-                }
+                // if (empty($request->nom))
+                // {
+                //     $errors = "Renseignez la taxe";
+                // }
                 if (empty($request->value))
                 {
                     $errors = "Renseignez la valeur";
