@@ -52,7 +52,8 @@
             "php artisan clear-compiled",
             "composer dumpautoload",
             "php artisan config:cache",
-            "sudo mkdir -p s public/img_prod"
+            "sudo mkdir -p s public/uploads/img_prod",
+            "sudo mkdir -p s storage/public/images/produits"
         ],
         "config-server-laravel-app": [
             "@config-server-base",
@@ -60,7 +61,7 @@
         ],
         "config-server-linux": [
             "@config-server-laravel-app",
-            "sudo chmod -R 777 public/uploads/"
+            "sudo chmod -R 777 storage/public/images/produits"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
