@@ -139,10 +139,9 @@
 
             <header class = "mb-4"  style="width:100%;">
                 <div class="header text-center" style="font-size: 300px;font-weight:bold">
-                    <img style="width: 100%" src="{{asset('my_custom_symlink_1/logo.jpg')}}" alt="">
+                    <img style="width: 100%" src="{{asset('storage/Logo_saloum_digital.jpg')}}" alt="">
                 </div>
             </header>
-
             <div class="mt-4">
                 @yield('content')
             </div>
