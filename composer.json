@@ -44,7 +44,7 @@
         ],
         "config-server-base": [
             "sudo chmod -R 777 storage/",
-            "sudo chmod -R 777 storage/app/public",
+            "sudo chmod -R 777 storage/public",
             "sudo chmod -R 777 public/",
             "sudo chmod -R 777 public/app-assets/assets/images",
             "sudo chmod -R 777 bootstrap/cache",
