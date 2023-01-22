@@ -64,6 +64,22 @@
             "@config-server-laravel-app",
             "sudo chmod -R 777 storage/public/images/produits"
         ],
+        "config-server-linux-test": [
+            "sudo chmod -R 777 storage/",
+            "sudo chmod -R 777 storage/app/public",
+            "sudo chmod -R 777 public/",
+            "sudo chmod -R 777 public/app-assets/assets/images",
+            "sudo chmod -R 777 bootstrap/cache",
+            "sudo chmod -R 777 storage/ bootstrap/cache",
+            "cp .env.server.test .env",
+            "php artisan clear-compiled",
+            "composer dumpautoload",
+            "php artisan config:cache",
+            "sudo mkdir -p s public/uploads/img_prod",
+            "sudo mkdir -p s storage/public/images/produits",
+            "chown -R www-data:www-data storage bootstrap/cache",
+            "sudo chmod -R 777 storage/public/images/produits"
+        ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
