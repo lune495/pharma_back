@@ -22,7 +22,7 @@ class CreateProduitsTable extends Migration
             $table->integer('pa')->nullable();
             $table->integer('pv')->nullable();
             $table->integer('limite')->nullable();
-            $table->integer('qte')->default('0');
+            $table->integer('qte')->nullable();
             $table->unsignedBigInteger('famille_id');
             $table->foreign('famille_id')->references('id')->on('familles');
             $table->timestamps();
