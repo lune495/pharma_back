@@ -91,7 +91,7 @@ class VenteController extends Controller
                                         $saved = $venteprdt->save();
                                         if($saved)
                                         {
-                                            $produit->qte = $produit->qte - $venteprdt->qte;
+                                            $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte ;
                                             $qte_total_vente = $qte_total_vente + $venteprdt->qte;
                                             $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
                                             $produit->save();

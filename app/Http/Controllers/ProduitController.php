@@ -60,10 +60,10 @@ class ProduitController extends Controller
                     }
                 }
                 
-                if ($request->qte < 0)
-                {
-                    $errors = "Renseignez la quantite du produit";
-                }
+                // if ($request->qte < 0)
+                // {
+                //     $errors = "Renseignez la quantite du produit";
+                // }
                 if ($request->pa < 0)
                 {
                     $errors = "Renseignez le prix d'achat";
