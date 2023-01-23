@@ -77,7 +77,7 @@ class VenteController extends Controller
                                     $current_quantity = $produit->qte; 
                                     if ($current_quantity < $detail['quantite']) 
                                     {
-                                        $errors = "<strong class='text-capitalize'>{$produit->designation}</strong> a un stock de <strong class='text-capitalize'>{$current_quantity}</strong><br> Vous ne pouvez pas effectuer cette vente";
+                                        $errors = "{$produit->designation} a un stock de {$current_quantity} Vous ne pouvez pas effectuer cette vente";
                                         break;
                                     }
                                     else 
