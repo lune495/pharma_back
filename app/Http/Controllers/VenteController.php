@@ -41,10 +41,10 @@ class VenteController extends Controller
                 {
                     $item = Vente::find($request->id);
                 }
-                // if ($request->montantencaisse == null)
-                // {
-                //     $errors = "Renseignez le montant encaisse";
-                // }
+                if (empty($item->client_id))
+                {
+                    $errors = "Renseignez le client";
+                }
                 
                     DB::beginTransaction();
                     // $item->montantencaisse = $request->montantencaisse;
