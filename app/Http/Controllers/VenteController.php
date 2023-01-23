@@ -50,7 +50,6 @@ class VenteController extends Controller
                     // $item->montantencaisse = $request->montantencaisse;
                     // $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
-                    dd($request->client_id);
                     //$item->user_id = $user_id;
                     $item->user_id = 1;
                     $str_json = json_encode($request->details);
