@@ -1,6 +1,8 @@
+{{-- @if (auth()->check()) --}}
 @extends('pdf.layouts.layout-export2')
 @section('title', "PDF Facture commande")
 @section('content')
+
     <table style="border: none; border: none;margin-top:2px;font-size: 11px">
         <tr>
             <td style="border: none">
@@ -148,4 +150,6 @@
     </tbody>
 </table>
 </div>
+
 @endsection
+{{-- @endif --}}

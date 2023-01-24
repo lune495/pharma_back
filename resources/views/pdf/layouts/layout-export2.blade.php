@@ -107,7 +107,7 @@
 
                 /** Define the footer rules **/
                 .footer {
-                    /**position: fixed;**/
+                    *position: fixed;
                     bottom: 0px;
                     height: 2.5cm;
                 }
