@@ -178,7 +178,7 @@ class Outil extends Model
 
     public static function getCavente($from,$to)
     {
-        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id and v.statut = 0 )
+        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id and v.statut is false )
         as solde "),[$from, $to])[0]->solde;
         $sommetotal = Outil::formatPrixToMonetaire($sommetotal, false, true);
         return  $sommetotal;
