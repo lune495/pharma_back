@@ -13,34 +13,28 @@
                     margin-bottom: 1rem;
                     background-color: transparent;
                 }
-
                 .table th,
                 .table td {
                     padding: 0.55rem;
                     vertical-align: top;
                     border-top: 1px solid #e9ecef;
                 }
-
-                .table thead th {
+                 .table thead th {
                     background-color: black;
                     vertical-align: bottom;
                     border-bottom: 2px solid #e9ecef;
                     color: #d7d9f2;
                 }
-
                 .table tbody + tbody {
                     border-top: 2px solid #e9ecef;
                 }
-
                 .table .table {
                     background-color: #fff;
                 }
-
                 .table-sm th,
                 .table-sm td {
                     padding: 0.3rem;
                 }
-
                 .table-bordered {
                     border: none;
                 }
@@ -49,19 +43,16 @@
                 .table-bordered td {
                     border: none;
                 }
-
                 .table-bordered thead th,
                 .table-bordered thead td {
                     border-bottom-width: 2px;
                 }
-
                 .table-borderless th,
                 .table-borderless td,
                 .table-borderless thead th,
                 .table-borderless tbody + tbody {
                     border: 0;
                 }
-
                 .table-striped tbody tr:nth-of-type(odd) {
                     background-color: rgba(0, 0, 0, 0.03);
                 }
@@ -83,7 +74,6 @@
                 th[scope="row"] {
                     background-color: #d7d9f2;
                 }
-
                 table {
                     border-collapse: collapse;
                     border: 1px solid rgb(200, 200, 200);

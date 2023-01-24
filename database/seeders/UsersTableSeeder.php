@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class UsersTableSeeder extends Seeder
 {
@@ -20,20 +22,29 @@ class UsersTableSeeder extends Seeder
         array_push($users,array("name" => "Alioune" , "email" => "cis.showroom@gmail.com" ,"password" => "aliounecis2023","role_id" => "1"));
         array_push($users,array("name" => "Moussa" , "email" => "cis.showroom@gmail.com" ,"password" => "moussacis2023","role_id" => "1"));
         // array_push($users,array("name" => "Moussa" , "email" => "cis.showroom@gmail.com" ,"password" => "moussacis2023","role_id" => "1"));
-        $newuser = User::where('email', $users[0]['email'])->first();
-        if (!isset($newuser))
-        {
-            $newuser = new User();
-            $newuser->name = $users[0]['name'];
-            $newuser->name = $users[0]['email'];
-            $newuser->name = $users[0]['password'];
-            $newuser->role_id = $users[0]['role_id'];
+        foreach ($users as $user) {
+            $alluser = User::all();
+            $test = 0;
+            foreach ($alluser as $value) {
+              if($user['name'] == $value->name)
+                {
+                  $test = 1;
+                }
+            }
+              if($test == 0){
+                $newuser = new User();
+                $newuser->name = $user['name'];
+                $newuser->email = $user['email'];
+                $newuser->password = $user['password'];
+                $newuser->role_id = $user['role_id'];
+                
+                $newuser->email = $user['email'];
+                if (!isset($newuser->id))
+                {
+                    $newuser->password = bcrypt($user['password']);
+                }
+                $newuser->save();
+              }
         }
-            $newuser->email = $users[0]['email'];
-        if (!isset($newuser->id))
-        {
-            $newuser->password = bcrypt($users[0]['password']);
-        }
-        $newuser->save();
     }
 }
