@@ -79,22 +79,14 @@ class ProduitController extends Controller
                 $item->famille_id = $request->famille_id;
                 $image_name = null;
                 if($request->hasFile('image')){
-                   $destinationPath = "images/produits";
+                //    $destinationPath = "images/produits";
                    $image = $request->file("image");
                    $image_name = $image->getClientOriginalName();
-                   Storage::disk('public')->put($image_name,file_get_contents($request->image));
-                //    $path = $request->file('image')->storeAs($destinationPath,$image_name);
+                    $destinationPath = public_path().'/images';
+                    $image->move($destinationPath,$image_name);
+                   //Storage::disk('public')->put($image_name,file_get_contents($request->image));
+                   //$path = $request->file('image')->storeAs($destinationPath,$image_name);
                 }
-                // if(!File::isDirectory($path)){
-                // File::makeDirectory($path, 0777, true, true);}
-                // $destinationPath = public_path('\img_prod');
-                // $img = Image::make($image->getRealPath());
-                // $img->resize(60, 60, function ($constraint) {
-                // $constraint->aspectRatio();
-                // })->save($destinationPath.'/'.$input['imagename']);
-                // /*After Resize Add this Code to Upload Image*/
-                // $destinationPath = public_path('/');
-                // $image->move($destinationPath, $input['imagename']);
                 $item->image = $image_name;
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;
