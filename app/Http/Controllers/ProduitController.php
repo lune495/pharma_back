@@ -92,7 +92,6 @@ class ProduitController extends Controller
                 // $img->resize(60, 60, function ($constraint) {
                 // $constraint->aspectRatio();
                 // })->save($destinationPath.'/'.$input['imagename']);
-
                 // /*After Resize Add this Code to Upload Image*/
                 // $destinationPath = public_path('/');
                 // $image->move($destinationPath, $input['imagename']);
