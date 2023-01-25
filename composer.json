@@ -54,7 +54,7 @@
             "composer dumpautoload",
             "php artisan config:cache",
             "sudo mkdir -p s public/uploads/img_prod",
-            "sudo mkdir -p s storage/public/images/produits"
+            "sudo mkdir -p s storage/app/public/images/produits"
         ],
         "config-server-laravel-app": [
             "@config-server-base",
