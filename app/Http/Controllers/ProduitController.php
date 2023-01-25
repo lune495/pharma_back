@@ -79,11 +79,11 @@ class ProduitController extends Controller
                 $item->famille_id = $request->famille_id;
                 $image_name = null;
                 if($request->hasFile('image')){
-                   $destinationPath = "images/produits";
+                   $destinationPath = "images";
                    $image = $request->file("image");
                    $image_name = $image->getClientOriginalName();
-                   Storage::disk('public')->put($image_name,\file_get_contents($request->image));
-                //    $path = $request->file('image')->storeAs($destinationPath,$image_name);
+                //    Storage::disk('public')->put($image_name,file_get_contents($request->image));
+                   $request->image->move(public_path($destinationPath),$image_name);
                 }
                 // if(!File::isDirectory($path)){
                 // File::makeDirectory($path, 0777, true, true);}

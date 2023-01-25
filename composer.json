@@ -53,7 +53,7 @@
             "php artisan clear-compiled",
             "composer dumpautoload",
             "php artisan config:cache",
-            "sudo mkdir -p s public/uploads/img_prod",
+            "sudo mkdir -p s public/images",
             "sudo mkdir -p s storage/app/public/images/produits"
         ],
         "config-server-laravel-app": [
