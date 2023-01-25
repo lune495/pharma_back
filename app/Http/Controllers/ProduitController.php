@@ -83,7 +83,12 @@ class ProduitController extends Controller
                    $image = $request->file("image");
                    $image_name = $image->getClientOriginalName();
                 //    Storage::disk('public')->put($image_name,file_get_contents($request->image));
-                   $request->image->move(public_path($destinationPath),$image_name);
+                if (!file_exists(public_path($destinationPath))) {            
+                if(File::makeDirectory(public_path($destinationPath),0777,true)){
+                    $request->image->move(public_path($destinationPath),$image_name);
+                  }
+                }
+                   
                 }
                 // if(!File::isDirectory($path)){
                 // File::makeDirectory($path, 0777, true, true);}
