@@ -7,6 +7,7 @@ use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 class ProduitController extends Controller
 {
     private $queryName = "produits";
@@ -81,7 +82,8 @@ class ProduitController extends Controller
                    $destinationPath = "images/produits";
                    $image = $request->file("image");
                    $image_name = $image->getClientOriginalName();
-                   $path = $request->file('image')->storeAs($destinationPath,$image_name); 
+                   Storage::disk('public')->put($image_name,\file_get_contents($request->image));
+                //    $path = $request->file('image')->storeAs($destinationPath,$image_name);
                 }
                 // if(!File::isDirectory($path)){
                 // File::makeDirectory($path, 0777, true, true);}
