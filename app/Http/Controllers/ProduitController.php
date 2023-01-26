@@ -7,6 +7,8 @@ use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
+use App\Exports\ExportProduit;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 class ProduitController extends Controller
 {
@@ -164,6 +166,20 @@ class ProduitController extends Controller
         {
             return array();
         }
+    }
+
+     public function importView(Request $request){
+        return view('importFile');
+    }
+ 
+    public function import(Request $request){
+        Excel::import(new ImportUser,
+                      $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+ 
+    public function exportProduit(Request $request){
+        return Excel::download(new ExportProduit, 'produits.xlsx');
     }
 
     /**
