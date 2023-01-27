@@ -57,6 +57,13 @@ class Outil extends Model
         $data = json_decode($response->getBody(), true);
         return ($justone) ? $data['data'][$queryName][0] : $data;
     }
+    public static function setParametersExecution()
+    {
+        ini_set('max_execution_time', -1);
+        ini_set('max_input_time', -1);
+        ini_set('pcre.backtrack_limit', 50000000000);
+        ini_set('memory_limit',-1);
+    }
     public static function getAPI()
     {
         return config('env.APP_URL');

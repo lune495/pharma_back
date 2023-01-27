@@ -7,7 +7,7 @@ use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
-use App\Exports\ExportProduit;
+use App\Exports\ProduitView;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 class ProduitController extends Controller
@@ -132,6 +132,18 @@ class ProduitController extends Controller
         //
         return Produit::find($id);
     }
+    public static function getDataForExport()
+    {
+        $allproduit = Produit::all();
+        $dataForExport = array();
+        $key = 1;
+        foreach ($allproduit as $onligne)
+        {
+            array_push($dataForExport, $onligne);
+        }
+
+        return $dataForExport;
+    }
 
     public function list_top_produit()
     {
@@ -179,7 +191,7 @@ class ProduitController extends Controller
     }
  
     public function exportProduit(Request $request){
-        return Excel::download(new ExportProduit, 'produits.xlsx');
+        return Excel::download(new ProduitView(), 'produits.xlsx');
     }
 
     /**
