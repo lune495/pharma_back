@@ -30,7 +30,7 @@ class ProduitView implements FromView
     public function view(): View
     {
         Outil::setParametersExecution();
-        return view('pdf.Produit', [
+        return view('pdf.produit', [
             'data'    => ProduitController::getDataForExport(),
             'is_excel'   => true,
         ]);
