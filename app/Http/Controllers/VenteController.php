@@ -41,15 +41,15 @@ class VenteController extends Controller
                 {
                     $item = Vente::find($request->id);
                 }
-                // if (empty($item->client_id))
-                // {
-                //     $errors = "Renseignez le client";
-                // }
+                    if (empty($request->client_id))
+                    {
+                        $errors = "Renseignez le client";
+                    }
                 
                     DB::beginTransaction();
                     // $item->montantencaisse = $request->montantencaisse;
                     // $item->monnaie = $request->monnaie;
-                    // $item->client_id = $request->client_id;
+                    $item->client_id = $request->client_id;
                     $item->user_id = $request->user_id;
                     // $item->user_id = 1;
                     $str_json = json_encode($request->details);
