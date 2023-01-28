@@ -59,7 +59,7 @@ class ProduitController extends Controller
                     $produit = Produit::where('code',$request->code)->first();
                     if($produit != null && empty($request->id))
                     {
-                        $errors = "cette reference existe deja";
+                        $errors = "cette reference existe déja";
                     }
                 }
                 
