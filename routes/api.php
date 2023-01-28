@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VenteController;
 use App\Http\Controllers\TaxeController;
@@ -51,6 +52,7 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
     Route::post('/produits/{id}',[ProduitController::class,'save']);
     Route::post('/approvisionnements',[ApprovisionnementController::class,'save']);
     Route::post('/ventes',[VenteController::class,'save']);
+    Route::post('/proformas',[ProformaController::class,'save']);
     Route::put('/familles/{id}',[FamilleController::class,'update']);
     Route::delete('/produits/{id}',[ProduitController::class,'delete']);
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
