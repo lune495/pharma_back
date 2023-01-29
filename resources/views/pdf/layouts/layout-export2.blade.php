@@ -107,7 +107,7 @@
 
                 /** Define the footer rules **/
                 .footer {
-                    *position: fixed;
+                    position: fixed;
                     bottom: 0px;
                     height: 2.5cm;
                 }
@@ -138,15 +138,15 @@
 
             <!--Footer page-->
             <div class="footer">
-                 <div style="font-size:9px;font-weight: bold; border: 1px solid black; padding: 5px ">
+                 {{-- <div style="font-size:9px;font-weight: bold; border: 1px solid black; padding: 5px "> --}}
                     <p> 
-                        <i>La confiance n'exclut pas le controle, veuillez verifier votre facture a la réception
+                        <i>La confiance n'exclut pas le controle, veuillez verifier votre facture à la réception
                         <br>
                         {{-- Tout montant versé en acompte n’est pas remboursable et fait office d’engagement d’achat auprès de FILIALE et reste propriété de FILIALE.   
                         </i>  --}}
                     </p>
-                </div>
-                <hr>
+                {{-- </div> --}}
+                {{-- <hr> --}}
                 <div style="display:inline-flex" style="font-size:10px;">
                     <p class="text-left" style="font-size:10px;"> NINEA: 00455 90 26 - Dakar</p> 
                 </div>
