@@ -13,4 +13,8 @@ class Remise extends Model
     {
         return $this->hasMany(Vente::class);
     }
+    public  function proformas()
+    {
+        return $this->hasMany(Proforma::class);
+    }
 }

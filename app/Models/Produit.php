@@ -17,6 +17,10 @@ class Produit extends Model
     {
         return $this->hasMany(VenteProduit::class);
     }
+    public function proforma_produits()
+    {
+        return $this->hasMany(ProformaProduit::class);
+    }
     public function depots()
     {
         return $this->hasMany(Depot::class);

@@ -25,6 +25,7 @@ class ProformaPaginatedQuery extends Query
         return
         [
             'id'                  => ['type' => Type::int()],
+            'numero'              => ['type' => Type::string()],
             'client_id'           => ['type' => Type::int()],
             'user_id'             => ['type' => Type::int()],
 
@@ -49,6 +50,10 @@ class ProformaPaginatedQuery extends Query
         if (isset($args['user_id']))
         {
             $query = $query->where('user_id', $args['user_id']);
+        }
+        if (isset($args['numero']))
+        {
+            $query = $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['numero'].'%');
         }
         $count = Arr::get($args, 'count', 10);
         $page  = Arr::get($args, 'page', 1);

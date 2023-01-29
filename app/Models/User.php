@@ -58,6 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Vente::class);
     }
+     public function proformas()
+    {
+        return $this->hasMany(Proforma::class);
+    }
     public function approvisionnements()
     {
         return $this->hasMany(Approvisionnement::class);

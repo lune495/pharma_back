@@ -21,6 +21,7 @@ class CreateProformaProduitsTable extends Migration
             $table->foreign('proforma_id')->references('id')->on('proformas');
             $table->integer('qte')->default('0');
             $table->integer('prix_vente')->default(0);
+            $table->float('remise')->nullable()->default('0');
             $table->timestamps();
         });
     }

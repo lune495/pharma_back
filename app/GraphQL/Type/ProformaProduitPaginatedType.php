@@ -2,19 +2,19 @@
 
 namespace App\GraphQL\Type;
 
-use  App\Models\VenteProduit;
-use  App\Models\Outil;
+use  App\Model\LigneApprovisionnement;
+use  App\Model\Outil;
 use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 
-class VenteProduitPaginatedType extends GraphQLType
+class ProformaProduitType extends GraphQLType
 {
 
     protected $attributes =
     [
-        'name' => 'VenteProduit',
+        'name' => 'ProformaProduit',
         'description' => ''
     ];
 
@@ -23,7 +23,7 @@ class VenteProduitPaginatedType extends GraphQLType
         return
         [
             'id'                                                        => [ 'type' => Type::int(), 'description' => ''],
-            'vente_id'                                                  => [ 'type' => Type::int(), 'description' => ''],
+            'proforma_id'                                                  => [ 'type' => Type::int(), 'description' => ''],
             'produit_id'                                                => [ 'type' => Type::int(), 'description' => ''],
             'qte'                                                       => [ 'type' => Type::int(), 'description' => ''],
             'prix_vente'                                                => [ 'type' => Type::int(), 'description' => ''],

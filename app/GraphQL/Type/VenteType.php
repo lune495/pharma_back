@@ -36,7 +36,6 @@ class VenteType extends GraphQLType
                 'taxe'                      => ['type' => GraphQL::type('Taxe')],
                 'vente_produits'            => ['type' => Type::listOf(GraphQL::type('VenteProduit')), 'description' => ''],
                 'created_at'                => ['type' => Type::string()],
-                'created_at'                => ['type' => Type::string()],
                 'created_at_fr'             => ['type' => Type::string()],
 
             ];

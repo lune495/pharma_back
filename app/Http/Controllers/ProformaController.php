@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Proforma,ProformaProduit,User,Outil};
+use App\Models\{Proforma,ProformaProduit,User,Outil,produit};
 use Illuminate\Support\Facades\DB;
 use \PDF;
 
@@ -73,9 +73,9 @@ class ProformaController extends Controller
                             if($tva!= false && $tva->value != null){
                                $item->taxe_id = $tva->id;
                             }
-                            $item->montant = $montant_total_profoma;
+                            $item->montant = $montant_total_proforma;
                             $item->qte = $qte_total_proforma;
-                            $item->numero = "Proforma00{$item->id}";
+                            $item->numero = "PR-CIS22100{$item->id}";
                             $item->save();
                             $id = $item->id;
                             DB::commit();
@@ -84,7 +84,7 @@ class ProformaController extends Controller
                         if (isset($errors))
                         {
                             throw new \Exception($errors);
-                        } 
+                        }
 
         } catch (exception $e) {
             DB::rollback();
@@ -94,4 +94,20 @@ class ProformaController extends Controller
 
     }
 
+    public function generatePDF($id)
+    {
+        $proforma = Proforma::find($id);
+        if($proforma != null)
+        {
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+            // dd($data);
+            $pdf = PDF::loadView("pdf.devis", $data);
+            // $measure = array(0,0,225.772,650.197);
+            // return $pdf->setPaper($measure, 'orientation')->stream();
+            return $pdf->stream();
+        }else{
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, false);
+            return view('notfound');
+        }
+    }
 }

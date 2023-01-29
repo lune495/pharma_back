@@ -15,6 +15,7 @@ class CreateProformasTable extends Migration
     {
         Schema::create('proformas', function (Blueprint $table) {
             $table->id();
+            $table->string('numero')->nullable()->default('PR-CIS2210');
             $table->integer('montant')->nullable();
             $table->integer('qte')->default('0');
             $table->unsignedBigInteger('client_id')->nullable();
