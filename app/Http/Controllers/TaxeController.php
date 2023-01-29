@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\{Taxe,Outil};
 
 class TaxeController extends Controller
 {
@@ -22,15 +24,14 @@ class TaxeController extends Controller
                 {
                     $item = Taxe::find($request->id);
                 }
-                if (empty($request->nom))
-                {
-                    $errors = "Renseignez la taxe";
-                }
+                // if (empty($request->nom))
+                // {
+                //     $errors = "Renseignez la taxe";
+                // }
                 if (empty($request->value))
                 {
                     $errors = "Renseignez la valeur";
                 }
-                $item->nom = $request->nom;
                 $item->value = $request->value;
                 if (!isset($errors)) 
                 {

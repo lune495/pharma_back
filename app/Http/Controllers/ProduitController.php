@@ -7,6 +7,9 @@ use App\Models\{Produit,Outil,VenteProduit,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
+use App\Exports\ProduitView;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 class ProduitController extends Controller
 {
     private $queryName = "produits";
@@ -56,14 +59,14 @@ class ProduitController extends Controller
                     $produit = Produit::where('code',$request->code)->first();
                     if($produit != null && empty($request->id))
                     {
-                        $errors = "cette reference existe deja";
+                        $errors = "cette reference existe déja";
                     }
                 }
                 
-                if ($request->qte < 0)
-                {
-                    $errors = "Renseignez la quantite du produit";
-                }
+                // if ($request->qte < 0)
+                // {
+                //     $errors = "Renseignez la quantite du produit";
+                // }
                 if ($request->pa < 0)
                 {
                     $errors = "Renseignez le prix d'achat";
@@ -76,30 +79,17 @@ class ProduitController extends Controller
                 $item->code = $request->code;
                 $item->description = $request->description;
                 $item->famille_id = $request->famille_id;
-                $image = $request->file('image');
-
-                $reImage = time().'.'.$image->getClientOriginalExtension();
-                if($errors == null && $request->hasFile('image'))
-                {
-                $path = public_path('/img_prod');
-                if(!File::isDirectory($path)){
-                File::makeDirectory($path, 0777, true, true);
+                $image_name = null;
+                if($request->hasFile('image')){
+                //    $destinationPath = "images/produits";
+                   $image = $request->file("image");
+                   $image_name = $image->getClientOriginalName();
+                    $destinationPath = public_path().'/images';
+                    $image->move($destinationPath,$image_name);
+                   //Storage::disk('public')->put($image_name,file_get_contents($request->image));
+                   //$path = $request->file('image')->storeAs($destinationPath,$image_name);
                 }
-                $image->move($path, $reImage);
-                }
-                
-                // if(!File::isDirectory($path)){
-                // File::makeDirectory($path, 0777, true, true);}
-                // $destinationPath = public_path('\img_prod');
-                // $img = Image::make($image->getRealPath());
-                // $img->resize(60, 60, function ($constraint) {
-                // $constraint->aspectRatio();
-                // })->save($destinationPath.'/'.$input['imagename']);
-
-                // /*After Resize Add this Code to Upload Image*/
-                // $destinationPath = public_path('/');
-                // $image->move($destinationPath, $input['imagename']);
-                $item->image = $reImage;
+                $item->image = $image_name;
                 $item->pa = $request->pa;
                 $item->pv = $request->pv;
                 $item->limite = $request->limite;
@@ -142,11 +132,23 @@ class ProduitController extends Controller
         //
         return Produit::find($id);
     }
+    public static function getDataForExport()
+    {
+        $allproduit = Produit::all();
+        $dataForExport = array();
+        $key = 1;
+        foreach ($allproduit as $onligne)
+        {
+            array_push($dataForExport, $onligne);
+        }
+
+        return $dataForExport;
+    }
 
     public function list_top_produit()
     {
         //
-        $top_produit =  DB::select(DB::raw("select produits.designation, sum(vente_produits.qte * vente_produits.`prix_vente`) as Montant from vente_produits inner join produits on vente_produits.produit_id = produits.id group by produits.designation Order by sum(vente_produits.qte * vente_produits.prix_vente) desc limit 5"));
+        $top_produit =  DB::select(DB::raw("select produits.designation, sum(vente_produits.qte * vente_produits.prix_vente) as Montant from vente_produits inner join produits on vente_produits.produit_id = produits.id group by produits.designation Order by sum(vente_produits.qte * vente_produits.prix_vente) desc limit 5"));
         if(isset($top_produit))
         {
             // return $data = [
@@ -176,6 +178,20 @@ class ProduitController extends Controller
         {
             return array();
         }
+    }
+
+     public function importView(Request $request){
+        return view('importFile');
+    }
+ 
+    public function import(Request $request){
+        Excel::import(new ImportUser,
+                      $request->file('file')->store('files'));
+        return redirect()->back();
+    }
+ 
+    public function exportProduit(Request $request){
+        return Excel::download(new ProduitView(), 'produits.xlsx');
     }
 
     /**

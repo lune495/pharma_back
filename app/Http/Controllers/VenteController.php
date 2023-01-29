@@ -34,23 +34,24 @@ class VenteController extends Controller
         {
                 $errors =null;
                 $item = new Vente();
-                $user_id = auth('sanctum')->user()->id;
+                // $user_id = auth('sanctum')->user()->id;
                 $montant_total_vente = 0;
                 $qte_total_vente = 0;
                 if (!empty($request->id))
                 {
                     $item = Vente::find($request->id);
                 }
-                // if ($request->montantencaisse == null)
-                // {
-                //     $errors = "Renseignez le montant encaisse";
-                // }
+                    if (empty($request->client_id))
+                    {
+                        $errors = "Renseignez le client";
+                    }
                 
                     DB::beginTransaction();
                     // $item->montantencaisse = $request->montantencaisse;
                     // $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
-                    $item->user_id = $user_id;
+                    $item->user_id = $request->user_id;
+                    // $item->user_id = 1;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
                         if (!isset($errors)) 
@@ -76,7 +77,7 @@ class VenteController extends Controller
                                     $current_quantity = $produit->qte; 
                                     if ($current_quantity < $detail['quantite']) 
                                     {
-                                        $errors = "<strong class='text-capitalize'>{$produit->designation}</strong> a un stock de <strong class='text-capitalize'>{$current_quantity}</strong><br> Vous ne pouvez pas effectuer cette vente";
+                                        $errors = "{$produit->designation} a un stock de {$current_quantity} Vous ne pouvez pas effectuer cette vente";
                                         break;
                                     }
                                     else 
@@ -90,7 +91,7 @@ class VenteController extends Controller
                                         $saved = $venteprdt->save();
                                         if($saved)
                                         {
-                                            $produit->qte = $produit->qte - $venteprdt->qte;
+                                            $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte ;
                                             $qte_total_vente = $qte_total_vente + $venteprdt->qte;
                                             $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
                                             $produit->save();

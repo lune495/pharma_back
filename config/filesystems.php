@@ -67,7 +67,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        // public_path('storage') => storage_path('app/public'),
+        // public_path('my_custom_symlink_1') => storage_path('app/image'),
     ],
 
 ];

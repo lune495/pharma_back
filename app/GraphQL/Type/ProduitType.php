@@ -56,6 +56,11 @@ class ProduitType extends GraphQLType
         
         return $root['pa']==null ? 0 : $root['pa'];
     }
+    protected function resolveQteField($root, array $args)
+    {
+        
+        return $root['qte']==null ? 0 : $root['qte'];
+    }
     protected function resolvePvField($root, array $args)
     {
         

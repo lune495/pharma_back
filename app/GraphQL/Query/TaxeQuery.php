@@ -42,7 +42,6 @@ class TaxeQuery extends Query
             return
             [
                 'id'                                => $item->id,
-                'nom'                               => $item->nom,
                 'value'                             => $item->value,
             ];
         });

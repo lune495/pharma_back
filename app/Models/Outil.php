@@ -20,10 +20,10 @@ use App\Mail\Maileur;
 use \NumberFormatter;
 class Outil extends Model
 {
-
     public static $queries = array(
         "produits"                   => " id,image,code,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
         "ventes"                     => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,statut,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
+        "proformas"                  => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},user_id,user{id,name,role{id,nom}},proforma_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "users"                      => " id,name,email,role{id,nom}",
         "taxes"                      => " id,value",
         "remises"                    => " id,value",
@@ -51,12 +51,19 @@ class Outil extends Model
                 'exceptions' => true
             ]
         ]);
-
+        $name_env = self::getAPI();
         $critere = (is_numeric($id_critere)) ? "id:{$id_critere}" : $id_critere;
         $queryAttr = Outil::$queries[$queryName];
-        $response = $guzzleClient->get("http://localhost/laravel-app/public/graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
+        $response = $guzzleClient->get("{$name_env}graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
         $data = json_decode($response->getBody(), true);
         return ($justone) ? $data['data'][$queryName][0] : $data;
+    }
+    public static function setParametersExecution()
+    {
+        ini_set('max_execution_time', -1);
+        ini_set('max_input_time', -1);
+        ini_set('pcre.backtrack_limit', 50000000000);
+        ini_set('memory_limit',-1);
     }
     public static function getAPI()
     {
@@ -179,7 +186,7 @@ class Outil extends Model
 
     public static function getCavente($from,$to)
     {
-        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id )
+        $sommetotal = DB::select(DB::raw("select (select coalesce(sum(vp.prix_vente*vp.qte),0) from vente_produits as vp,produits as p,ventes as v where  vp.created_at >= ?  and vp.vente_id = v.id  and vp.created_at <= ? and vp.produit_id=p.id and v.statut is false )
         as solde "),[$from, $to])[0]->solde;
         $sommetotal = Outil::formatPrixToMonetaire($sommetotal, false, true);
         return  $sommetotal;

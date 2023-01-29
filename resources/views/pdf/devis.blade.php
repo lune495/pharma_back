@@ -1,5 +1,5 @@
 {{-- @if (auth()->check()) --}}
-@extends('pdf.layouts.layout-export2')
+@extends('pdf.layouts.layout-export')
 @section('title', "PDF Facture commande")
 @section('content')
 
@@ -65,7 +65,7 @@
         </tr>
     </table>
 
-    <h2 style="margin:0">Facture N°  {{$numero ? $numero : "FA01"}}</h2>
+    <h2 style="margin:0">Devis N°  {{$numero ? $numero : "FA01"}}</h2>
     <br>
     <div class="static">
     <table class="table table-bordered">
@@ -79,15 +79,15 @@
         </tr>
     <tbody style="border:none">
         {{$i = 0}}
-        @foreach($vente_produits as $vente)
+        @foreach($proforma_produits as $proforma)
             {{$i++}}
             <tr {{ $i%2 == 1 ? "style=background-color:rgba(255,249,249,0.877);line-height:9px": "style=background-color:rgba(21,150,189,0.281);line-height:9px" }}>
-                <td style="font-size:12px;padding: 6px;line-height:15px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
-                <td style="font-size:12px;padding: 6px;line-height:15px"><center> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</center></td>
-                <td style="font-size:12px;padding: 6px"> <center>{{$vente["qte"]}}</center></td>
-                <td style="font-size:12px;padding: 6px"> <center>{{$vente["prix_vente"]}}</center></td>
-                <td style="font-size:12px;padding: 6px"> <center>{{($vente["remise"] ? $vente["remise"] : "-")}}</center></td>
-                <td style="font-size:12px;padding: 6px"><center>{{\App\Models\Outil::formatPrixToMonetaire($vente["montant_net"], false, false)}}</center></td>
+                <td style="font-size:12px;padding: 6px;line-height:15px"> {{ \App\Models\Outil::premereLettreMajuscule($proforma["produit"] ? $proforma["produit"]["code"] : "No ref")}}</td>
+                <td style="font-size:12px;padding: 6px;line-height:15px"><center> {{ \App\Models\Outil::premereLettreMajuscule($proforma["produit"] ? $proforma["produit"]["designation"] : "")}}</center></td>
+                <td style="font-size:12px;padding: 6px"> <center>{{$proforma["qte"]}}</center></td>
+                <td style="font-size:12px;padding: 6px"> <center>{{$proforma["prix_vente"]}}</center></td>
+                <td style="font-size:12px;padding: 6px"> <center>{{($proforma["remise"] ? $proforma["remise"] : "-")}}</center></td>
+                <td style="font-size:12px;padding: 6px"><center>{{\App\Models\Outil::formatPrixToMonetaire($proforma["montant_net"], false, false)}}</center></td>
             </tr>
         @endforeach
 
@@ -137,7 +137,7 @@
                     <p style="line-height:5px">{{ \App\Models\Outil::formatPrixToMonetaire($montant_ttc !=0 ? $montant_ttc : $montant_avec_remise, false, false)}}</p>
             </td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td colspan="2"  style="padding-top : 10px;font-size: 11px">
                 <p >Arretée à la somme de :</p>  
                 <p style="font-weight: bold;font-size: 11px">{{\App\Models\Outil::convertNumber($montant_ttc !=0 ? $montant_ttc : $montant_avec_remise)}}</p> 
@@ -145,7 +145,7 @@
             <td style="padding-top : 10px;font-size: 11px" colspan="2"> <p>Conditions Règlement</p> </td>
             <td style="padding-top : 10px;font-size: 11px"> <p>ESPECES</p></td>
             <td style="padding-top : 10px;font-weight: bold;font-size: 11px" colspan="2"><p> {{\App\Models\Outil::formatPrixToMonetaire($montant_ttc ? $montant_ttc : $montant_avec_remise, false, true)}} </p></td>
-        </tr>
+        </tr> --}}
         
     </tbody>
 </table>

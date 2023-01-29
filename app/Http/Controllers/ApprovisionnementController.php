@@ -20,7 +20,7 @@ class ApprovisionnementController extends Controller
                 $errors = null;
                 // $fournisseur = null;
                 $item = new Approvisionnement();
-                $user_id = auth('sanctum')->user()->id;
+                // $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))

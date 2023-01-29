@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use  Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Role;
+use App\Models\{Role,Taxe};
 
 
 class RoleSeeder extends Seeder
@@ -16,6 +16,15 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
+        $taxes = array();
+        array_push($taxes,array("value" => "18"));
+        $newtaxe = Taxe::where('value', $taxes[0]['value'])->first();
+        if (!isset($newtaxe))
+        {
+            $newtaxe = new Taxe();
+            $newtaxe->value = $taxes[0]['value'];
+        }
+        $newtaxe->save();
         $newrole = Role::where('nom','ADMIN')->first();
         if(!isset($newrole))
         {
