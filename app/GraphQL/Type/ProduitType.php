@@ -31,6 +31,7 @@ class ProduitType extends GraphQLType
                 'famille'                   => ['type' => GraphQL::type('Famille')],
                 'depots'                    => ['type' => Type::listOf(GraphQL::type('Depot')), 'description' => ''],
                 'capital'                   => ['type' => Type::string()],
+                'nbr_produit'               => ['type' => Type::string()],
             ];
     }
 
@@ -50,6 +51,11 @@ class ProduitType extends GraphQLType
         }
         $capital = Outil::formatPrixToMonetaire($capital, false, true);
         return $capital;    
+    }
+    protected function resolveNbrProduitField($root, array $args)
+    {
+        $productCount = Produit::count();
+        return $productCount;    
     }
     protected function resolvePaField($root, array $args)
     {

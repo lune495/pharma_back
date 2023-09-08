@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Produit;
-use Maatwebsite\Excel\Concerns\ToModel;
+//use Maatwebsite\Excel\Concerns\ToModel;
 
 class ImportProduit implements ToModel
 {

@@ -6,7 +6,7 @@ use App\Http\Controllers\ProduitController;
 // use App\Model\Bon;
 // use App\Model\PaiementVente;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+//use Maatwebsite\Excel\Concerns\FromView;
 
 use App\Models\{Produit,Outil};
 

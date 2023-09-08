@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Exports\DatasExport;
 use Barryvdh\DomPDF\Facade as PDF;
-use Maatwebsite\Excel\Facades\Excel;
+//use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use MPDF;
 

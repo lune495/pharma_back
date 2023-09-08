@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Produit;
-use Maatwebsite\Excel\Concerns\FromCollection;
+//use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ExportProduit implements FromCollection
 {
