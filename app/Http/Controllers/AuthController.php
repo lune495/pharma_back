@@ -12,6 +12,7 @@ class AuthController extends Controller
     private $queryName = "users";
     // Register
     public function register(Request $request ) {
+      
         $fields = $request->validate([
             'name' => 'required|string',
             'password' => 'required|string|confirmed',
@@ -30,6 +31,7 @@ class AuthController extends Controller
             'user' =>  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]),
             'token' => $token
         ];
+
 
         return Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
     }
