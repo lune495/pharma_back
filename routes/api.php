@@ -25,18 +25,18 @@ use App\Http\Controllers\FournisseurController;
 |
 */
 // Public Routes
-//Route::resource('produits', ProduitController::class);
-Route::get('/produits',[ProduitController::class, 'index']);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+//Route::resource('produits', ProduitController::class);
+Route::get('/produits',[ProduitController::class, 'index']);
 Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/top_produit_vendu',[ProduitController::class, 'list_top_produit']);
 Route::get('/top_meilleur_client',[ProduitController::class, 'list_meilleur_client']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 
 // Protected Routes
-// Route::group(['middleware' => ['auth:sanctum']],function()
-// {
+Route::group(['middleware' => ['auth:sanctum']],function()
+ {
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
@@ -58,4 +58,4 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
     Route::post('/familles',[FamilleController::class,'save']);
     Route::post('/logout',[AuthController::class,'logout']);
-// });
+});
