@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class NewSaleEvent
 {
@@ -32,9 +33,10 @@ class NewSaleEvent
      */
     public function broadcastOn()
     {
+        Log::info('Broadcasting NewSaleEvent');
         return new PrivateChannel('ventes');
     }
-    
+
     /**
      * Les données à diffuser avec l'événement.
      *
