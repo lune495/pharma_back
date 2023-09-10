@@ -33,7 +33,7 @@ class NewSaleEvent
      */
     public function broadcastOn()
     {
-        Log::info('Broadcasting NewSaleEvent');
+        \Log::info('Broadcasting NewSaleEvent');
         return new PrivateChannel('ventes');
     }
 
