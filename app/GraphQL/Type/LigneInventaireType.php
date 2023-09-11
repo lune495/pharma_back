@@ -24,6 +24,7 @@ class LigneInventaireType extends GraphQLType
             'id'                                                        => [ 'type' => Type::int(), 'description' => ''],
             'inventaire_id'                                             => [ 'type' => Type::int(), 'description' => ''],
             'produit_id'                                                => [ 'type' => Type::int(), 'description' => ''],
+            'produit'                                                   => [ 'type' => GraphQL::type('Produit'), 'description' => ''],
             'quantite_reel'                                             => [ 'type' => Type::int(), 'description' => ''],
             'quantite_theorique'                                        => [ 'type' => Type::int(), 'description' => ''],
             'diff_inventaire'                                           => [ 'type' => Type::int(), 'description' => ''],
