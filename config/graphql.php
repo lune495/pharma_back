@@ -76,6 +76,8 @@ return [
             'query' => [
                 // ExampleQuery::class,
                 \App\GraphQL\Query\ProduitQuery::class,
+                \App\GraphQL\Query\InventaireQuery::class,
+                \App\GraphQL\Query\InventairePaginatedQuery::class,
                 \App\GraphQL\Query\ProformaQuery::class,
                 \App\GraphQL\Query\ProduitPaginatedQuery::class,
                 \App\GraphQL\Query\ProformaPaginatedQuery::class,
@@ -135,6 +137,9 @@ return [
         // ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
         \App\GraphQL\Type\ProduitType::class,
+        \App\GraphQL\Type\InventaireType::class,
+        \App\GraphQL\Type\InventairePaginatedType::class,
+        \App\GraphQL\Type\LigneInventaireType::class,
         \App\GraphQL\Type\ProformaType::class,
         \App\GraphQL\Type\TaxeType::class,
         \App\GraphQL\Type\RemiseType::class,
