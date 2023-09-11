@@ -25,7 +25,7 @@ class Outil extends Model
         "ventes"                     => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,statut,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "proformas"                  => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},user_id,user{id,name,role{id,nom}},proforma_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "users"                      => " id,name,email,role{id,nom}",
-        "taxes"                      => " id,value",
+        "inventaires"                => " id,ref,user{id,name},ligne_inventaires{id,produit{id,designation},quantite_reel,quantite_theorique,diff_inventaire}",
         "remises"                    => " id,value",
         "approvisionnements"         => "id,user_id,user{name},montant,statut,numero,qte_total_appro,fournisseur_id,fournisseur{id,nom_complet,telephone,adresse},ligne_approvisionnements{id,produit_id,produit{id,designation,pa,pv,qte,famille_id,famille{id,nom}},quantity_received,created_at,created_at_fr,updated_at,updated_at_fr},created_at,created_at_fr,type_appro",
     );

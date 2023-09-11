@@ -13,6 +13,7 @@ use App\Http\Controllers\FamilleController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\InventaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
+    Route::post('/inventaires',[InventaireController::class,'save']);
     Route::post('/fournisseurs',[FournisseurController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
     Route::post('/approsdepot',[MouvementController::class,'approdepot']);
