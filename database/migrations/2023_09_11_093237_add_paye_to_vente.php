@@ -14,9 +14,7 @@ class AddPayeToVente extends Migration
     public function up()
     {
         Schema::table('ventes', function (Blueprint $table) {
-            //
             $table->boolean('paye')->default('0');
-
         });
     }
 
@@ -28,7 +26,6 @@ class AddPayeToVente extends Migration
     public function down()
     {
         Schema::table('ventes', function (Blueprint $table) {
-            //
             $table->dropColumn('paye');
         });
     }
