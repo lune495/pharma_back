@@ -43,7 +43,7 @@ class InventaireController extends Controller
                 $qte_total_inventaire = 0;
                 if (!empty($request->id))
                 {
-                    $item = Vente::find($request->id);
+                    $item = Inventaire::find($request->id);
                 }
                 
                     DB::beginTransaction();
@@ -62,22 +62,22 @@ class InventaireController extends Controller
                                 else 
                                 {
                                 $quantite_theorique = $produit->qte; 
-                                $ligne_inventaire = new Ligne_Inventaire(); 
+                                $ligne_inventaire = new LigneInventaire(); 
                                 $ligne_inventaire->produit_id = $detail['produit_id'];
                                 $ligne_inventaire->inventaire_id  = $item->id;
                                 $ligne_inventaire->quantite_reel = $detail['quantite_reel'];
                                 $ligne_inventaire->quantite_theorique = $quantite_theorique;
-                                $ligne_inventaire->diff_inventaire = $detail['quantite_reel'] - $detail['quantite_theorique'];
+                                $ligne_inventaire->diff_inventaire = $detail['quantite_reel'] - $quantite_theorique;
                                 $saved = $ligne_inventaire->save();
                                 }
                                 if($saved)
                                 {
                                     if ($detail['quantite_reel'] >  $quantite_theorique) {
-                                        $produit->qte = $produit->qte + ($detail['quantite_reel'] - $detail['quantite_theorique']);
+                                        $produit->qte = $produit->qte + ($detail['quantite_reel'] - $quantite_theorique);
                                         $produit->save();
                                     }
                                     if ($detail['quantite_reel'] <  $quantite_theorique) {
-                                        $produit->qte = $produit->qte - ($detail['quantite_reel'] - $detail['quantite_theorique']);
+                                        $produit->qte = $produit->qte - ($detail['quantite_reel'] - $quantite_theorique);
                                         $produit->save();
                                     }
                                 }
