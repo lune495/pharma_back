@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Famille extends Model
+class Inventairestock extends Model
 {
     use HasFactory;
-
-    public function produits()
-    {
-        return $this->hasMany(Produit::class);
-    }
 }
