@@ -48,6 +48,7 @@ class InventaireQuery extends Query
             [
                 'id'                      => $item->id,
                 'ref'                     => $item->ref,
+                'user'                    => $item->user,
                 'ligne_inventaires'       => $item->ligne_inventaires,
                 'created_at'              => $item->created_at,
                 'created_at_fr'           => $item->created_at_fr,

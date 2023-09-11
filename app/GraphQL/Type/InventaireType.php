@@ -19,6 +19,7 @@ class InventaireType extends GraphQLType
             [ 
                 'id'                        => ['type' => Type::id(), 'description' => ''],
                 'ref'                       => ['type' => Type::string()],
+                'user'                      => ['type' => GraphQL::type('User')],
                 'ligne_inventaires'         => ['type' => Type::listOf(GraphQL::type('LigneInventaire')), 'description' => ''],
                 'created_at'                => ['type' => Type::string()],
                 'created_at_fr'             => ['type' => Type::string()],
