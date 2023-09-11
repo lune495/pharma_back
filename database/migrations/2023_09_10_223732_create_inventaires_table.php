@@ -15,6 +15,7 @@ class CreateInventairesTable extends Migration
     {
         Schema::create('inventaires', function (Blueprint $table) {
             $table->id();
+            $table->string('ref')->nullable()->default('InV00');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
