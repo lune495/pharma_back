@@ -55,8 +55,8 @@ class VenteController extends Controller
                     // $item->montantencaisse = $request->montantencaisse;
                     // $item->monnaie = $request->monnaie;
                     $item->client_id = $request->client_id;
-                    $item->user_id = $user->id;
-                    // $item->user_id = 1;
+                    // $item->user_id = $user->id;
+                    $item->user_id = 1;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
                         if (!isset($errors)) 
@@ -122,10 +122,11 @@ class VenteController extends Controller
                             $log->prix = $montant_total_vente;
                             $log->remise = 0;
                             $log->montant = 0;
-                            $log->user_id = $user->id;
+                            // $log->user_id = $user->id;
+                            $log->user_id = 1;
                             $log->save();
                             DB::commit();
-                            event(new NewSaleEvent($item));
+                            // event(new NewSaleEvent($item));
                             return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                         }
                         if (isset($errors))

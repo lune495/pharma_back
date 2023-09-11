@@ -100,7 +100,6 @@ return [
                 \App\GraphQL\Query\DashboardsQuery::class,
                 \App\GraphQL\Query\RoleQuery::class,
                 \App\GraphQL\Query\FamillePaginatedQuery::class,
-                \App\GraphQL\Query\VenteProduitsQuery::class,
             ],
             'mutation' => [
                 // ExampleMutation::class,
@@ -154,7 +153,6 @@ return [
         \App\GraphQL\Type\UserType::class,
         \App\GraphQL\Type\DepotType::class,
         \App\GraphQL\Type\ApprovisionnementType::class,
-        \App\GraphQL\Type\VenteProduitType::class,
         \App\GraphQL\Type\ProformaProduitType::class,
         \App\GraphQL\Type\LigneApprovisionnementType::class,
         \App\GraphQL\Type\FournisseurPaginatedType::class,
