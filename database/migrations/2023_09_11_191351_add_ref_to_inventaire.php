@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInventairesTable extends Migration
+class AddRefToInventaire extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateInventairesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventaires', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
+        Schema::table('inventaires', function (Blueprint $table) {
+            //
+            $table->string('ref')->nullable()->default('InV0');
         });
     }
 
@@ -28,6 +26,9 @@ class CreateInventairesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventaires');
+        Schema::table('inventaires', function (Blueprint $table) {
+            //
+            $table->dropColumn('ref');
+        });
     }
 }
