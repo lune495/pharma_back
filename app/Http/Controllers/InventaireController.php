@@ -88,7 +88,7 @@ class InventaireController extends Controller
                             $item->ref = "InV0{$item->id}";
                             $item->save();
                             DB::commit();
-                            return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                            return  Outil::redirectgraphql($this->queryName, "id:{$item->id}", Outil::$queries[$this->queryName]);
                         }
                         if (isset($errors))
                         {
