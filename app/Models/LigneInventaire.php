@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class LigneInventaire extends Model
 {
     use HasFactory;
+    public  function produit()
+    {
+        return $this->belongsTo(Produit::class);
+    }
 }
