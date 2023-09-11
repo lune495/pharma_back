@@ -77,7 +77,7 @@ class InventaireController extends Controller
                                         $produit->save();
                                     }
                                     if ($detail['quantite_reel'] <  $quantite_theorique) {
-                                        $produit->qte = $produit->qte - ($detail['quantite_reel'] - $quantite_theorique);
+                                        $produit->qte = $produit->qte - (-1 * $detail['quantite_reel'] - $quantite_theorique);
                                         $produit->save();
                                     }
                                 }
