@@ -81,7 +81,7 @@
         {{$i = 0}}
         @foreach($vente_produits as $vente)
             {{$i++}}
-            <tr {{ $i%2 == 1 ? style="background-color:rgba(255,249,249,0.877);line-height:9px": style="background-color:rgba(21,150,189,0.281);line-height:9px" }}>
+            <tr {{ $i%2 === 1 ? style="background-color:rgba(255,249,249,0.877);line-height:9px": style="background-color:rgba(21,150,189,0.281);line-height:9px" }}>
                 <td style="font-size:12px;padding: 6px;line-height:15px"> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["code"] ? $vente["produit"]["code"] : "No ref")}}</td>
                 <td style="font-size:12px;padding: 6px;line-height:15px"><center> {{ \App\Models\Outil::premereLettreMajuscule($vente["produit"]["designation"])}}</center></td>
                 <td style="font-size:12px;padding: 6px"> <center>{{$vente["qte"]}}</center></td>
