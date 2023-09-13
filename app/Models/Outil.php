@@ -22,7 +22,7 @@ class Outil extends Model
 {
     public static $queries = array(
         "produits"                   => " id,image,code,designation,description,qte,pa,pv,limite,famille_id,famille{id,nom},depots{id,produit_id,stock,limite,pa}",
-        "ventes"                     => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,statut,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
+        "ventes"                     => " id,nom_complet,numero,montant,montant_ht,montant_ttc,montant_taxe,statut,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},montantencaisse,monnaie,user_id,user{id,name,role{id,nom}},vente_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "proformas"                  => " id,numero,montant,montant_ht,montant_ttc,montant_taxe,montant_avec_remise,remise_total,qte,created_at,created_at_fr,taxe{id,value},client{nom_complet,telephone,adresse},user_id,user{id,name,role{id,nom}},proforma_produits{id,remise,pu_net,montant_net,montant_remise,qte,prix_vente,total,produit{id,code,designation,qte,pv}}",
         "users"                      => " id,name,email,role{id,nom}",
         "inventaires"                => " id,ref,user{id,name},ligne_inventaires{id,produit{id,designation},quantite_reel,quantite_theorique,diff_inventaire}",

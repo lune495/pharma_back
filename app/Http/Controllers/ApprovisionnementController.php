@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Fournisseur,Produit,Approvisionnement,User,Depot,Outil,LigneApprovisionnement};
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use \PDF;
 
 
@@ -20,6 +22,7 @@ class ApprovisionnementController extends Controller
                 $errors = null;
                 // $fournisseur = null;
                 $item = new Approvisionnement();
+                $user = Auth::user();
                 // $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
@@ -34,7 +37,7 @@ class ApprovisionnementController extends Controller
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
                 // $item->user_id = $user_id; 
-                $item->user_id = 4; 
+                $item->user_id = $user; 
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 

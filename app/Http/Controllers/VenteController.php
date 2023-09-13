@@ -46,98 +46,98 @@ class VenteController extends Controller
                 {
                     $item = Vente::find($request->id);
                 }
-                    if (empty($request->client_id))
-                    {
-                        $errors = "Renseignez le client";
-                    }
+                if (empty($request->nom_client))
+                {
+                    $errors = "Renseignez le client";
+                }
                 
-                    DB::beginTransaction();
-                    // $item->montantencaisse = $request->montantencaisse;
-                    // $item->monnaie = $request->monnaie;
-                    $item->client_id = $request->client_id;
-                    // $item->user_id = $user->id;
-                    $item->user_id = 1;
-                    $str_json = json_encode($request->details);
-                    $details = json_decode($str_json, true);
-                        if (!isset($errors)) 
+                DB::beginTransaction();
+                // $item->montantencaisse = $request->montantencaisse;
+                // $item->monnaie = $request->monnaie;
+                // $item->client_id = $request->client_id;
+                $item->user_id = $user->id;
+                $item->nom_client = $request->nom_client;
+                $str_json = json_encode($request->details);
+                $details = json_decode($str_json, true);
+                    if (!isset($errors))
+                    {
+                        $item->save();
+                        foreach ($details as $detail) 
                         {
-                            $item->save();
-                            foreach ($details as $detail) 
+                            $produit = Produit::find($detail['produit_id']);
+                            if (!isset($produit)) {
+                            $errors = "Produit inexistant";
+                            }
+                            else if(!isset($detail['quantite']) || !is_numeric($detail['quantite']) || $detail['quantite'] < 1)
                             {
-                                $produit = Produit::find($detail['produit_id']);
-                                if (!isset($produit)) {
-                                $errors = "Produit inexistant";
-                                }
-                                else if(!isset($detail['quantite']) || !is_numeric($detail['quantite']) || $detail['quantite'] < 1)
+                                $errors = "Veuillez défnir la quantité";
+                                break;
+                            }
+                            if (empty($detail['prix_vente']))
+                            {
+                                $errors = "Renseignez le prix unitaire du produit : {$produit->designation}";
+                            }
+                            else 
+                            {
+                                $current_quantity = $produit->qte; 
+                                if ($current_quantity < $detail['quantite']) 
                                 {
-                                    $errors = "Veuillez défnir la quantité";
+                                    $errors = "{$produit->designation} a un stock de {$current_quantity} Vous ne pouvez pas effectuer cette vente";
                                     break;
-                                }
-                                if (empty($detail['prix_vente']))
-                                {
-                                    $errors = "Renseignez le prix unitaire du produit : {$produit->designation}";
                                 }
                                 else 
                                 {
-                                    $current_quantity = $produit->qte; 
-                                    if ($current_quantity < $detail['quantite']) 
+                                    $venteprdt = new VenteProduit(); 
+                                    $venteprdt->produit_id = $detail['produit_id'];
+                                    $venteprdt->vente_id  = $item->id;
+                                    $venteprdt->qte = $detail['quantite'];
+                                    $venteprdt->prix_vente = $detail['prix_vente'];
+                                    $venteprdt->remise = $detail['remise'] > 0 ? $detail['remise'] : 0;
+                                    $saved = $venteprdt->save();
+                                    if($saved)
                                     {
-                                        $errors = "{$produit->designation} a un stock de {$current_quantity} Vous ne pouvez pas effectuer cette vente";
-                                        break;
-                                    }
-                                    else 
-                                    {
-                                        $venteprdt = new VenteProduit(); 
-                                        $venteprdt->produit_id = $detail['produit_id'];
-                                        $venteprdt->vente_id  = $item->id;
-                                        $venteprdt->qte = $detail['quantite'];
-                                        $venteprdt->prix_vente = $detail['prix_vente'];
-                                        $venteprdt->remise = $detail['remise'] > 0 ? $detail['remise'] : 0;
-                                        $saved = $venteprdt->save();
-                                        if($saved)
-                                        {
-                                            $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte ;
-                                            $qte_total_vente = $qte_total_vente + $venteprdt->qte;
-                                            $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
-                                            $produit->save();
-                                        }
+                                        $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte ;
+                                        $qte_total_vente = $qte_total_vente + $venteprdt->qte;
+                                        $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
+                                        $produit->save();
                                     }
                                 }
                             }
                         }
-                        if (!isset($errors)) 
-                        { 
-                            $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::first();
-                            if($tva!= false && $tva->value != null){
-                               $item->taxe_id = $tva->id;
-                            }
-                            $item->montant = $montant_total_vente;
-                            $item->qte = $qte_total_vente;
-                            $item->numero = "FA00{$item->id}";
-                            $item->save();
-                            $id = $item->id;
-                            $log->designation = "pharmacie";
-                            $log->id_evnt = $id;
-                            $log->date = $item->created_at;
-                            $log->prix = $montant_total_vente;
-                            $log->remise = 0;
-                            $log->montant = 0;
-                            // $log->user_id = $user->id;
-                            $log->user_id = 1;
-                            $log->save();
-                            DB::commit();
-                            // event(new NewSaleEvent($item));
-                            return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                    }
+                    if (!isset($errors)) 
+                    { 
+                        $tva = !(array_key_exists('tva', $request->all())) ? false : Taxe::first();
+                        if($tva!= false && $tva->value != null){
+                            $item->taxe_id = $tva->id;
                         }
-                        if (isset($errors))
-                        {
-                            throw new \Exception($errors);
-                        } 
+                        $item->montant = $montant_total_vente;
+                        $item->qte = $qte_total_vente;
+                        $item->numero = "FARMA0{$item->id}";
+                        $item->save();
+                        $id = $item->id;
+                        $log->designation = "pharmacie";
+                        $log->id_evnt = $id;
+                        $log->date = $item->created_at;
+                        $log->prix = $montant_total_vente;
+                        $log->remise = 0;
+                        $log->montant = 0;
+                        // $log->user_id = $user->id;
+                        $log->user_id = 1;
+                        $log->save();
+                        DB::commit();
+                        // event(new NewSaleEvent($item));
+                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
+                    }
+                    if (isset($errors))
+                    {
+                        throw new \Exception($errors);
+                    } 
 
-        } catch (exception $e) {
-            DB::rollback();
-            return $e->getMessage();
-        }
+    } catch (exception $e) {
+        DB::rollback();
+        return $e->getMessage();
+    }
         
 
     }
