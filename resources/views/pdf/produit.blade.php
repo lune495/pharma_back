@@ -122,13 +122,6 @@
                 <th><strong>Category</strong></th>
             </tr>
             <tbody>
-                {{-- @foreach($taille as $key =>$item)
-                    <tr align="center">
-                        <td style="">{{$item->nom}}</td>
-                        <td style="">{{$item->famille_produit["designation"]}}</td>
-                        <td style="">{{$item->description}}</td>
-                    </tr>
-                @endforeach --}}
                 @for ($i = 0; $i < count($data); $i++)
                 <tr align="center">
                         <td style="">{{$data[$i]["code"] }}</td>
