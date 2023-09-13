@@ -6,23 +6,23 @@
     <table style="border: none; border: none;margin-top:2px;font-size: 11px">
         <tr>
             <td style="border: none">
-                <p style="font-weight: bold;font-size: 14px">C.I.S SHOWROOM</p>
-                <p style="font-size: 11px">Vente de Materiels de Plomberie et Sanitaire</p>
+                <p style="font-weight: bold;font-size: 14px">CHIFAA</p>
+                <p style="font-size: 11px">CHIFAA No 023 Parcelles Assainies-Unité 24</p>
             </td>
         </tr>
         <tr  style="border: none">
             <td  style="border: none">
                 <div style="" >
-                    <p  style="text-align:left;line-height:5px"> OUEST FOIRE, TALLY WALLY N°21  </p>
-                    <p style="text-align:left;line-height:5px"> +221 77 348 15 82</p>
-                    <p style="text-align:left;line-height:5px"> +221 77 597 55 21</p>
+                    <p  style="text-align:left;line-height:5px">CHIFAA No 023 Parcelles Assainies-Unité 24</p>
+                    <p style="text-align:left;line-height:5px"> +221 33 821 25 12</p>
+                    <p style="text-align:left;line-height:5px"> 77 270 72 22</p>
                 </div>
             </td>
             <td style="border:none;">
                 <div style="border-left: 3px solid black">
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">www.ccps.sn</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Instagram:  @ccps</p>
-                    <p style="text-align:left ; margin-left:15px;line-height:5px ">email:  ccpsvdn@gmail.com</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">www.chifaa.sn</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">Instagram:  @chifaa²</p>
+                    <p style="text-align:left ; margin-left:15px;line-height:5px ">email:  chifaa@gmail.com</p>
                 </div>
             </td>
             <td style="border:none;"></td>

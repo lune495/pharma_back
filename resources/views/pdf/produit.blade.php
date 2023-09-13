@@ -119,7 +119,7 @@
                 <th><strong>Stock</strong></th>
                 <th><strong>Prix Achat</strong></th>
                 <th><strong>Prix Vente</strong></th>
-                <th><strong>Category</strong></th>
+                <th><strong>Famille</strong></th>
             </tr>
             <tbody>
                 @for ($i = 0; $i < count($data); $i++)
