@@ -55,7 +55,7 @@
             <td style="border: none">
                 <div>
                     <p class="badge" style="text-align:left;line-height:15px">Client</p>
-                    <p style="text-align:left;line-height:5px">{{ $client ?  "Nom: " .\App\Models\Outil::premereLettreMajuscule($client["nom_complet"]) : "CLIENT DE PASSAGE"}}</p>
+                    <p style="text-align:left;line-height:5px">{{ $nom_complet ?  "Nom: " .\App\Models\Outil::premereLettreMajuscule($nom_complet) : "CLIENT DE PASSAGE"}}</p>
                     <p style="text-align:left ;line-height:5px ">{{ $client ? "Téléphone: " . $client["telephone"] : " "}}</p>
                     <p style="text-align:left;line-height:5px;text-transform: capitalize "> {{ $client ? "Adresse:" . $client["adresse"] : ""}}</p>
                 </div>
