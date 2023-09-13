@@ -20,10 +20,8 @@ class ApprovisionnementController extends Controller
             return DB::transaction(function () use ($request)
             {
                 $errors = null;
-                // $fournisseur = null;
                 $item = new Approvisionnement();
                 $user = Auth::user();
-                // $user_id = auth('sanctum')->user()->id;
                 $montant_total_appro = 0;
                 $qte_total_appro = 0;
                 if (isset($request->fournisseur_id))
@@ -37,7 +35,7 @@ class ApprovisionnementController extends Controller
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
                 // $item->user_id = $user_id; 
-                $item->user_id = $user; 
+                $item->user_id = $user->id; 
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
                 if (!isset($errors)) 
@@ -122,7 +120,7 @@ class ApprovisionnementController extends Controller
                     {
                         $item->type_appro = "BOUTIQUE";
                     }
-                    $item->numero = "SN0002022FA0{$item->id}";
+                    $item->numero = "SN0002023FA0{$item->id}";
                     $item->montant = $montant_total_appro;
                     $item->qte_total_appro = $qte_total_appro;
                     $item->save();
@@ -131,7 +129,7 @@ class ApprovisionnementController extends Controller
                 {
                     throw new \Exception($errors);
                 }
-                 DB::commit();
+                DB::commit();
                 return  Outil::redirectgraphql($this->queryName, "id:{$itemId}", Outil::$queries[$this->queryName]);
             });
         } catch (exception $e) {            
