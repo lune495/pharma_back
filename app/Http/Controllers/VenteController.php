@@ -59,7 +59,7 @@ class VenteController extends Controller
                 $item->nom_client = $request->nom_client;
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
-                    if (!isset($errors))
+                    if (!isset($errors)) 
                     {
                         $item->save();
                         foreach ($details as $detail) 

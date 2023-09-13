@@ -29,6 +29,7 @@ class VenteType extends GraphQLType
                 'montantencaisse'           => ['type' => Type::string()],
                 'monnaie'                   => ['type' => Type::string()],
                 'statut'                    => ['type' => Type::boolean()],
+                'nom_complet'               => ['type' => Type::string()],
 
                 'user_id'                   => ['type' => Type::int()],
                 'user'                      => ['type' => GraphQL::type('User')],
