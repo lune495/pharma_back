@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
 use App\Exports\ProduitView;
-//use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 class ProduitController extends Controller
 {
