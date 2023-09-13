@@ -7,7 +7,6 @@
         <tr>
             <td style="border: none">
                 <p style="font-weight: bold;font-size: 14px">CHIFAA</p>
-                <p style="font-size: 11px">CHIFAA No 023 Parcelles Assainies-Unité 24</p>
             </td>
         </tr>
         <tr  style="border: none">
