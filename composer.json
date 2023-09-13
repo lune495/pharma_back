@@ -15,6 +15,7 @@
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "rebing/graphql-laravel": "^8.2"
     },
     "require-dev": {
