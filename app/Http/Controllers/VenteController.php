@@ -46,7 +46,7 @@ class VenteController extends Controller
                 {
                     $item = Vente::find($request->id);
                 }
-                if (empty($request->nom_client))
+                if (empty($request->nom_complet))
                 {
                     $errors = "Renseignez le client";
                 }
