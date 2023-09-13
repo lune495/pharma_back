@@ -77,6 +77,7 @@ class VenteQuery extends Query
                 'montantencaisse'         => $item->montantencaisse,
                 'monnaie'                 => $item->monnaie,
                 'statut'                  => $item->statut,
+                'paye'                    => $item->paye,
                 'nom_complet'             => $item->nom_complet,
                 'user_id'                 => $item->user_id,
                 'user'                    => $item->user,
