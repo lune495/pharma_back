@@ -34,11 +34,10 @@ Route::get('/produits/{id}',[ProduitController::class, 'show']);
 Route::get('/top_produit_vendu',[ProduitController::class, 'list_top_produit']);
 Route::get('/top_meilleur_client',[ProduitController::class, 'list_meilleur_client']);
 Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
-Route::post('/inventaire',[InventaireController::class,'save']);
 
 // Protected Routes
-// Route::group(['middleware' => ['auth:sanctum']],function()
-//  {
+Route::group(['middleware' => ['auth:sanctum']],function()
+ {
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
@@ -46,6 +45,7 @@ Route::post('/inventaire',[InventaireController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
     Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
+    Route::post('/inventaire',[InventaireController::class,'save']);
     Route::post('/venteannulee/{id}',[VenteController::class,'abortsale']);
     Route::post('/approannulee/{id}',[ApprovisionnementController::class,'abortappro']);
     Route::delete('/clients/{id}',[ClientController::class,'delete']);
@@ -60,4 +60,4 @@ Route::post('/inventaire',[InventaireController::class,'save']);
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
     Route::post('/familles',[FamilleController::class,'save']);
     Route::post('/logout',[AuthController::class,'logout']);
-// });
+});
