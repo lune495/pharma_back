@@ -15,7 +15,7 @@ class AddNomClientToVente extends Migration
     {
         Schema::table('ventes', function (Blueprint $table) {
             //
-            $table->string('nom_client')->default('client passager');
+            $table->string('nom_client')->nullable();
         });
     }
 
