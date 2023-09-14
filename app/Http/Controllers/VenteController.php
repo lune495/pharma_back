@@ -52,7 +52,7 @@ class VenteController extends Controller
                 // $item->monnaie = $request->monnaie;
                 // $item->client_id = $request->client_id;
                 // $item->user_id = $user->id;
-                $item->user_id = 1;
+                $item->user_id = 2;
                 $item->nom_client = $request->nom_complet;
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
@@ -120,7 +120,7 @@ class VenteController extends Controller
                         $log->remise = 0;
                         $log->montant = 0;
                         // $log->user_id = $user->id;
-                        $log->user_id = 1;
+                        $log->user_id = 2;
                         $log->save();
                         DB::commit();
                         // event(new NewSaleEvent($item));

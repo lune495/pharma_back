@@ -34,7 +34,7 @@ class ApprovisionnementController extends Controller
                 // }
                 DB::beginTransaction();
                 $item->fournisseur_id = $request->fournisseur_id;
-                $item->user_id = 1; 
+                $item->user_id = 2; 
                 // $item->user_id = $user->id;
                 $str_json = json_encode($request->details);
                 $details = json_decode($str_json, true);
