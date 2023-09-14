@@ -37,8 +37,8 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 Route::post('/inventaire',[InventaireController::class,'save']);
 
 // Protected Routes
-// Route::group(['middleware' => ['auth:sanctum']],function()
-//  {
+Route::group(['middleware' => ['auth:sanctum']],function()
+ {
     Route::post('/produits',[ProduitController::class,'save']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
@@ -60,4 +60,4 @@ Route::post('/inventaire',[InventaireController::class,'save']);
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
     Route::post('/familles',[FamilleController::class,'save']);
     Route::post('/logout',[AuthController::class,'logout']);
-// });
+});
