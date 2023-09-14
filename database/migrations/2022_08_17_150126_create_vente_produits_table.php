@@ -13,7 +13,9 @@ class CreateVenteProduitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vente_produits', function (Blueprint $table) {
+        
+        if (!Schema::hasTable('vente_produits')) {
+            Schema::create('vente_produits', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits');
@@ -23,6 +25,7 @@ class CreateVenteProduitsTable extends Migration
             $table->integer('prix_vente');
             $table->timestamps();
         });
+        }
     }
 
     /**

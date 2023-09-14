@@ -13,6 +13,7 @@ class CreateProduitsTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('produits')) {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
             $table->string('code')->nullable();
@@ -27,6 +28,7 @@ class CreateProduitsTable extends Migration
             $table->foreign('famille_id')->references('id')->on('familles');
             $table->timestamps();
         });
+    }
     }   
 
     /**

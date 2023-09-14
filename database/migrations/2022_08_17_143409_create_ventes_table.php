@@ -13,6 +13,7 @@ class CreateVentesTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('ventes')) {
         Schema::create('ventes', function (Blueprint $table) {
             $table->id();
             $table->integer('montant')->nullable();
@@ -23,6 +24,7 @@ class CreateVentesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
+    }
     }
 
     /**

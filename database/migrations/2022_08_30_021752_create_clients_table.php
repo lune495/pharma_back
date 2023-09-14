@@ -13,14 +13,16 @@ class CreateClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string('nom_complet');
-            $table->string('email')->nullable();
-            $table->string('adresse')->nullable();
-            $table->string('telephone')->nullable();
-            $table->timestamps();
-        });
+            if (!Schema::hasTable('clients')) {
+                Schema::create('clients', function (Blueprint $table) {
+                $table->id();
+                $table->string('nom_complet');
+                $table->string('email')->nullable();
+                $table->string('adresse')->nullable();
+                $table->string('telephone')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
