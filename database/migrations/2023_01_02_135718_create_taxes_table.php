@@ -13,11 +13,13 @@ class CreateTaxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        if (!Schema::hasTable('taxes')) {
+            Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->float('value');
             $table->timestamps();
         });
+        }
     }
 
     /**
