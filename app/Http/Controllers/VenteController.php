@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise,Log};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Events\NewSaleEvent;
+use App\Events\MyEvent;
 
 use \PDF;
 
@@ -124,6 +124,7 @@ class VenteController extends Controller
                         $log->save();
                         DB::commit();
                         // event(new NewSaleEvent($item));
+                        event(new MyEvent('Nouvelle vente'));
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                     if (isset($errors))

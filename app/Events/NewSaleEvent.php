@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class NewSaleEvent
+class NewSaleEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $sale;
@@ -33,8 +33,7 @@ class NewSaleEvent
      */
     public function broadcastOn()
     {
-        \Log::info('Broadcasting NewSaleEvent');
-        return new PrivateChannel('ventes');
+        return ['vente'];
     }
 
     /**
@@ -42,13 +41,20 @@ class NewSaleEvent
      *
      * @return array
      */
-    public function broadcastWith()
+    public function broadcastAs()
     {
-        // Vous pouvez personnaliser les données que vous souhaitez diffuser avec l'événement.
-        // Par exemple, vous pouvez inclure des détails sur la vente nouvellement enregistrée.
         return [
             'message' => 'Nouvelle vente enregistrée!',
             'sale' => $this->sale,
         ];
     }
+    // public function broadcastWith()
+    // {
+    //     // Vous pouvez personnaliser les données que vous souhaitez diffuser avec l'événement.
+    //     // Par exemple, vous pouvez inclure des détails sur la vente nouvellement enregistrée.
+    //     return [
+    //         'message' => 'Nouvelle vente enregistrée!',
+    //         'sale' => $this->sale,
+    //     ];
+    // }
 }
