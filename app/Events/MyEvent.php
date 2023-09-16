@@ -9,11 +9,11 @@ class MyEvent implements ShouldBroadcast
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public $message;
+  public $vente;
 
-  public function __construct($message)
+  public function __construct($vente)
   {
-      $this->message = $message;
+      $this->vente = $vente;
   }
 
   public function broadcastOn()
@@ -23,6 +23,9 @@ class MyEvent implements ShouldBroadcast
 
   public function broadcastAs()
   {
-      return 'my-event';
+    [
+        'message' => 'Nouvelle vente enregistrée!',
+        'my-event' => $this->vente,
+    ];
   }
 }
