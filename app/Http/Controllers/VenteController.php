@@ -7,6 +7,8 @@ use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise,Log};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MyEvent;
+use Pusher\Pusher;
+
 use \PDF;
 
 class VenteController extends Controller
