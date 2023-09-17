@@ -123,7 +123,8 @@ class VenteController extends Controller
                         $log->save();
                         DB::commit();
                         // event(new NewSaleEvent($item));
-                        event(new MyEvent($item));
+                        // event(new MyEvent($item));
+                        Pusher::trigger('my-channel', 'my-event', ['vente' => $item]);
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                     if (isset($errors))

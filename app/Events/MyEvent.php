@@ -25,9 +25,11 @@ class MyEvent implements ShouldBroadcast
 
   public function broadcastAs()
   {
-    [
-        'message' => 'Nouvelle vente enregistrée!',
-        'my-event' => $this->vente,
-    ];
+    return 'my-event';
+  }
+
+  public function broadcastWith()
+  {
+    return ['vente' => $this->vente];
   }
 }
