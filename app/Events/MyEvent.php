@@ -6,6 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\Channel;
 
 class MyEvent implements ShouldBroadcast
 {
@@ -13,14 +14,14 @@ class MyEvent implements ShouldBroadcast
 
   public $vente;
 
-  public function __construct($vente)
+  public function __construct()
   {
-      $this->vente = $vente;
+    //   $this->vente = $vente;
   }
 
   public function broadcastOn()
   {
-      return ['my-channel'];
+      return new Channel('chan-demo');
   }
 
   public function broadcastAs()

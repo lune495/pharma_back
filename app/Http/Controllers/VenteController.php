@@ -7,7 +7,6 @@ use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise,Log};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MyEvent;
-use Pusher\Pusher;
 
 use \PDF;
 
@@ -25,6 +24,13 @@ class VenteController extends Controller
         
         return Vente::all();
 
+    }
+
+    public function notif()
+    {
+        $event = new MyEvent();
+        event($event);
+        dd("test");
     }
 
     /**
@@ -50,15 +56,6 @@ class VenteController extends Controller
                 }
                 
                 DB::beginTransaction();
-                $pusher = new Pusher(
-                    config('broadcasting.connections.pusher.key'),
-                    config('broadcasting.connections.pusher.secret'),
-                    config('broadcasting.connections.pusher.app_id'),
-                    [
-                        'cluster' => config('broadcasting.connections.pusher.options.cluster'),
-                        'useTLS' => true,
-                    ]
-                );
                 // $item->montantencaisse = $request->montantencaisse;
                 // $item->monnaie = $request->monnaie;
                 // $item->client_id = $request->client_id;
@@ -136,7 +133,6 @@ class VenteController extends Controller
                         DB::commit();
                         // event(new NewSaleEvent($item));
                         // event(new MyEvent($item));
-                        $pusher->trigger('my-channel', 'my-event', ['vente' => $item]);
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                     if (isset($errors))

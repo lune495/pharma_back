@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "predis/predis": "^2.2",
         "rebing/graphql-laravel": "^8.2"
     },
     "require-dev": {
