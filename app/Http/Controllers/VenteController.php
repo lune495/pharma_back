@@ -14,6 +14,7 @@ use \PDF;
 class VenteController extends Controller
 {
     private $queryName = "ventes";
+    
     /**
      * Display a listing of the resource.
      *
@@ -49,6 +50,15 @@ class VenteController extends Controller
                 }
                 
                 DB::beginTransaction();
+                $pusher = new Pusher(
+                    config('broadcasting.connections.pusher.key'),
+                    config('broadcasting.connections.pusher.secret'),
+                    config('broadcasting.connections.pusher.app_id'),
+                    [
+                        'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                        'useTLS' => true,
+                    ]
+                );
                 // $item->montantencaisse = $request->montantencaisse;
                 // $item->monnaie = $request->monnaie;
                 // $item->client_id = $request->client_id;
@@ -126,7 +136,7 @@ class VenteController extends Controller
                         DB::commit();
                         // event(new NewSaleEvent($item));
                         // event(new MyEvent($item));
-                        Pusher::trigger('my-channel', 'my-event', ['vente' => $item]);
+                        $pusher->trigger('my-channel', 'my-event', ['vente' => $item]);
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                     if (isset($errors))
