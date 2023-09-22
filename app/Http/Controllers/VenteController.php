@@ -28,7 +28,14 @@ class VenteController extends Controller
 
     public function Notif()
     {
-        event(new MyEvent('hello world'));
+        $item = new Vente();
+        $item->user_id = 1;
+        // $item->user_id = 2;
+        $item->nom_client = "Alioune Badara";
+        $item->montant = 120000;
+        $item->qte = 10;
+        $item->numero = "FARMA000012";
+        event(new MyEvent($item));
     }
 
     /**
