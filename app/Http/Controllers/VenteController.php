@@ -28,14 +28,8 @@ class VenteController extends Controller
 
     public function Notif()
     {
-        $item = new Vente();
-        $item->user_id = 1;
-        // $item->user_id = 2;
-        $item->nom_client = "Alioune Badara";
-        $item->montant = 120000;
-        $item->qte = 10;
-        $item->numero = "FARMA000012";
-        event(new MyEvent($item));
+        $data = Outil::getOneItemWithGraphQl($this->queryName,9, true);
+        event(new MyEvent($data));
     }
 
     /**
@@ -106,7 +100,7 @@ class VenteController extends Controller
                                     $saved = $venteprdt->save();
                                     if($saved)
                                     {
-                                        $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte ;
+                                        // $produit->qte = $produit->qte != null ? $produit->qte - $venteprdt->qte : $venteprdt->qte;
                                         $qte_total_vente = $qte_total_vente + $venteprdt->qte;
                                         $montant_total_vente = $montant_total_vente  + ($detail['prix_vente'] * $venteprdt->qte);
                                         $produit->save();
