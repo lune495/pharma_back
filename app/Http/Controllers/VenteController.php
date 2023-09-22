@@ -26,11 +26,9 @@ class VenteController extends Controller
 
     }
 
-    public function notif()
+    public function Notif()
     {
-        $event = new MyEvent();
-        event($event);
-        dd("test");
+        event(new MyEvent('hello world'));
     }
 
     /**
