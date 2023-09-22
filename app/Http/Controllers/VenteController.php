@@ -129,9 +129,9 @@ class VenteController extends Controller
                         $log->user_id = $user->id;
                         // $log->user_id = 2;
                         $log->save();
+                        $data = Outil::getOneItemWithGraphQl($this->queryName,$id, true);
+                        event(new MyEvent($data));
                         DB::commit();
-                        // event(new NewSaleEvent($item));
-                        // event(new MyEvent($item));
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                     }
                     if (isset($errors))
