@@ -12,25 +12,20 @@ class MyEvent implements ShouldBroadcast
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public $vente;
+  public $message;
 
-  public function __construct()
+  public function __construct($message)
   {
-    //   $this->vente = $vente;
+      $this->message = $message;
   }
 
   public function broadcastOn()
   {
-      return new Channel('chan-demo');
+      return ['my-channel'];
   }
 
   public function broadcastAs()
   {
-    return 'my-event';
-  }
-
-  public function broadcastWith()
-  {
-    return ['vente' => $this->vente];
+      return 'my-event';
   }
 }
