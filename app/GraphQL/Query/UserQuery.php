@@ -23,6 +23,7 @@ class UserQuery extends Query
         return
         [
             'id'                  => ['type' => Type::int()],
+            'role_id'             => ['type' => Type::int()],
             'nom'                 => ['type' => Type::string()],
         ];
     }
@@ -33,6 +34,10 @@ class UserQuery extends Query
         if (isset($args['id']))
         {
             $query = $query->where('id', $args['id']);
+        }  
+        if (isset($args['role_id']))
+        {
+            $query = $query->where('role_id', $args['role_id']);
         }  
         $query = $query->get(); 
         return $query->map(function (User $item)
