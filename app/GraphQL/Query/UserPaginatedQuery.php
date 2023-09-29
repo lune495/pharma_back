@@ -25,6 +25,7 @@ class UserPaginatedQuery extends Query
         return
         [
             'id'                            => ['type' => Type::int()],
+            'role_id'                       => ['type' => Type::int()],
             'name'                          => ['type' => Type::string()],
         
             'page'                          => ['name' => 'page', 'description' => 'The page', 'type' => Type::int() ],
@@ -39,6 +40,10 @@ class UserPaginatedQuery extends Query
         if (isset($args['id']))
         {
             $query->where('id', $args['id']);
+        }
+        if (isset($args['role_id']))
+        {
+            $query->where('role_id', $args['role_id']);
         }
         if (isset($args['name']))
         {
