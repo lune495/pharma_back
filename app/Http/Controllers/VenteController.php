@@ -219,14 +219,14 @@ class VenteController extends Controller
             $results = [];
             $data = DB::table('ventes')
             ->select('*') // Sélectionne tous les attributs de la table "ventes"
-            ->where(function ($query) {
-                $query->where('created_at', '>=', function ($subQuery) {
-                    $subQuery->select('date_fermeture')
-                        ->from('cloture_caisses')
-                        ->orderByDesc('date_fermeture')
-                        ->limit(1);
-                });
-            })
+            // ->where(function ($query) {
+            //     $query->where('created_at', '>=', function ($subQuery) {
+            //         $subQuery->select('date_fermeture')
+            //             ->from('cloture_caisses')
+            //             ->orderByDesc('date_fermeture')
+            //             ->limit(1);
+            //     });
+            // })
             ->where('created_at', '<=', now())
             ->orderBy('created_at') // Vous pouvez également trier par un attribut spécifique si nécessaire
             ->get();
