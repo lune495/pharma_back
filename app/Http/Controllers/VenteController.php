@@ -226,7 +226,7 @@ class VenteController extends Controller
                     ->toArray();
                     $results['data'] = $data;
                     $results['date_situation'] = now()->format('Y-m-d H:i:s');
-                dd($results);
+                //dd($results);
             } else {
                 $data = DB::table('ventes')
                     ->select('*')

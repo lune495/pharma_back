@@ -4,132 +4,66 @@
                 @yield('title')
             </title>
             <style>
-                .text-uppercase
-                {
-                    text-transform: uppercase;
-                }
-                .table {
-                    width: 100%;
-                    margin-bottom: 1rem;
-                    background-color: transparent;
-                }
-                .table th,
-                .table td {
-                    padding: 0.55rem;
-                    vertical-align: top;
-                    border-top: 1px solid #e9ecef;
-                }
-                 .table thead th {
-                    background-color: black;
-                    vertical-align: bottom;
-                    border-bottom: 2px solid #e9ecef;
-                    color: #d7d9f2;
-                }
-                .table tbody + tbody {
-                    border-top: 2px solid #e9ecef;
-                }
-                .table .table {
-                    background-color: #fff;
-                }
-                .table-sm th,
-                .table-sm td {
-                    padding: 0.3rem;
-                }
-                .table-bordered {
-                    border: none;
-                }
+               /* styles.css */
 
-                .table-bordered th,
-                .table-bordered td {
-                    border: none;
-                }
-                .table-bordered thead th,
-                .table-bordered thead td {
-                    border-bottom-width: 2px;
-                }
-                .table-borderless th,
-                .table-borderless td,
-                .table-borderless thead th,
-                .table-borderless tbody + tbody {
-                    border: 0;
-                }
-                .table-striped tbody tr:nth-of-type(odd) {
-                    background-color: rgba(0, 0, 0, 0.03);
-                }
-                td,
-                th {
-                    border: 1px solid rgb(190, 190, 190);
-                    padding: 10px;
-                }
+/* Supprimez les marges du corps du document */
+body {
+    margin: 0;
+    padding: 0;
+}
 
-                td {
-                    text-align: center;
-                }
+/* Style pour les tableaux */
+.table-container {
+    display: flex;
+    justify-content: space-between;
+}
+ /* Style pour centrer le titre */
+    .situation-heading {
+        text-align: center;
+    }
 
-                th[scope="col"] {
-                    background-color: #696969;
-                    color: #fff;
-                }
+/* Style pour chaque tableau */
+.custom-table {
+    border-collapse: collapse;
+    width: 100%; /* Ajustez la largeur selon vos besoins, par exemple, 50% */
+}
 
-                th[scope="row"] {
-                    background-color: #d7d9f2;
-                }
-                table {
-                    border-collapse: collapse;
-                    border: 1px solid rgb(200, 200, 200);
-                    letter-spacing: 1px;
-                    font-family: sans-serif;
-                    font-size: .8rem;
-                }
-                .text-center {
-                    text-align: center;
-                }
-                .text-left {
-                    text-align: left;
-                }
-                .text-right {
-                    text-align: right;
-                }
-                /** Define now the real margins of every page in the PDF **/
-                body {
-                    margin-top: 0.2cm;
-                    font-weight: 400;
-                    background:  #fff;
-                    color: black;
-                    -webkit-print-color-adjust:  exact;
-                }
+.custom-table th {
+    background-color: #007bff; /* Couleur de l'en-tête */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
 
-                /** Define the header rules **/
-                .header {
-                    position: fixed;
-                    height: 1.5cm;
-                }
+.custom-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
 
-                /** Define the footer rules **/
-                .footer {
-                    position: fixed;
-                    bottom: 0px;
-                    height: 2.5cm;
-                }
-                .badge{
-                    padding:.5em 2em !important;
-                    color:black;
-                    background:#f1f1f1;
-                    max-width: 300px !important;
-                    border-radius:8px !important;
-                    font-size:11px !important;
-                }
-                .mb-4{
-                    margin-bottom: 5em;                }
-                .mt-4{
-                    margin-top: 2em;                }
+/* Style pour la ligne colorée */
+.colorful-row {
+    background-color: #f2f2f2;
+}
+
+/* Style pour le badge */
+.badge {
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
             </style>
         </head>
         <body>
 
-            <header class = "mb-4"  style="width:100%;">
-                <div class="header text-center" style="font-size: 300px;font-weight:bold">
-                    <img style="width: 100%" src="https://i.ibb.co/Tg0tJFW/Logo-saloum-digital.jpg" alt="">
+            <header class = "mb-4" >
+                <div class="header text-center">
+                <!-- <img src="{{asset('app-assets/assets/images/LOGO.png')}}" style="width: 80px; margin-top: 10px;"> <br> -->
                 </div>
             </header>
             <div class="mt-4">
@@ -138,18 +72,18 @@
 
             <!--Footer page-->
             <div class="footer">
-                 {{-- <div style="font-size:9px;font-weight: bold; border: 1px solid black; padding: 5px ">
+                 <!-- {{-- <div style="font-size:9px;font-weight: bold; border: 1px solid black; padding: 5px "> --}}
                     <p> 
-                        <i>La confiance n'exclut pas le controle, veuillez verifier votre facture a la réception
+                        <i>La confiance n'exclut pas le controle, veuillez verifier votre facture à la réception
                         <br>
-                         Tout montant versé en acompte n’est pas remboursable et fait office d’engagement d’achat auprès de FILIALE et reste propriété de FILIALE.   
-                        </i>  
+                        {{-- Tout montant versé en acompte n’est pas remboursable et fait office d’engagement d’achat auprès de FILIALE et reste propriété de FILIALE.   
+                        </i>  --}}
                     </p>
-                </div> --}}
-                {{-- <hr> --}}
-                <div style="display:inline-flex" style="font-size:10px;">
+                {{-- </div> --}}
+                {{-- <hr> --}} -->
+                <!-- <div style="display:inline-flex" style="font-size:10px;">
                     <p class="text-left" style="font-size:10px;"> NINEA: 00455 90 26 - Dakar</p> 
-                </div>
+                </div> -->
             </div>
         </body>
     </html>
