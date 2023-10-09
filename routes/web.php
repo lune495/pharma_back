@@ -21,7 +21,7 @@ use App\Http\Controllers\ProformaController;
 // Route::group(['middleware' => ['auth:sanctum']],function()
 // {
     Route::get('/vente/generate-pdf/{id}', [VenteController::class,'generatePDF']);
-    Route::get('/vente/situation', [VenteControllerController::class,'generatePDF2']);
+    Route::get('/vente/situation', [VenteController::class,'generatePDF2']);
     Route::get('/approvisionnementpdf/{id}', [ApprovisionnementController::class,'genereallPDf']);
     Route::get('/export-produits',[ProduitController::class,'exportProduit']);
     Route::get('/test',[VenteController::class,'Notif']);
