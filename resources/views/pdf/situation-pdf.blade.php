@@ -2,7 +2,7 @@
 @section('title', "Situation Generale")
 @section('content')
 
-<h4 class="situation-heading">Situation Generale du {{$date_situation}}</h4>
+<h4 class="situation-heading">Situation Pharmacie du {{$date_situation}}</h4>
 <div class="table-container">
     <!-- Tableau de gauche (RECETTE) -->
     <div class="table-wrapper left">
