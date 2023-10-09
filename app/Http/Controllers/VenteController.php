@@ -221,6 +221,7 @@ class VenteController extends Controller
             if ($count === 0) {
                 $data = DB::table('ventes')
                     ->select('*')
+                    ->where('statut', '=', false)
                     ->orderBy('created_at')
                     ->get()
                     ->toArray();
