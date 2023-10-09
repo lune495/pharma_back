@@ -21,12 +21,13 @@ class VenteQuery extends Query
     {
         return
         [
-            'id'                  => ['type' => Type::int()],
-            'reference'           => ['type' => Type::string()],
-            'user_id'             => ['type' => Type::int()],
-            'produit_id'          => ['type' => Type::int()],
-            'created_at_start'    => ['type' => Type::string()],
-            'created_at_end'      => ['type' => Type::string()],
+            'id'                   => ['type' => Type::int()],
+            'reference'            => ['type' => Type::string()],
+            'user_id'              => ['type' => Type::int()],
+            'produit_id'           => ['type' => Type::int()],
+            'created_at_start'     => ['type' => Type::string()],
+            'created_at_end'       => ['type' => Type::string()],
+            'filtre_pharma'        => ['type' => Type::string()],
         ];
     }
 
@@ -41,6 +42,10 @@ class VenteQuery extends Query
         if (isset($args['reference']))
         {
             $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
+        }
+        if (isset($args['filtre_pharma']))
+        {
+            $query->where('statut',false);
         }
         if(isset($args['produit_id']))
         {
