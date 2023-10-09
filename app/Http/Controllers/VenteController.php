@@ -217,7 +217,7 @@ class VenteController extends Controller
             $errors =null;
             $montant = 0;
             $results = [];
-            $data = DB::table('cloture_caisses')
+            $data = DB::table('ventes')
             ->select('*') // Sélectionne tous les attributs de la table "ventes"
             // ->where(function ($query) {
             //     $query->where('created_at', '>=', function ($subQuery) {
