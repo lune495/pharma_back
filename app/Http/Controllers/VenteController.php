@@ -231,6 +231,7 @@ class VenteController extends Controller
             } else {
                 $data = DB::table('ventes')
                     ->select('*')
+                    ->where('statut', '=', false)
                     ->where(function ($query) {
                         $query->where('created_at', '>=', function ($subQuery) {
                             $subQuery->select('date_fermeture')
