@@ -127,6 +127,7 @@ class VenteController extends Controller
                         $log->remise = 0;
                         $log->montant = 0;
                         $log->user_id = $user->id;
+                        $log->statut_pharma = false;
                         // $log->user_id = 2;
                         $log->save();
                         DB::commit();
@@ -160,6 +161,7 @@ class VenteController extends Controller
         {
             $vente = Vente::find($id);
             if($vente){
+                $log = Log::where('id_evnt',$vente->id)->get();
                 if($vente->statut == 0)
                 {
                     DB::beginTransaction();
@@ -176,6 +178,8 @@ class VenteController extends Controller
                     $vente->statut = 1;
                     if($vente->save())
                     {
+                        $log->statut_pharma = true;
+                        $log->save();
                         DB::commit();
                         $id = $vente->id;
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
