@@ -183,6 +183,10 @@ class Outil extends Model
         $retour = ' F CFA';
         return $retour;
     }
+    
+    public static function toUpperCase($inputString) {
+        return strtoupper($inputString);
+    }
 
     public static function getCavente($from,$to)
     {
