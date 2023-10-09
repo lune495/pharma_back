@@ -210,6 +210,39 @@ class VenteController extends Controller
             return view('notfound');
         }
     }
+    public function generatePDF2()
+    {
+            // Calculez le montant total de la caisse à la fermeture (par exemple, en ajoutant les montants des consultations non facturées)
+            // $totalCaisse = $request->montant_total;
+            $errors =null;
+            $montant = 0;
+            $results = [];
+            $data = DB::table('ventes')
+            ->select('*') // Sélectionne tous les attributs de la table "ventes"
+            ->where(function ($query) {
+                $query->where('created_at', '>=', function ($subQuery) {
+                    $subQuery->select('date_fermeture')
+                        ->from('cloture_caisses')
+                        ->orderByDesc('date_fermeture')
+                        ->limit(1);
+                });
+            })
+            ->where('created_at', '<=', now())
+            ->orderBy('created_at') // Vous pouvez également trier par un attribut spécifique si nécessaire
+            ->get();
+
+            $latestClosureDate = DB::table('cloture_caisses')
+            ->select(DB::raw('MAX(date_fermeture) AS latest_date_fermeture'))
+            ->whereNotNull('date_fermeture')
+            ->first();
+            dd($data);
+            $results['data'] = $data;
+            $results['depenses'] = $depenses;
+            $results['derniere_date_fermeture'] = $latestClosureDate->latest_date_fermeture;
+            $results['current_date'] = now()->format('Y-m-d H:i:s');
+        $pdf = PDF::loadView("pdf.situation-pdf",$results);
+        return $pdf->stream();
+    }
     /**
      * Update the specified resource in storage.
      *
