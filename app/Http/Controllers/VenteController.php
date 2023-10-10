@@ -227,7 +227,7 @@ class VenteController extends Controller
                     ->toArray();
                     $results['data'] = $data;
                     $results['date_situation'] = now()->format('Y-m-d H:i:s');
-                dd($results);
+                //dd($results);
             } else {
                 $data = DB::table('ventes')
                     ->select('*')
@@ -248,15 +248,9 @@ class VenteController extends Controller
                     ->select(DB::raw('MAX(date_fermeture) AS latest_date_fermeture'))
                     ->whereNotNull('date_fermeture')
                     ->first();
-                    // Depense
-                    // $depenses = DB::table('depenses')
-                    // ->orderBy('id', 'desc')
-                    // ->whereBetween('created_at', [$latestClosureDate ? $latestClosureDate->latest_date_fermeture : "0000-00-00 00:00:00", now()])
-                    // ->get();
                     $results['data'] = $data;
-                    // $results['depenses'] = $depenses;
                     $results['derniere_date_fermeture'] = $latestClosureDate->latest_date_fermeture;
-                    $results['current_date'] = now()->format('Y-m-d H:i:s');
+                    $results['date_situation'] = now()->format('Y-m-d H:i:s');
             }   
         $pdf = PDF::loadView("pdf.situation-pdf",$results);
         return $pdf->stream();
