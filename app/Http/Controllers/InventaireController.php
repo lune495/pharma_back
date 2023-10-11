@@ -46,7 +46,8 @@ class InventaireController extends Controller
                     $item = Inventaire::find($request->id);
                 }
                     DB::beginTransaction();
-                    $item->user_id = 1;
+                    // $item->user_id = 1;
+                    $item->user_id = $user->id;
                     $str_json = json_encode($request->details);
                     $details = json_decode($str_json, true);
                         if (!isset($errors)) 
