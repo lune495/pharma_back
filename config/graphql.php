@@ -143,6 +143,7 @@ return [
         \App\GraphQL\Type\InventairePaginatedType::class,
         \App\GraphQL\Type\SortieStockType::class,
         \App\GraphQL\Type\SortieStockPaginatedType::class,
+        \App\GraphQL\Type\LigneSortieStockType::class,
         \App\GraphQL\Type\LigneInventaireType::class,
         \App\GraphQL\Type\ProformaType::class,
         \App\GraphQL\Type\TaxeType::class,
