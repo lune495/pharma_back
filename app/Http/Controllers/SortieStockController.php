@@ -52,7 +52,7 @@ class SortieStockController extends Controller
                                 $quantite_stock = $produit->qte; 
                                 $ligne_sortie_stock = new LigneSortieStock(); 
                                 $ligne_sortie_stock->produit_id = $detail['produit_id'];
-                                $ligne_sortie_stock->inventaire_id  = $item->id;
+                                $ligne_sortie_stock->sortie_stock_id  = $item->id;
                                 $ligne_sortie_stock->quantite = $detail['quantite'];
                                 $ligne_sortie_stock->quantite_stock = $quantite_stock;
                                 $saved = $ligne_sortie_stock->save();
