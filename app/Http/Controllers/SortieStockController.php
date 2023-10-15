@@ -41,6 +41,8 @@ class SortieStockController extends Controller
                         if (!isset($errors)) 
                         {
                             $item->save();
+
+                            dd($details);
                             foreach ($details as $detail) 
                             {
                                 $produit = Produit::find($detail['produit_id']);
