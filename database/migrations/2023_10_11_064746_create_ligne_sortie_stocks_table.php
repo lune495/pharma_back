@@ -15,7 +15,7 @@ class CreateLigneSortieStocksTable extends Migration
     {
         Schema::create('ligne_sortie_stocks', function (Blueprint $table) {
             $table->id();
-             $table->unsignedBigInteger('sortie_stock_id');
+            $table->unsignedBigInteger('sortie_stock_id');
             $table->foreign('sortie_stock_id')->references('id')->on('sortie_stocks')->onDelete('cascade');
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');

@@ -29,7 +29,7 @@ class SortieStockQuery extends Query
 
     public function resolve($root, $args)
     {
-        $query = SortieStock::with('sortie_stocks');
+        $query = SortieStock::with('ligne_sortie_stocks');
 
         if (isset($args['id']))
         {

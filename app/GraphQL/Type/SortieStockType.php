@@ -39,6 +39,18 @@ class SortieStockType extends GraphQLType
         }
         return $date_at;
     }
+    protected function resolveCreatedAtFrField($root, $args)
+    {
+        if (!isset($root['created_at']))
+        {
+            $created_at = $root->created_at;
+        }
+        else
+        {
+            $created_at = $root['created_at'];
+        }
+        return Carbon::parse($created_at)->format('d/m/Y H:i:s');
+    }
 
     // You can also resolve a field by declaring a method in the class
     // with the following format resolve[FIELD_NAME]Field()
