@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class SortieStockController extends Controller
 {
     //
-    private $queryName = "sortie_stocks";
+    private $queryName = "sortiestocks";
 
     /**
      * Store a newly created resource in storage.
@@ -41,7 +41,8 @@ class SortieStockController extends Controller
                         if (!isset($errors)) 
                         {
                             $item->save();
-                            foreach ($details as $detail) 
+                            //dd($request->all());
+                            foreach ($request->all() as $detail) 
                             {
                                 $produit = Produit::find($detail['produit_id']);
                                 if (!isset($produit)) {
