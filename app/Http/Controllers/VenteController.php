@@ -161,7 +161,8 @@ class VenteController extends Controller
         {
             $vente = Vente::find($id);
             if($vente){
-                $log = Log::where('id_evnt',$vente->id)->get();
+                $log = Log::where('id_evnt',$vente->id)->first();
+                // dd($log);
                 if($vente->statut == 0)
                 {
                     DB::beginTransaction();
@@ -169,7 +170,7 @@ class VenteController extends Controller
                     foreach ($vnteprdts as $vnteprdt) 
                     {
                         $produit = Produit::find($vnteprdt->produit_id);
-                        if($produit)
+                        if($produit && $vente->paye == true)
                         {
                             $produit->qte = $produit->qte + $vnteprdt->qte;
                             $produit->save();
@@ -178,8 +179,10 @@ class VenteController extends Controller
                     $vente->statut = 1;
                     if($vente->save())
                     {
-                        $log->statut_pharma = true;
-                        $log->save();
+                        if ($log) {
+                            $log->statut_pharma = true;
+                            $log->save();
+                        }
                         DB::commit();
                         $id = $vente->id;
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
