@@ -58,11 +58,11 @@ class SortieStockController extends Controller
                                 $ligne_sortie_stock->quantite_stock = $quantite_stock;
                                 $saved = $ligne_sortie_stock->save();
                                 }
-                                // if($saved)
-                                // {
-                                //         $produit->qte = $produit->qte + $detail['quantite'];
-                                //         $produit->save();
-                                // }
+                                if($saved)
+                                {
+                                        $produit->qte = $produit->qte - $detail['quantite'];
+                                        $produit->save();
+                                }
                             }
                         }
                         if (!isset($errors)) 
