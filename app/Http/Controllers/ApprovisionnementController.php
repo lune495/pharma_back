@@ -68,7 +68,7 @@ class ApprovisionnementController extends Controller
                             if($saved)
                             {
                                 $qte_total_appro = $qte_total_appro + $itemDetail->quantity_received;
-                                $montant_total_appro = $montant_total_appro  + ($itemDetail->produit->pa * $itemDetail->quantity_received);
+                                $montant_total_appro = $montant_total_appro  + ($detail['pu'] * $itemDetail->quantity_received);
                             }
                         }
                         // Appro depot
