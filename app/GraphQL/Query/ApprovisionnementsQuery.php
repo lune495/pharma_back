@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Query;
 
-use  App\Models\{Approvisionnement,LigneApprovisionnement,Outil};
+use App\Models\{Approvisionnement,LigneApprovisionnement,Outil};
 use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
