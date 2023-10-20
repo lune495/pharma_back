@@ -15,7 +15,7 @@ class AddPuToLigneApprovisionnement extends Migration
     {
         Schema::table('ligne_approvisionnements', function (Blueprint $table) {
             //
-            $table->inetger('pu')->nullable();
+            $table->integer('pu')->nullable();
         });
     }
 
