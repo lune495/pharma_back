@@ -15,6 +15,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\InventaireController;
 use App\Http\Controllers\SortieStockController;
+use App\Http\Controllers\BonRetourController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
     Route::post('/inventaire',[InventaireController::class,'save']);
     Route::post('/sortiestock',[SortieStockController::class,'save']);
+    Route::post('/bon_retour',[BonRetourController::class,'save']);
     Route::post('/venteannulee/{id}',[VenteController::class,'abortsale']);
     Route::post('/approannulee/{id}',[ApprovisionnementController::class,'abortappro']);
     Route::delete('/clients/{id}',[ClientController::class,'delete']);

@@ -12,14 +12,13 @@ class AuthController extends Controller
     private $queryName = "users";
     // Register
     public function register(Request $request ) {
-      
         $fields = $request->validate([
             'email' => 'required|string',
             'name' => 'required|string',
             'password' => 'required|string|confirmed',
             'role_id' => 'required|integer',
         ]);
-        $user =  User::create([
+      $user =  User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
