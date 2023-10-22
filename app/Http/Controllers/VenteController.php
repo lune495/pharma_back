@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
-use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise,Log};
+use App\Models\{Produit,VenteProduit,Vente,User,Outil,Taxe,Remise,Log,BonRetour};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MyEvent;
@@ -208,6 +208,22 @@ class VenteController extends Controller
         //  $measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();
              return $pdf->stream();
+        }else{
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, false);
+            return view('notfound');
+        }
+    }
+    public function generatePDFRetour($id)
+    {
+        $bon_retour = BonRetour::find($id);
+        if($service!=null)
+        {
+         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+         dd($data);
+         $pdf = PDF::loadView("pdf.ticket-retour", $data);
+        $measure = array(0,0,225.772,650.197);
+        return $pdf->setPaper($measure, 'orientation')->stream();
+            //  return $pdf->stream();
         }else{
          $data = Outil::getOneItemWithGraphQl($this->queryName, $id, false);
             return view('notfound');

@@ -82,8 +82,5 @@ class BonRetourController extends Controller
              DB::rollback();
              return $e->getMessage();
         }
-        
-        
-
     }
 }
