@@ -93,7 +93,7 @@
                 </div>
                 ************************
 
-                <dt  style="font-size: 18px;font-weight:bold">BR N°{{$id}}</dt>
+                <dt  style="font-size: 18px;font-weight:bold;text-align:center">BR N°{{$id}}</dt>
             </section>
             <section  style="margin-top : 30px;font-size: 15px;">
                 <table>
