@@ -27,7 +27,7 @@ class Outil extends Model
         "users"                      => " id,name,email,role{id,nom}",
         "inventaires"                => " id,ref,user{id,name},ligne_inventaires{id,produit{id,designation},quantite_reel,quantite_theorique,diff_inventaire}",
         "sortiestocks"               => " id,ref,user{id,name},ligne_bon_stocks{id,produit{id,designation},quantite,quantite_stock}",
-        "bon_retours"                => " id,ref,user{email},ligne_bon_retours{id,produit{id,designation,pv},quantite_retour,created_at}",
+        "bon_retours"                => " id,ref,user{email},ligne_bon_retours{id,produit{id,designation,pv},quantite_retour,created_at},created_at",
         "remises"                    => " id,value",
         "approvisionnements"         => " id,user_id,user{name},montant,statut,numero,qte_total_appro,fournisseur_id,fournisseur{id,nom_complet,telephone,adresse},ligne_approvisionnements{id,produit_id,produit{id,designation,pa,pv,qte,famille_id,famille{id,nom}},quantity_received,created_at,created_at_fr,updated_at,updated_at_fr},created_at,created_at_fr,type_appro",
     );
