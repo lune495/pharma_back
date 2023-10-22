@@ -65,6 +65,7 @@
                 /*margin-left: auto;
                 margin-right: auto;*/
             }
+        }
         </style>
     <head>
     <body>
@@ -103,11 +104,11 @@
                         <td style="width: 20%">Montant </td>
                     </tr> -->
                         {{$montant = 0}}
-                        @foreach($element_services as $element_service )
+                        @foreach($ligne_bon_retours as $ligne_bon_retour )
                             <tr>
-                                <td style="padding-left: 15px;">{{$element_service["type_service"]["nom"] ? $element_service["type_service"]["nom"] : "" }}</td>
-                                <td style="padding-left: 15px;">{{$element_service["type_service"]["prix"] ? \App\Models\Outil::formatPrixToMonetaire($element_service["type_service"]["prix"], false, false) : ""}}</td>
-                                {{$element_service["type_service"]["prix"] ? $montant = $montant + $element_service["type_service"]["prix"] : ""}}
+                                <td style="padding-left: 15px;">{{$ligne_bon_retour["produit"]["designation"] ? $ligne_bon_retour["produit"]["designation"] : "" }}</td>
+                                <td style="padding-left: 15px;">{{$ligne_bon_retour["produit"]["pv"] ? \App\Models\Outil::formatPrixToMonetaire($ligne_bon_retour["produit"]["pv"], false, false) : ""}}</td>
+                                {{$ligne_bon_retour["produit"]["pv"] ? $montant = $montant + $ligne_bon_retour["produit"]["pv"] : ""}}
                                 <td style="padding-left: 15px">
                             </tr>
                         @endforeach

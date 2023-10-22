@@ -219,7 +219,7 @@ class VenteController extends Controller
         if($bon_retour!=null)
         {
          $data = Outil::getOneItemWithGraphQl("bon_retours", $id, true);
-         dd($data);
+         //dd($data);
          $pdf = PDF::loadView("pdf.ticket-retour", $data);
         $measure = array(0,0,225.772,650.197);
         return $pdf->setPaper($measure, 'orientation')->stream();
