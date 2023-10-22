@@ -218,7 +218,7 @@ class VenteController extends Controller
         $bon_retour = BonRetour::find($id);
         if($bon_retour!=null)
         {
-         $data = Outil::getOneItemWithGraphQl("bon_retour", $id, true);
+         $data = Outil::getOneItemWithGraphQl("bon_retours", $id, true);
          dd($data);
          $pdf = PDF::loadView("pdf.ticket-retour", $data);
         $measure = array(0,0,225.772,650.197);
