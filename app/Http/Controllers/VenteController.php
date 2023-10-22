@@ -216,9 +216,9 @@ class VenteController extends Controller
     public function generatePDFRetour($id)
     {
         $bon_retour = BonRetour::find($id);
-        if($service!=null)
+        if($bon_retour!=null)
         {
-         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
+         $data = Outil::getOneItemWithGraphQl("bon_retour", $id, true);
          dd($data);
          $pdf = PDF::loadView("pdf.ticket-retour", $data);
         $measure = array(0,0,225.772,650.197);
