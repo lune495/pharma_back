@@ -1,4 +1,4 @@
-    <html>
+<html>
         <head>
             <title>
                 @yield('title')
@@ -123,6 +123,16 @@
                     margin-bottom: 5em;                }
                 .mt-4{
                     margin-top: 2em;                }
+                .filigrane{
+                    position: absolute;
+                    top: 50%; /* Positionnez le texte verticalement au milieu de la page */
+                    left: 50%; /* Centrez horizontalement */
+                    transform: translate(-50%, -50%) rotate(-45deg); /* Inclinaison du texte tout en le maintenant centré */
+                }
+                .filigrane p {
+                    font-size: 10em; /* Taille du texte en pourcentage de la largeur de la vue */
+                    opacity: 0.2; /* Opacité réduite */
+                }
             </style>
         </head>
         <body>

@@ -2,7 +2,6 @@
 @extends('pdf.layouts.layout-export2')
 @section('title', "PDF Facture commande")
 @section('content')
-
     <table style="border: none; border: none;margin-top:2px;font-size: 11px">
         <tr>
             <td style="border: none">
@@ -63,7 +62,7 @@
             <td style="border:none;"></td>
         </tr>
     </table>
-
+    @if ($statut)<div class="filigrane"><p>ANNULEE</p></div>@endif
     <h2 style="margin:0">Facture N°  {{$numero ? $numero : "FA01"}}</h2>
     <br>
     <div class="static">
