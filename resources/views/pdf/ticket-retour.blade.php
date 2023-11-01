@@ -90,11 +90,14 @@
                 </div>
                 ************************
                 <dt  style="margin:10px 0">Date : {{$created_at}}</dt>
-                </div>
+                
                 ************************
-
+                    <dt  style="margin:10px 0">{{ $nom_client ?  "Client: " .\App\Models\Outil::premereLettreMajuscule($nom_client) : "CLIENT DE PASSAGE"}} </dt>
+                ************************
                 <dt  style="font-size: 18px;font-weight:bold;text-align:center">BR N°{{$id}}</dt>
+                  
             </section>
+            </div>
             <section  style="margin-top : 30px;font-size: 15px;">
                 <table>
                     <tbody>
@@ -102,7 +105,7 @@
                         <td style="width: 10%">Qte </td>
                         <td style="width: 60%">Produit </td>
                         <td style="width: 20%">Montant </td>
-                    </tr> -->
+                        </tr> -->
                         {{$montant = 0}}
                         @foreach($ligne_bon_retours as $ligne_bon_retour )
                             <tr>

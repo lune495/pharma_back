@@ -19,6 +19,7 @@ class BonRetourType extends GraphQLType
             [ 
                 'id'                        => ['type' => Type::id(), 'description' => ''],
                 'ref'                       => ['type' => Type::string()],
+                'nom_client'                => ['type' => Type::string()],
                 'user'                      => ['type' => GraphQL::type('User')],
                 'ligne_bon_retours'         => ['type' => Type::listOf(GraphQL::type('LigneBonRetour')), 'description' => ''],
                 'created_at'                => ['type' => Type::string()],

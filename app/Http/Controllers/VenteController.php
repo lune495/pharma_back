@@ -127,7 +127,7 @@ class VenteController extends Controller
                         $log->remise = 0;
                         $log->montant = 0;
                         $log->user_id = $user->id;
-                        $log->statut_pharma = false;
+                        $log->statut_pharma = true;
                         // $log->user_id = 2;
                         $log->save();
                         DB::commit();

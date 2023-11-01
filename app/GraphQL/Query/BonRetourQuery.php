@@ -48,6 +48,7 @@ class BonRetourQuery extends Query
             [
                 'id'                         => $item->id,
                 'ref'                        => $item->ref,
+                'nom_client'                 => $item->nom_client,
                 'user'                       => $item->user,
                 'ligne_bon_retours'          => $item->ligne_bon_retours,
                 'created_at'                 => $item->created_at,
