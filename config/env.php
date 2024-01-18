@@ -11,7 +11,7 @@ return [
     | faire à nouveau php artisan config:cache pour rendre la modification disponible.
     |
     */
-    'APP_URL'                          => env('APP_URL', 'localhost/StockApp/public'),
+    'APP_URL'                          => env('APP_URL', 'localhost/pharma_back/public'),
     'FOLDER'                           => env('FOLDER', ''),
     'FRONT_URL'                        => env('FRONT_URL', ''),
 
