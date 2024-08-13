@@ -83,7 +83,7 @@ class VenteController extends Controller
                             }
                             else 
                             {
-                                $current_quantity = $produit->qte; 
+                                $current_quantity = $produit->qte;
                                 if ($current_quantity < $detail['quantite']) 
                                 {
                                     $errors = "{$produit->designation} a un stock de {$current_quantity} Vous ne pouvez pas effectuer cette vente";

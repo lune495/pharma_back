@@ -64,12 +64,12 @@ class VenteQuery extends Query
             $to = date($to.' 23:59:59');
             $query->whereBetween('created_at', array($from, $to));
         }
-        $latestClosureDate = ClotureCaisse::orderBy('date_fermeture', 'desc')
-        ->value('date_fermeture');
-        if(isset($latestClosureDate))
-        {
-            $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
-        }  
+        // $latestClosureDate = ClotureCaisse::orderBy('date_fermeture', 'desc')
+        // ->value('date_fermeture');
+        // if(isset($latestClosureDate))
+        // {
+        //     $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
+        // }  
         $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Vente $item)
