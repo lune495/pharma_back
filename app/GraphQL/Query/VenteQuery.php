@@ -68,7 +68,7 @@ class VenteQuery extends Query
         ->value('date_fermeture');
         if(isset($latestClosureDate))
         {
-            $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
+            $query = $query->whereBetween('created_at', ['2024-08-12 08:01:09', now()]);
         }  
         $query->orderBy('id', 'desc');
         $query = $query->get();
