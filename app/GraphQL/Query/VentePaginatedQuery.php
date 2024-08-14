@@ -32,6 +32,7 @@ class VentePaginatedQuery extends Query
             'user_id'                  => ['type' => Type::int()],
             'produit_id'               => ['type' => Type::int()],
             'reference'                => ['type' => Type::string()],
+            'nom_client'               => ['type' => Type::string()],
             'created_at_start'         => ['type' => Type::string()],
             'created_at_end'           => ['type' => Type::string()],
 
@@ -62,6 +63,10 @@ class VentePaginatedQuery extends Query
         if (isset($args['reference']))
         {
             $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
+        }
+        if (isset($args['nom_client']))
+        {
+            $query->where('nom_client',Outil::getOperateurLikeDB(),'%'.$args['nom_client'].'%');
         }
         if(isset($args['produit_id']))
         {
