@@ -1,0 +1,108 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "barryvdh/laravel-dompdf": "^2.0",
+        "beyondcode/laravel-websockets": "^2.0@beta",
+        "doctrine/dbal": "^3.3",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.7",
+        "laravel/framework": "^8.75",
+        "laravel/helpers": "^1.5",
+        "laravel/sanctum": "^2.15",
+        "laravel/tinker": "^2.5",
+        "predis/predis": "^2.2",
+        "pusher/pusher-php-server": "~5.0",
+        "rebing/graphql-laravel": "^8.2"
+    },
+    "require-dev": {
+        "facade/ignition": "^2.5",
+        "fakerphp/faker": "^1.9.1",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "config-server-base": [
+            "sudo chmod -R 777 storage/",
+            "sudo chmod -R 777 storage/public",
+            "sudo chmod -R 777 public/",
+            "sudo chmod -R 777 public/app-assets/assets/images",
+            "sudo chmod -R 777 bootstrap/cache",
+            "sudo chmod -R 777 storage/ bootstrap/cache",
+            "cp .env.server .env",
+            "php artisan clear-compiled",
+            "composer dumpautoload",
+            "php artisan config:cache",
+            "sudo mkdir -p s public/images",
+            "sudo mkdir -p s storage/app/public/images/produits"
+        ],
+        "config-server-laravel-app": [
+            "@config-server-base",
+            "chown -R www-data:www-data storage bootstrap/cache"
+        ],
+        "config-server-linux": [
+            "@config-server-laravel-app",
+            "sudo chmod -R 777 storage/public/images/produits"
+        ],
+        "config-server-linux-test": [
+            "sudo chmod -R 777 storage/",
+            "sudo chmod -R 777 storage/app/public",
+            "sudo chmod -R 777 public/",
+            "sudo chmod -R 777 public/app-assets/assets/images",
+            "sudo chmod -R 777 bootstrap/cache",
+            "sudo chmod -R 777 storage/ bootstrap/cache",
+            "cp .env.server.test .env",
+            "php artisan clear-compiled",
+            "composer dumpautoload",
+            "php artisan config:cache",
+            "sudo mkdir -p s public/uploads/img_prod",
+            "sudo mkdir -p s storage/public/images/produits",
+            "chown -R www-data:www-data storage bootstrap/cache",
+            "sudo chmod -R 777 storage/public/images/produits"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

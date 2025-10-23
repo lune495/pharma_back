@@ -1,0 +1,25 @@
+
+
+********************************************************************************************************************************************
+
+************************************************** Stat. Gestion de stock ******************************************************************
+
+
+- Magasin :
+Le pdf doit montrer le stock d'entrée,le stock de sortie et le solde du stock.
+details:
+stock d'entrée : 
+stock de sortie : 
+        Transfert de depot (magasin -> pharmacie)
+        Bon de livraison
+
+- Pharmacie :
+details:
+stock d'entrée : 
+        Achat
+        Transfert de depot (magasin -> pharmacie)
+stock de sortie : 
+        Vente
+        Bon de livraison
+
+Pour les opérations Achat(Appro) , B.L(Sortie stock) et transfert le profil chifaasn est abile à faire ces opérations.
