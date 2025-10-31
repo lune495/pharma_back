@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFamilleIdToProduits extends Migration
+class AddInitialDepotIdToVenteProduits extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddFamilleIdToProduits extends Migration
      */
     public function up()
     {
-        Schema::table('produits', function (Blueprint $table) {
-            //
-            $table->foreignId('famille_id')->nullable()->constrained()->references('id')->on('familles');
+        Schema::table('vente_produits', function (Blueprint $table) {
+            $table->foreignId('initial_depot_id')->nullable()->constrained()->references('id')->on('initial_depots');
         });
     }
 
@@ -26,8 +25,8 @@ class AddFamilleIdToProduits extends Migration
      */
     public function down()
     {
-        Schema::table('produits', function (Blueprint $table) {
-            //
+        Schema::table('vente_produits', function (Blueprint $table) {
+            $table->dropForeign(['initial_depot_id']);
         });
     }
 }

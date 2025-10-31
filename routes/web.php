@@ -24,7 +24,10 @@ use App\Http\Controllers\ProformaController;
     Route::get('/vente/ticket-retour-pdf/{id}', [VenteController::class,'generatePDFRetour']);
     Route::get('/vente/situation', [VenteController::class,'generatePDF2']);
     Route::get('/approvisionnementpdf/{id}', [ApprovisionnementController::class,'genereallPDf']);
+    Route::get('/getAllCaProduit', [VenteController::class,'generateCaProduits']);
+    Route::get('/getAllQteAppro', [VenteController::class,'generateQteAppro']);
     Route::get('/export-produits',[ProduitController::class,'exportProduit']);
+    Route::get('/getVentesParProduitJuin', [ProduitController::class, 'getVentesParProduitJuin']);
     Route::get('/test',[VenteController::class,'Notif']);
     // Route::get('/', function () {
     //     return view('welcome');

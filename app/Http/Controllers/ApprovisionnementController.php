@@ -69,45 +69,46 @@ class ApprovisionnementController extends Controller
                             {
                                 $qte_total_appro = $qte_total_appro + $itemDetail->quantity_received;
                                 $montant_total_appro = $montant_total_appro  + ($detail['pu'] * $itemDetail->quantity_received);
-                            }
-                        }
-                        // Appro depot
-                        if($request->type_appro == 'DEPOT')
-                        {
-                            if (isset($detail['produit_id']))
-                            {
-                                $depot = Depot::where("produit_id",$detail['produit_id'])->get();
-                            }
-                            if(!$depot->first())
-                            {
-                                $errors = "Ce produit n'existe pas";
-                            }
-                            // if (empty($request->quantite))
-                            // {
-                            //     $errors = "Renseignez la quantite";
-                            // }
-                            if (!isset($errors)) 
-                            {
-                                $depot = Depot::find($depot[0]['id']);
-                                $depot->stock = $depot->stock + $detail['quantite'];
-                                $depot->save();
-                            }
-                        }
-                        if($request->type_appro == 'BOUTIQUE')
-                        {
-                            if (isset($detail['produit_id']))
-                            {
-                                $produit = Produit::where("id",$detail['produit_id'])->get();
-                            }
-                            if(!$item->first())
-                            {
-                                $errors = "Ce produit n'existe pas";
-                            }
-                            if (!isset($errors)) 
-                            {
-                                $produit = Produit::find($produit[0]['id']);
-                                $produit->qte = $produit->qte + $detail['quantite'];
-                                $produit->save();
+                                // if($item->user->role_id == 18)
+                                // {
+                                //     if (isset($detail['produit_id']))
+                                //     {
+                                //         $depot = Depot::where("produit_id",$detail['produit_id'])->where("initial_depot_id",2)->get();
+                                //     }
+                                //     if(!$depot->first())
+                                //     {
+                                //         $errors = "Ce produit n'existe pas dans le Magazin";
+                                //     }
+                                //     // if (empty($request->quantite))
+                                //     // {
+                                //     //     $errors = "Renseignez la quantite";
+                                //     // }
+                                //     if (!isset($errors)) 
+                                //     {
+                                //         $depot->stock = $depot->stock + $detail['quantite'];
+                                //         $depot->save();
+                                //     }
+                                // }
+                                // if ($item->user->role_id == 3) 
+                                // {
+                                //     $produit_depot_pharma = Depot::where('produit_id', $detail['produit_id'])->where('initial_depot_id', '=', 1)->first();
+                                //     if(!$produit_depot_pharma->first())
+                                //     {
+                                //         $errors = "Ce produit n'existe pas";
+                                //     }
+                                //     if($produit_depot_pharma)
+                                //     {
+                                //         $produit_depot_pharma->stock = isset($produit_depot_pharma) ? $produit_depot_pharma->stock + $detail['quantite'] : $produit_depot_pharma->stock;
+                                //         $produit_depot_pharma->save();
+                                //     }
+                                
+                                    if (!isset($errors)) 
+                                    {
+                                        $produit = Produit::find($detail['produit_id']);
+                                        $produit->qte = $produit->qte + $detail['quantite'];
+                                        $produit->save();
+                                    }
+                                // }
                             }
                         }
                     }    
@@ -177,7 +178,8 @@ class ApprovisionnementController extends Controller
                     return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                 } 
             }
-            if($appro && $appro->type_appro == 'DEPOT'){
+            if($appro && $appro->type_appro == 'DEPOT')
+            {
                 if($appro->statut == 0)
                 {
                     DB::beginTransaction();

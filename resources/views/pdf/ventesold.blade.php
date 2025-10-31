@@ -3,10 +3,8 @@
 @section('title', "PDF Facture commande")
 @section('content')
     <table style="border: none; border: none;margin-top:2px;font-size: 11px">
-        <tr>
-            <td style="border: none">
-                <p style="font-weight: bold;font-size: 14px">CHIFAA</p>
-            </td>
+        <tr  style="border: none">
+            <td  style="border: none"></td>
         </tr>
         <tr  style="border: none">
             <td  style="border: none">

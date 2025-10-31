@@ -39,12 +39,15 @@ Route::get('/produits/search/{name}',[ProduitController::class, 'search']);
 
 // Protected Routes
 Route::group(['middleware' => ['auth:sanctum']],function()
- {
+{
     Route::post('/produits',[ProduitController::class,'save']);
+    Route::post('/compilation_produit_depot',[DepotController::class,'syncProduitsDepots']);
+    Route::post('/transfert',[DepotController::class,'transfert_depot']);
     Route::post('/approsboutique',[MouvementController::class,'ravitaillerboutique']);
     Route::post('/clients',[ClientController::class,'save']);
     Route::post('/fournisseurs',[FournisseurController::class,'save']);
     Route::post('/depots',[DepotController::class,'save']);
+    Route::post('/initial_depots',[DepotController::class,'save_intial_depot']);
     Route::post('/approsdepot',[MouvementController::class,'approdepot']);
     Route::delete('/ventes/{id}',[VenteController::class,'delete']);
     Route::post('/inventaire',[InventaireController::class,'save']);
@@ -60,8 +63,8 @@ Route::group(['middleware' => ['auth:sanctum']],function()
     Route::post('/ventes',[VenteController::class,'save']);
     Route::post('/proformas',[ProformaController::class,'save']);
     Route::put('/familles/{id}',[FamilleController::class,'update']);
-    Route::delete('/produits/{id}',[ProduitController::class,'delete']);
     Route::delete('/familles/{id}',[FamilleController::class,'delete']);
     Route::post('/familles',[FamilleController::class,'save']);
+    Route::delete('/produits/{id}',[ProduitController::class,'delete']);
     Route::post('/logout',[AuthController::class,'logout']);
 });

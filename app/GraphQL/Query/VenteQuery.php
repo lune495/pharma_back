@@ -5,7 +5,7 @@ namespace App\GraphQL\Query;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\{Vente,ClotureCaisse};
+use App\Models\{Vente,ClotureCaisse,Outil};
 class VenteQuery extends Query
 {
     protected $attributes = [
@@ -39,10 +39,6 @@ class VenteQuery extends Query
         {
             $query->where('id', $args['id']);
         }
-        if (isset($args['reference']))
-        {
-            $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
-        }
         if (isset($args['filtre_pharma']))
         {
             $query->where('statut',false);
@@ -64,12 +60,31 @@ class VenteQuery extends Query
             $to = date($to.' 23:59:59');
             $query->whereBetween('created_at', array($from, $to));
         }
-        $latestClosureDate = ClotureCaisse::orderBy('date_fermeture', 'desc')
-        ->value('date_fermeture');
-        if(isset($latestClosureDate))
-        {
-            $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
-        }  
+        
+         if (isset($args['reference'])) {
+            $query = $query->where('numero', Outil::getOperateurLikeDB(), '%' . $args['reference'] . '%');
+        } else {
+            // $date_debut_test = date('2025-09-12 07:28:03');
+            // $date_fin_test = date('2025-09-12 14:09:30');
+            $latestClosureDate = ClotureCaisse::orderBy('date_fermeture', 'desc')
+            ->value('date_fermeture');
+            if(isset($latestClosureDate))
+            {
+                $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
+                // $query = $query->whereBetween('created_at', [$date_debut_test, $date_fin_test]);
+            }
+        }
+        
+        // if (isset($args['reference']))
+        // {
+        //     $query->where('numero',Outil::getOperateurLikeDB(),'%'.$args['reference'].'%');
+        // }
+        // $latestClosureDate = ClotureCaisse::orderBy('date_fermeture', 'desc')
+        // ->value('date_fermeture');
+        // if(isset($latestClosureDate))
+        // {
+        //     $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
+        // }  
         $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Vente $item)

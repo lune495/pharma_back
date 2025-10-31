@@ -110,8 +110,9 @@
                         @foreach($ligne_bon_retours as $ligne_bon_retour )
                             <tr>
                                 <td style="padding-left: 15px;">{{$ligne_bon_retour["produit"]["designation"] ? $ligne_bon_retour["produit"]["designation"] : "" }}</td>
+                                <td style="padding-left: 15px;">{{$ligne_bon_retour["quantite_retour"] ? $ligne_bon_retour["quantite_retour"] : "" }}</td>
                                 <td style="padding-left: 15px;">{{$ligne_bon_retour["produit"]["pv"] ? \App\Models\Outil::formatPrixToMonetaire($ligne_bon_retour["produit"]["pv"], false, false) : ""}}</td>
-                                {{$ligne_bon_retour["produit"]["pv"] ? $montant = $montant + $ligne_bon_retour["produit"]["pv"] : ""}}
+                                {{$ligne_bon_retour["produit"]["pv"] ? $montant = $montant + ($ligne_bon_retour["produit"]["pv"] * $ligne_bon_retour["quantite_retour"]) : ""}}
                                 <td style="padding-left: 15px">
                             </tr>
                         @endforeach

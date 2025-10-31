@@ -23,6 +23,7 @@ class DepotQuery extends Query
         [
             'id'                  => ['type' => Type::int()],
             'produit_id'          => ['type' => Type::int()],
+            'initial_depot_id'    => ['type' => Type::int()],
             'designation'         => ['type' => Type::string()],
         ];
     }
@@ -33,6 +34,10 @@ class DepotQuery extends Query
         if (isset($args['produit_id']))
         {
             $query = $query->where('produit_id',$args['produit_id']);
+        }
+        if (isset($args['initial_depot_id']))
+        {
+            $query = $query->where('initial_depot_id', $args['initial_depot_id']);
         }
         if(isset($args['designation']))
         {
@@ -47,11 +52,9 @@ class DepotQuery extends Query
             return
             [
                 'id'                      => $item->id,
-                'stock'                   => $item->stock,
-                'pa'                      => $item->pa,
-                'limite'                  => $item->limite,
                 'produit_id'              => $item->produit_id,
                 'produit'                 => $item->produit,
+                'stock'                   => $item->stock,
             ];
         });
 

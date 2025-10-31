@@ -40,6 +40,7 @@ class VenteController extends Controller
      */
     public function save(Request $request)
     {
+        // dd($request->all());
         try 
         {
                 $errors =null;
@@ -134,11 +135,11 @@ class VenteController extends Controller
                         $data = Outil::getOneItemWithGraphQl($this->queryName,$id, true);
                         event(new MyEvent($data));
                         return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
-                    }
-                    if (isset($errors))
-                    {
-                        throw new \Exception($errors);
-                    } 
+                        }
+                        if (isset($errors))
+                        {
+                            throw new \Exception($errors);
+                        }
 
     } catch (exception $e) {
         DB::rollback();
@@ -202,10 +203,9 @@ class VenteController extends Controller
         $vente = Vente::find($id);
         if($vente!=null)
         {
-         $data = Outil::getOneItemWithGraphQl($this->queryName, $id, true);
-        // dd($data);
+         $data = Outil::getOneItemWithOldGraphQl($this->queryName, $id);
          $pdf = PDF::loadView("pdf.ventesold", $data);
-        //  $measure = array(0,0,225.772,650.197);
+        //$measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();
              return $pdf->stream();
         }else{
@@ -287,6 +287,27 @@ class VenteController extends Controller
         $vente = Vente::find($id);
         $vente->update($request->all());
         return $vente;
+    }
+
+    public function generateCaProduits()
+    {
+        //
+
+        $from = "2024-01-01 00:00:00";
+        $to = "2024-12-31 00:00:00";
+        $produits = Outil::getProduitsVendus($from,$to);
+        $pdf = PDF::loadView("pdf.situationProduit", ['produits' => $produits]);
+        return $pdf->stream();
+    }
+
+    public function generateQteAppro()
+    {
+        $from = "2024-01-01 00:00:00";
+        $to = "2024-12-31 00:00:00";
+        $produits = Outil::getQteAppro($from,$to);
+        // dd($produits);
+        $pdf = PDF::loadView("pdf.SituationApproParQte", ['produits' => $produits]);
+        return $pdf->stream();
     }
 
     /**

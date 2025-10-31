@@ -40,82 +40,83 @@ class ProduitController extends Controller
     {
         try 
         {
-                $errors =null;
-                $item = new Produit();
-                if (!empty($request->id))
+            $errors =null;
+            $item = new Produit();
+            if (!empty($request->id))
+            {
+                $item = Produit::find($request->id);
+            }
+            if (empty($request->designation))
+            {
+                $errors = "Renseignez la designation";
+            }
+            if (empty($request->famille_id))
+            {
+                $errors = "Renseignez la categorie du produit";
+            }
+            // if (!empty($request->code))
+            // {
+            //     $produit = Produit::where('code',$request->code)->first();
+            //     if($produit != null && empty($request->id))
+            //     {
+            //         $errors = "cette reference existe déja";
+            //     }
+            // }
+            
+            // if ($request->qte < 0)
+            // {
+            //     $errors = "Renseignez la quantite du produit";
+            // }
+            if ($request->pa < 0)
+            {
+                $errors = "Renseignez le prix d'achat";
+            }
+            if ($request->pv < 0)
+            {
+                $errors = "Renseignez le prix de vente";
+            }
+            $item->designation = $request->designation;
+            $item->code = $request->code;
+            $item->description = $request->description;
+            $item->famille_id = $request->famille_id;
+            $image_name = null;
+            if($request->hasFile('image'))
+            {
+                //$destinationPath = "images/produits";
+                $image = $request->file("image");
+                $image_name = $image->getClientOriginalName();
+                $destinationPath = public_path().'/images';
+                $image->move($destinationPath,$image_name);
+                //Storage::disk('public')->put($image_name,file_get_contents($request->image));
+                //$path = $request->file('image')->storeAs($destinationPath,$image_name);
+            }
+            $item->image = $image_name;
+            $item->pa = $request->pa;
+            $item->pv = $request->pv;
+            $item->limite = $request->limite;
+            if(!empty($request->id))
+            {
+                $itemDetailVente = VenteProduit::where('produit_id',$request->id)->first();
+                $itemDetailAppro = LigneApprovisionnement::where('produit_id',$request->id)->first();
+                    
+                if ($itemDetailVente==null && $itemDetailAppro==null)
                 {
-                    $item = Produit::find($request->id);
-                }
-                if (empty($request->designation))
-                {
-                    $errors = "Renseignez la designation";
-                }
-                if (empty($request->famille_id))
-                {
-                    $errors = "Renseignez la categorie du produit";
-                }
-                if (!empty($request->code))
-                {
-                    $produit = Produit::where('code',$request->code)->first();
-                    if($produit != null && empty($request->id))
-                    {
-                        $errors = "cette reference existe déja";
+                    $item->qte = $request->qte;
+                }elseif($item->qte != $request->qte){
+                        $errors = "Impossible de modifier le stock de ce produit";
                     }
-                }
-                
-                // if ($request->qte < 0)
-                // {
-                //     $errors = "Renseignez la quantite du produit";
-                // }
-                if ($request->pa < 0)
+            }else{
+                    $item->qte = $request->qte;
+            }if (!isset($errors)) 
                 {
-                    $errors = "Renseignez le prix d'achat";
+                    $item->save();
+                    $id = $item->id;
+                    return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
                 }
-                if ($request->pv < 0)
+                if (isset($errors))
                 {
-                    $errors = "Renseignez le prix de vente";
+                    throw new \Exception($errors);
                 }
-                $item->designation = $request->designation;
-                $item->code = $request->code;
-                $item->description = $request->description;
-                $item->famille_id = $request->famille_id;
-                $image_name = null;
-                if($request->hasFile('image')){
-                //    $destinationPath = "images/produits";
-                   $image = $request->file("image");
-                   $image_name = $image->getClientOriginalName();
-                    $destinationPath = public_path().'/images';
-                    $image->move($destinationPath,$image_name);
-                   //Storage::disk('public')->put($image_name,file_get_contents($request->image));
-                   //$path = $request->file('image')->storeAs($destinationPath,$image_name);
-                }
-                $item->image = $image_name;
-                $item->pa = $request->pa;
-                $item->pv = $request->pv;
-                $item->limite = $request->limite;
-                if(!empty($request->id))
-                {
-                    $itemDetailVente = VenteProduit::where('produit_id',$request->id)->first();
-                    $itemDetailAppro = LigneApprovisionnement::where('produit_id',$request->id)->first();
-                       
-                    if ($itemDetailVente==null && $itemDetailAppro==null){
-                        $item->qte = $request->qte;
-                    }elseif($item->qte != $request->qte){
-                         $errors = "Impossible de modifier le stock de ce produit";
-                        }
-                }else{
-                        $item->qte = $request->qte;
-                }
-                    if (!isset($errors)) 
-                    {
-                        $item->save();
-                        $id = $item->id;
-                        return  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
-                    }
-                    if (isset($errors))
-                    {
-                        throw new \Exception($errors);
-                    }
         } catch (exception $e) {
                 return $e->getMessage();
         }
@@ -193,6 +194,23 @@ class ProduitController extends Controller
     public function exportProduit(Request $request){
         return Excel::download(new ProduitView(), 'produits.xlsx');
     }
+
+    public static function getVentesParProduitJuin($from = '2024-06-01 00:00:00', $to = '2024-06-30 23:59:59')
+    {
+        return DB::table('vente_produits as vp')
+            ->join('produits as p', 'vp.produit_id', '=', 'p.id')
+            ->join('ventes as v', 'vp.vente_id', '=', 'v.id')
+            ->select(
+                'p.id as produit_id',
+                'p.designation as produit_nom',
+                DB::raw('SUM(vp.qte) as quantite_vendue'),
+                DB::raw('SUM(vp.prix_vente * vp.qte) as chiffre_affaires')
+            )
+            ->whereBetween('vp.created_at', [$from, $to])
+            ->groupBy('p.id', 'p.designation')
+            ->get();
+    }
+
 
     /**
      * Remove the specified resource from storage.

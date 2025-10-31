@@ -139,7 +139,8 @@
 
             <header class = "mb-4"  style="width:100%;">
                 <div class="header text-center" style="font-size: 300px;font-weight:bold">
-                    <img style="width: 100%" src="{{asset('app-assets/assets/images/LOGO.PNG')}}" alt="">
+                    <!-- <img style="width: 100%" src="{{asset('app-assets/assets/images/LOGO.PNG')}}" alt=""> -->
+                    <img src="{{ asset('app-assets/assets/images/LOGO2.jpeg') }}" style="width: 80px; margin-top: 10px;"> <br>
                 </div>
             </header>
             <div class="mt-4">

@@ -29,6 +29,7 @@ class Outil extends Model
         "sortiestocks"               => " id,ref,user{id,name},ligne_bon_stocks{id,produit{id,designation},quantite,quantite_stock}",
         "bon_retours"                => " id,ref,nom_client,user{email},ligne_bon_retours{id,produit{id,code,designation,pv},quantite_retour,created_at},created_at",
         "remises"                    => " id,value",
+        "initial_depots"             => " id,nom_depot,depots{id,produit_id,stock}",
         "approvisionnements"         => " id,user_id,user{name},montant,statut,numero,qte_total_appro,fournisseur_id,fournisseur{id,nom_complet,telephone,adresse},ligne_approvisionnements{id,produit_id,produit{id,code,designation,pa,pv,qte,famille_id,famille{id,nom}},quantity_received,created_at,created_at_fr,updated_at,updated_at_fr},created_at,created_at_fr,type_appro",
     );
 
@@ -61,6 +62,21 @@ class Outil extends Model
         // dd($data);
         return ($justone) ? $data['data'][$queryName][0] : $data;
     }
+
+    public static function getOneItemWithOldGraphQl($queryName, $id_critere)
+    {
+        $guzzleClient = new \GuzzleHttp\Client([
+            'defaults' => [
+                'exceptions' => true
+            ]
+        ]);
+        $name_env = self::getAPI();
+        $critere = (is_numeric($id_critere)) ? "reference:\"{$id_critere}\"" : $id_critere;
+        $queryAttr = Outil::$queries[$queryName];
+        $response = $guzzleClient->get("{$name_env}graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
+        $data = json_decode($response->getBody(), true);
+        return $data['data'][$queryName][0];
+    }
     public static function setParametersExecution()
     {
         ini_set('max_execution_time', -1);
@@ -88,6 +104,32 @@ class Outil extends Model
         $pa = DB::select(DB::raw("select (SELECT COALESCE(SUM(p.pa),0) FROM `vente_produits` as vp,`produits` as p,`ventes` as v WHERE vp.`produit_id` = ? and vp.`vente_id` = v.id and vp.`produit_id`=p.id and vp.created_at >= ? and vp.created_at <= ?) 
         as pa"),[$id,$from,$to])[0]->pa;
         return  $ca - $pa;
+    }
+    public static function getProduitsVendus($from, $to)
+    {
+         // Augmenter la mémoire et le temps d'exécution
+    ini_set('memory_limit', '-1'); // Suppression de la limite de mémoire
+    ini_set('max_execution_time', 300); // Temps d'exécution augmenté à 5 minutes
+        return DB::select(DB::raw("SELECT p.id, p.designation, COALESCE(SUM(vp.qte), 0) as total_qte, COALESCE(SUM(vp.prix_vente * vp.qte), 0) as chiffre_affaire 
+            FROM vente_produits as vp
+            JOIN produits as p ON vp.produit_id = p.id
+            JOIN ventes as v ON vp.vente_id = v.id
+            WHERE vp.created_at BETWEEN ? AND ?
+            GROUP BY p.id, p.designation
+            ORDER BY chiffre_affaire DESC"), [$from, $to]);
+    }
+
+    public static function getQteAppro($from, $to)
+    {
+        ini_set('memory_limit', '-1'); // Suppression de la limite de mémoire
+        ini_set('max_execution_time', 300); // Temps d'exécution augmenté à 5 minutes
+        return DB::select(DB::raw("SELECT p.id, p.designation, COALESCE(SUM(la.quantity_received), 0) as total_qte
+            FROM ligne_approvisionnements as la
+            JOIN produits as p ON la.produit_id = p.id
+            JOIN approvisionnements as a ON la.approvisionnement_id = a.id
+            WHERE la.created_at BETWEEN ? AND ?
+            GROUP BY p.id, p.designation
+            ORDER BY total_qte DESC"), [$from, $to]);
     }
     public static function premereLettreMajuscule($val)
     {
