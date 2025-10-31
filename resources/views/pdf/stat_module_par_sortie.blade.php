@@ -80,7 +80,7 @@
     <h1>Statistique des B.L par services </h1>
 
     @foreach($modules as $module)
-        <div class="module-title">
+        <!-- <div class="module-title">
             {{ $module->nom }} 
             <span style="float:right; font-size:12px;">
                 @if($module->rdv_exist)
@@ -89,7 +89,7 @@
                     ❌ Aucun RDV
                 @endif
             </span>
-        </div>
+        </div> -->
 
         @if($module->sortie_stocks->isEmpty())
             <p class="no-data">Aucune sortie de stock enregistrée pour ce module.</p>

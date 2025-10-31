@@ -31,8 +31,6 @@ class AuthController extends Controller
             'user' =>  Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]),
             'token' => $token
         ];
-
-
         return Outil::redirectgraphql($this->queryName, "id:{$id}", Outil::$queries[$this->queryName]);
     }
 

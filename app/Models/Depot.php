@@ -18,6 +18,6 @@ class Depot extends Model
     ];
     public  function produit()
     {
-        return $this->belongsTo(Produit::class,'produit_id');
+        return $this->belongsTo(Produit::class,'produit_id', 'id');
     }
 }

@@ -5,7 +5,7 @@ namespace App\GraphQL\Query;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\InitialDepot;
+use App\Models\{InitialDepot,Outil};
     
 class InitialDepotQuery extends Query
 {
@@ -32,62 +32,56 @@ class InitialDepotQuery extends Query
     public function resolve($root, $args)
     {
         $query = InitialDepot::query();
-        if (isset($args['id']))
-        {
-            $query = $query->where('id', $args['id']);
-        }
-        if (isset($args['nom_depot']))
-        {
-            $query = $query->where('nom_depot', 'like', '%'.$args['nom_depot'].'%');
+
+        // --- 🔍 Filtrage de base ---
+        if (isset($args['id'])) {
+            $query->where('id', $args['id']);
         }
 
-        if (isset($args['search_produit'])) {
-            $search = $args['search_produit'];
+        if (isset($args['nom_depot'])) {
+            $query->where('nom_depot', 'like', '%'.$args['nom_depot'].'%');
+        }
 
-            $query->whereHas('depots.produit', function ($q) use ($search) {
-                $q->where('designation', 'like', '%'.$search.'%');
+        // --- 🔎 Recherche par produit ---
+        if (!empty($args['search_produit']) || !empty($args['code_produit'])) {
+            $search = $args['search_produit'] ?? null;
+            $code   = $args['code_produit'] ?? null;
+
+            // Condition commune pour filtrer les dépôts ayant un produit correspondant
+            $query->whereHas('depots.produit', function ($q) use ($search, $code) {
+                if ($search) {
+                    $q->where('designation', Outil::getOperateurLikeDB(), '%'.$search.'%');
+                }
+                if ($code) {
+                    $q->where('code', $code);
+                }
             });
 
-            // 🔹 Important : ici on restreint aussi les "depots" chargés dans le retour
-            $query->with(['depots' => function ($d) use ($search) {
-                $d->whereHas('produit', function ($p) use ($search) {
-                    $p->where('designation', 'like', '%'.$search.'%');
-                });
-            }, 'depots.produit']);
-            } else {
-                // Si pas de filtre produit, charger tous les dépôts normalement
-                $query->with('depots.produit');
+            // Charger seulement les dépôts filtrés
+            $query->with(['depots' => function ($d) use ($search, $code) {
+                $d->whereHas('produit', function ($p) use ($search, $code) {
+                    if ($search) {
+                        $p->where('designation', Outil::getOperateurLikeDB(), '%'.$search.'%');
+                    }
+                    if ($code) {
+                        $p->where('code', $code);
+                    }
+                })->with('produit');
+            }]);
+        } else {
+            // Aucun filtre produit, charger tous les produits liés
+            $query->with('depots.produit');
         }
-        // Recherche par code produit
 
-        if (isset($args['code_produit'])) {
-            $search = $args['code_produit'];
+        $query->orderByDesc('id');
 
-            $query->whereHas('depots.produit', function ($q) use ($search) {
-                $q->where('code',$search);
-            });
-
-            // 🔹 Important : ici on restreint aussi les "depots" chargés dans le retour
-            $query->with(['depots' => function ($d) use ($search) {
-                $d->whereHas('produit', function ($p) use ($search) {
-                    $p->where('code',$search);
-                });
-            }, 'depots.produit']);
-            } else {
-                // Si pas de filtre produit, charger tous les dépôts normalement
-                $query->with('depots.produit');
-        }
-        $query->orderBy('id', 'desc');
-        $query = $query->get();
-        return $query->map(function (InitialDepot $item)
-        {
-            return
-            [
-                'id'                        => $item->id,
-                'nom_depot'                 => $item->nom_depot,
-                'depots'                    => $item->depots
+        return $query->get()->map(function (InitialDepot $item) {
+            return [
+                'id'        => $item->id,
+                'nom_depot' => $item->nom_depot,
+                'depots'    => $item->depots,
             ];
         });
-
     }
+
 }

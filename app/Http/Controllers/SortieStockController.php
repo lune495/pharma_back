@@ -22,7 +22,7 @@ class SortieStockController extends Controller
     {
         try 
         {
-            // dd($request->all());
+            //dd($request->all());
             $errors =null;
             $item = new SortieStock();
             $log = new LigneSortieStock();
@@ -89,7 +89,6 @@ class SortieStockController extends Controller
                             $ligne_sortie_stock->initial_depot_id = 1;
                             $ligne_sortie_stock->save();
                         }
-                        // MAGASIN
                         if ($item->user->role_id == 18) 
                         {
                             $produit_depot = Depot::where('produit_id', $detail['produit_id'])->where('initial_depot_id', '=', 2)->first();
@@ -111,6 +110,8 @@ class SortieStockController extends Controller
                             $ligne_sortie_stock->quantite_stock = $produit->stock_magasin;
                             $ligne_sortie_stock->initial_depot_id = 2;
                             $ligne_sortie_stock->save();
+                        } else {
+                            $errors = "Vous n'êtes pas autorisé à effectuer une sortie de stock.";
                         }
                     }
                 }

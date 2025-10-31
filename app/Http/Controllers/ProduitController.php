@@ -40,6 +40,7 @@ class ProduitController extends Controller
     {
         try 
         {
+            // dd($request->all());
             DB::beginTransaction();
             $errors =null;
             $item = new Produit();

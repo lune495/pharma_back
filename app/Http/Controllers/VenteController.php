@@ -40,7 +40,7 @@ class VenteController extends Controller
      */
     public function save(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         try 
         {
                 $errors =null;
@@ -154,6 +154,15 @@ class VenteController extends Controller
 
     }
 
+    public function genere_fiche_inventaire()
+    {
+        //
+        $produits = Produit::orderBy('designation')->get();
+        $pdf = PDF::loadView("pdf.fiche_inventaire", ['produits' => $produits])
+                ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('fiche_inventaire.pdf');
+    }
 
     public function statModules()
     {
@@ -223,7 +232,7 @@ class VenteController extends Controller
         $vente = Vente::find($id);
         if($vente!=null)
         {
-         $data = Outil::getOneItemWithOldGraphQl($this->queryName, $id);
+         $data = Outil::getOneItemWithOldGraphQl($this->queryName, $vente->numero);
          $pdf = PDF::loadView("pdf.ventesold", $data);
         //$measure = array(0,0,225.772,650.197);
             // return $pdf->setPaper($measure, 'orientation')->stream();

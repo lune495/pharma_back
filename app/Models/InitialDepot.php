@@ -11,6 +11,6 @@ class InitialDepot extends Model
 
     public  function depots()
     {
-        return $this->hasMany(Depot::class);
+        return $this->hasMany(Depot::class, 'initial_depot_id', 'id');
     }
 }

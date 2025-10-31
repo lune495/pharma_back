@@ -22,6 +22,7 @@ use App\Http\Controllers\DepotController;
 // Route::group(['middleware' => ['auth:sanctum']],function()
 // {
     Route::get('/stat_stock_par_depot/{depot_id}', [DepotController::class,'getMouvementsProduits']);
+    Route::get('/genere_fiche_inventaire', [VenteController::class,'genere_fiche_inventaire']);
     Route::get('/vente/generate-pdf/{id}', [VenteController::class,'generatePDF']);
     Route::get('/stat_modules', [VenteController::class,'statModules']);
     Route::get('/vente/ticket-retour-pdf/{id}', [VenteController::class,'generatePDFRetour']);

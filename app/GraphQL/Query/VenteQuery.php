@@ -62,7 +62,8 @@ class VenteQuery extends Query
         }
         
          if (isset($args['reference'])) {
-            $query = $query->where('numero', Outil::getOperateurLikeDB(), '%' . $args['reference'] . '%');
+            $query = $query->where('numero', $args['reference']);
+            // $query = $query->where('numero', Outil::getOperateurLikeDB(), '%' . $args['reference'] . '%');
         } else {
             // $date_debut_test = date('2025-09-12 07:28:03');
             // $date_fin_test = date('2025-09-12 14:09:30');
@@ -84,7 +85,7 @@ class VenteQuery extends Query
         // if(isset($latestClosureDate))
         // {
         //     $query = $query->whereBetween('created_at', [$latestClosureDate, now()]);
-        // }  
+        // }
         $query->orderBy('id', 'desc');
         $query = $query->get();
         return $query->map(function (Vente $item)
@@ -114,6 +115,5 @@ class VenteQuery extends Query
                 'created_at_fr'           => $item->created_at_fr,
             ];
         });
-
     }
 }

@@ -72,8 +72,10 @@ class Outil extends Model
             ]
         ]);
         $name_env = self::getAPI();
-        $critere = (is_numeric($id_critere)) ? "reference:\"{$id_critere}\"" : $id_critere;
+        // $critere = (is_numeric($id_critere)) ? "reference:\"{$id_critere}\"" : $id_critere;
+        $critere =  "reference:\"{$id_critere}\"";
         $queryAttr = Outil::$queries[$queryName];
+        // dd("{$name_env}graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
         $response = $guzzleClient->get("{$name_env}graphql?query={{$queryName}({$critere}){{$queryAttr}}}");
         $data = json_decode($response->getBody(), true);
         return $data['data'][$queryName][0];
